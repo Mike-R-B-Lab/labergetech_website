@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap');
 
 :root {
-  --color-bg: #f1f2f4;
-  --color-surface: #e6e9ed;
+  --color-bg: #ffffff;
+  --color-surface: #eef1f4;
   --color-text: #0d253d;
   --color-accent: #15509c;
   --color-accent-2: #2f6db1;
