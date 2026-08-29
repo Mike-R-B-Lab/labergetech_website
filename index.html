@@ -155,8 +155,8 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
     <section id="about" aria-label="About" style="border-top: 2px solid var(--color-divider); border-bottom: 2px solid var(--color-divider); padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(28px, 4vw, 64px); align-items: center;">
         
-        <figure class="grayscale" data-reveal="1" ref="{{ photoRef }}" style="margin: 0; position: relative; min-height: 420px; overflow: hidden; background: var(--color-surface); height: 500px">
-          <img src="assets/michael.jpeg" alt="Michael Laberge, founder of LabergeTech, Montreal" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 553px; height: 517px; object-fit: contain; object-position: 50% 4%; left: 67px; top: -17px">
+        <figure data-reveal="1" ref="{{ photoRef }}" style="margin: 0; position: relative; min-height: 420px; overflow: hidden; height: 500px">
+          <img src="assets/michael.jpeg" alt="Michael Laberge, founder of LabergeTech, Montreal" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%">
         </figure><div data-reveal="1" ref="{{ aboutTextRef }}">
           <h2 style="font-size: clamp(28px, 3.6vw, 52px); letter-spacing: -0.03em; margin: 0 0 26px; max-width: 16ch;">{{ t.about.title }}</h2>
           <p style="margin: 0 0 16px; font-size: 16.5px; line-height: 1.65; max-width: 52ch;">{{ t.about.p1 }}</p>
