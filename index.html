@@ -19,13 +19,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="_ds/modernist-74c4808b-48da-4e06-be00-6f68cf7d0d0c/styles.css">
 <script src="_ds/modernist-74c4808b-48da-4e06-be00-6f68cf7d0d0c/_ds_bundle.js"></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"LabergeTech","description":"Practical automation, AI agents and software systems for businesses.","founder":{"@type":"Person","name":"Michael Laberge","jobTitle":"Founder"},"address":{"@type":"PostalAddress","addressLocality":"Montreal","addressRegion":"QC","addressCountry":"CA"},"telephone":"+1-438-401-7040","email":"michael@sendbetter.ai","areaServed":"CA","availableLanguage":["en","fr"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"LabergeTech","description":"Practical automation, AI agents and software systems for businesses.","founder":{"@type":"Person","name":"Michael Laberge","jobTitle":"Founder"},"address":{"@type":"PostalAddress","addressLocality":"Montreal","addressRegion":"QC","addressCountry":"CA"},"telephone":"+1-438-401-7040","email":"michael@labergetech.com","areaServed":"CA","availableLanguage":["en","fr"]}</script>
 <style>
 html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 body { margin: 0; overflow-x: hidden; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-text) 25%, transparent); }
 input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--color-text) 35%, transparent); font-size: 14px; }
+
+/* Contact form, "what do you need help with" chips. Real checkboxes so the
+   values submit natively and the keyboard works; the input itself is taken
+   out of the flow and the label carries the whole appearance. */
+.pick {
+  display: inline-flex; align-items: center; cursor: pointer;
+  -webkit-user-select: none; user-select: none;
+  font-family: var(--font-heading); font-weight: 800; font-size: 12.5px;
+  padding: 10px 14px; border: 2px solid var(--color-divider);
+  color: var(--color-text);
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+.pick input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.pick:hover { border-color: var(--color-accent); }
+.pick:has(input:checked) {
+  background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg);
+}
+.pick:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .pick { transition: none; } }
 
 /* Work delivered, stacked layout. Side by side, a rule above each stat reads
    as part of that card. Once the cards stack, the same rule reads as a divider
@@ -176,9 +195,9 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
               <span style="font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.contact.callLabel }}</span>
               <span style="font-family: var(--font-heading); font-weight: 800; font-size: clamp(16px, 1.4vw, 20px); letter-spacing: -0.02em;">(438) 401-7040</span>
             </a>
-            <a href="mailto:michael@sendbetter.ai" style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 2px solid var(--color-divider); text-decoration: none; color: var(--color-text);">
+            <a href="mailto:michael@labergetech.com" style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 2px solid var(--color-divider); text-decoration: none; color: var(--color-text);">
               <span style="font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Email</span>
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: clamp(14px, 1.2vw, 18px); letter-spacing: -0.02em;">michael@sendbetter.ai</span>
+              <span style="font-family: var(--font-heading); font-weight: 800; font-size: clamp(14px, 1.2vw, 18px); letter-spacing: -0.02em;">michael@labergetech.com</span>
             </a>
           </div>
         </div>
@@ -186,32 +205,41 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
         <form onSubmit="{{ submit }}" style="display: grid; gap: 0;">
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)); column-gap: clamp(24px, 3vw, 48px);">
             <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.name }}</span>
-            <input name="name" type="text" required="required" autoComplete="name" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
-          </label>
-          <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.email }}</span>
-            <input name="email" type="email" required="required" autoComplete="email" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
-          </label>
-          <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.phone }}</span>
-            <input name="phone" type="tel" autoComplete="tel" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
-          </label>
-          <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.company }}</span>
-            <input name="company" type="text" autoComplete="organization" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
-          </label>
+              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.name }}</span>
+              <input name="name" type="text" required="required" autoComplete="name" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
+            </label>
+            <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
+              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.email }}</span>
+              <input name="email" type="email" required="required" autoComplete="email" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
+            </label>
+            <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
+              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.phone }}</span>
+              <input name="phone" type="tel" autoComplete="tel" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
+            </label>
           </div>
+
+          <fieldset style="border: 0; margin: 0; min-width: 0; padding: 0 0 20px; border-bottom: 2px solid var(--color-divider);">
+            <legend style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); padding: 26px 0 0;">{{ t.form.focus }}</legend>
+            <p style="margin: 6px 0 14px; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.focusHint }}</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              <sc-for list="{{ picks }}" as="p" hint-placeholder-count="7">
+                <label class="pick">
+                  <input type="checkbox" name="focus" value="{{ p.id }}">
+                  <span>{{ p.label }}</span>
+                </label>
+              </sc-for>
+            </div>
+          </fieldset>
+
           <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.sector }}</span>
-            <input name="sector" type="text" placeholder="{{ t.form.sectorHint }}" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
+            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.context }}</span>
+            <textarea name="message" rows="3" placeholder="{{ t.form.contextHint }}" style="width: 100%; border: 0; background: transparent; padding: 4px 0; resize: vertical; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--color-text);"></textarea>
           </label>
-          <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.message }}</span>
-            <textarea name="message" rows="4" required="required" style="width: 100%; border: 0; background: transparent; padding: 4px 0; resize: vertical; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--color-text);"></textarea>
-          </label>
+
+          <input type="text" name="_honey" tabIndex="-1" autoComplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;">
+
           <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 22px;">
-            <button class="btn btn-primary" type="submit" style="padding: 15px 22px; font-size: 15px;">{{ sendLabel }}</button>
+            <button class="btn btn-primary" type="submit" style="padding: 15px 22px; font-size: 15px; opacity: {{ sendOpacity }}; cursor: {{ sendCursor }};">{{ sendLabel }}</button>
             <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
               <span style="font-size: 13px; color: var(--color-accent);">{{ sentMessage }}</span>
             </sc-if>
@@ -219,6 +247,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
               <span style="font-size: 13px; color: var(--color-accent);">{{ t.form.error }}</span>
             </sc-if>
           </div>
+          <p style="margin: 12px 0 0; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.replyNote }}</p>
         </form>
       </div>
     </section>
@@ -229,7 +258,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
       <span style="display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-weight: 800; letter-spacing: -0.02em; font-size: 15px;"><img src="assets/logo.png" alt="" width="20" height="20" style="display: block; border-radius: 4px;">LabergeTech</span>
       <span style="color: color-mix(in srgb, var(--color-text) 60%, transparent);">Montreal, Quebec</span>
       <a href="tel:+14384017040" style="color: var(--color-text); text-decoration: none;">(438) 401-7040</a>
-      <a href="mailto:michael@sendbetter.ai" style="color: var(--color-text); text-decoration: none;">michael@sendbetter.ai</a>
+      <a href="mailto:michael@labergetech.com" style="color: var(--color-text); text-decoration: none;">michael@labergetech.com</a>
       <span style="display: flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-weight: 800;">
         <button type="button" onClick="{{ setEn }}" style="background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: {{ enColor }};">EN</button>
         <span aria-hidden="true" style="opacity: .35;">/</span>
@@ -270,14 +299,26 @@ const COPY = {
       callLabel: "Call Michael"
     },
     form: {
-      name: "Name", email: "Email", phone: "Phone", company: "Company",
-      sector: "Type of business", sectorHint: "Construction, clinic, ecommerce…",
-      message: "What's taking too much time?",
+      name: "Name", email: "Email", phone: "Phone",
+      focus: "What do you need help with?",
+      focusHint: "Pick as many as apply.",
+      context: "Anything else? (optional)",
+      contextHint: "A sentence or two is plenty.",
+      replyNote: "We reply within one business day.",
       send: "Get a free automation audit",
       sending: "Sending…",
-      error: "Something went wrong. Email us at michael@sendbetter.ai.",
+      error: "Something went wrong. Email us at michael@labergetech.com.",
       sentDirect: "Thanks. We'll reply within a day.",
-      sent: "Opening your email. Send it and we'll reply within a day."
+      sent: "Opening your email. Send it and we'll reply within a day.",
+      picks: [
+        { id: "Website", label: "Website" },
+        { id: "Missed calls", label: "Missed calls" },
+        { id: "Lead follow-up", label: "Lead follow-up" },
+        { id: "Google reviews", label: "Google reviews" },
+        { id: "Paperwork and data entry", label: "Paperwork and data entry" },
+        { id: "Custom software", label: "Custom software" },
+        { id: "Not sure yet", label: "Not sure yet" }
+      ]
     },
     steps: [
       { num: "01", title: "Find the bottleneck", body: "We look at where time, leads, or money are being lost." },
@@ -304,7 +345,11 @@ const COPY = {
       { num: "05", eyebrow: "Build & teach", title: "Custom systems",
         flow: "Your process → your system → your team runs it",
         items: ["Internal apps", "Dashboards", "Integrations", "Training"],
-        benefit: "Software built around how your business actually works." }
+        benefit: "Software built around how your business actually works." },
+      { num: "06", eyebrow: "Get found online", title: "Websites",
+        flow: "Site built → structured for search → found on Google and by AI assistants",
+        items: ["Google SEO", "AI and LLM search", "Fast pages", "Built to convert"],
+        benefit: "A site people find on Google and that AI assistants can read." }
     ],
     cases_meta: [
       { unit: "Google reviews", unitSuffix: "in 2 months", suffix: "", note: "Automated Google review requests." },
@@ -341,12 +386,24 @@ const COPY = {
       callLabel: "Appeler Michael"
     },
     form: {
-      name: "Nom", email: "Courriel", phone: "Téléphone", company: "Entreprise",
-      sector: "Type d'entreprise", sectorHint: "Construction, clinique, e-commerce…",
-      message: "Qu'est-ce qui prend trop de temps?",
+      name: "Nom", email: "Courriel", phone: "Téléphone",
+      focus: "Avec quoi avez-vous besoin d'aide?",
+      focusHint: "Choisissez tout ce qui s'applique.",
+      context: "Autre chose? (optionnel)",
+      contextHint: "Une ou deux phrases suffisent.",
+      replyNote: "Nous répondons en moins d'un jour ouvrable.",
+      picks: [
+        { id: "Website", label: "Site web" },
+        { id: "Missed calls", label: "Appels manqués" },
+        { id: "Lead follow-up", label: "Suivi des leads" },
+        { id: "Google reviews", label: "Avis Google" },
+        { id: "Paperwork and data entry", label: "Paperasse et saisie" },
+        { id: "Custom software", label: "Logiciel sur mesure" },
+        { id: "Not sure yet", label: "Je ne sais pas encore" }
+      ],
       send: "Obtenir un audit gratuit",
       sending: "Envoi…",
-      error: "Une erreur est survenue. Écrivez-nous à michael@sendbetter.ai.",
+      error: "Une erreur est survenue. Écrivez-nous à michael@labergetech.com.",
       sentDirect: "Merci. Nous répondons en moins d'une journée.",
       sent: "Votre courriel s'ouvre. Envoyez-le et nous répondons en moins d'une journée."
     },
@@ -375,7 +432,11 @@ const COPY = {
       { num: "05", eyebrow: "Bâtir & enseigner", title: "Logiciel sur mesure",
         flow: "Votre processus → votre système → votre équipe le gère",
         items: ["Applications internes", "Tableaux de bord", "Intégrations", "Formation"],
-        benefit: "Un logiciel bâti selon votre façon de travailler." }
+        benefit: "Un logiciel bâti selon votre façon de travailler." },
+      { num: "06", eyebrow: "Être trouvé en ligne", title: "Sites web",
+        flow: "Site bâti → structuré pour la recherche → trouvé sur Google et par les assistants IA",
+        items: ["SEO Google", "Recherche IA et LLM", "Pages rapides", "Bâti pour convertir"],
+        benefit: "Un site que les gens trouvent sur Google et que les assistants IA peuvent lire." }
     ],
     cases_meta: [
       { unit: "Avis Google", unitSuffix: "en 2 mois", suffix: "", note: "Demandes d'avis Google automatisées." },
@@ -616,13 +677,20 @@ class Component extends DCLogic {
 
   submit = (e) => {
     e.preventDefault();
+    if (this.state.sending) return;          // a second click while in flight would send twice
     const f = e.target;
     const g = (k) => (f.elements[k] && f.elements[k].value ? f.elements[k].value.trim() : "");
+    // Honeypot: real people never see this field, so anything in it is a bot.
+    // Report success rather than an error so the bot has nothing to tune against.
+    if (g("_honey")) { this.setState({ sent: true, sentVia: "post" }); return; }
+    const picked = Array.prototype.slice
+      .call(f.querySelectorAll('input[name="focus"]:checked'))
+      .map((c) => c.value);
     const fr = this.state.lang === "fr";
-    const subject = (fr ? "Audit d'automatisation : " : "Automation audit: ") + (g("company") || g("name"));
+    const subject = (fr ? "Audit d'automatisation : " : "Automation audit: ") + (g("name") || g("email"));
     const data = {
       name: g("name"), email: g("email"), phone: g("phone"),
-      company: g("company"), sector: g("sector"), message: g("message"),
+      focus: picked.join(", "), message: g("message"),
       language: this.state.lang, _subject: subject, subject: subject
     };
     const key = this.props.web3formsKey || "3ef2cfed-c4ba-419b-809b-9d7c21197e36";
@@ -641,7 +709,7 @@ class Component extends DCLogic {
       }).then((r) => {
         if (!r.ok) throw new Error("bad status");
         f.reset();
-        this.setState({ sending: false, sent: true, error: false });
+        this.setState({ sending: false, sent: true, sentVia: "post", error: false });
       }).catch(() => {
         this.setState({ sending: false, error: true });
       });
@@ -651,13 +719,12 @@ class Component extends DCLogic {
       (fr ? "Nom : " : "Name: ") + data.name,
       (fr ? "Courriel : " : "Email: ") + data.email,
       (fr ? "Téléphone : " : "Phone: ") + data.phone,
-      (fr ? "Entreprise : " : "Company: ") + data.company,
-      (fr ? "Type d'entreprise : " : "Type of business: ") + data.sector,
+      (fr ? "Besoins : " : "Needs: ") + data.focus,
       "",
       data.message
     ];
-    window.location.href = "mailto:michael@sendbetter.ai?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines.join("\n"));
-    this.setState({ sent: true });
+    window.location.href = "mailto:michael@labergetech.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines.join("\n"));
+    this.setState({ sent: true, sentVia: "mail" });
   };
 
   renderVals() {
@@ -674,7 +741,7 @@ class Component extends DCLogic {
     this.photoRef = this.photoRef || React.createRef();
     this.aboutTextRef = this.aboutTextRef || React.createRef();
     const pad = (n) => (n < 10 ? "0" + n : "" + n);
-    const services = [3, 4, 0, 1, 2].map((i, idx) => Object.assign({}, t.services_list[i], { num: pad(idx + 1) }));
+    const services = [3, 4, 5, 0, 1, 2].map((i, idx) => Object.assign({}, t.services_list[i], { num: pad(idx + 1) }));
     const cases = CASES.map((c, i) => {
       const m = t.cases_meta[i];
       return Object.assign({}, c, m, { unit: m.unitSuffix ? m.unit + " · " + m.unitSuffix : m.unit });
@@ -701,7 +768,12 @@ class Component extends DCLogic {
       sending: !!this.state.sending,
       error: !!this.state.error,
       sendLabel: this.state.sending ? t.form.sending : t.form.send,
-      sentMessage: t.form.sentDirect,
+      sendOpacity: this.state.sending ? "0.45" : "1",
+      sendCursor: this.state.sending ? "not-allowed" : "pointer",
+      picks: t.form.picks,
+      // The mailto fallback has not sent anything yet, the visitor still has to
+      // press send in their mail client, so it needs its own wording.
+      sentMessage: this.state.sentVia === "mail" ? t.form.sent : t.form.sentDirect,
       sectionRef: this.sectionRef,
       pinRef: this.pinRef,
       trackRef: this.trackRef,
