@@ -52,10 +52,6 @@ legend.fld-k { padding-top: 26px; }
   margin: 6px 0 14px; font-size: 13px;
   color: color-mix(in srgb, var(--color-text) 62%, transparent);
 }
-.reply-note {
-  margin: 12px 0 0; font-size: 12px;
-  color: color-mix(in srgb, var(--color-text) 48%, transparent);
-}
 .pick-row { display: flex; flex-wrap: wrap; gap: 7px; }
 .send-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 26px; }
 .send-btn { padding: 18px 28px; font-size: 16px; }
@@ -198,7 +194,7 @@ legend.fld-k { padding-top: 26px; }
 
   <main id="top">
 
-    <section style="padding: clamp(36px, 6vh, 72px) clamp(20px, 5vw, 64px) clamp(48px, 7vh, 88px); max-width: 1680px; margin: 0 auto;">
+    <section style="padding: clamp(36px, 6vh, 72px) clamp(20px, 5vw, 64px) clamp(34px, 5vh, 58px); max-width: 1680px; margin: 0 auto;">
       <div style="font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin-bottom: clamp(20px, 3vh, 36px);">
         {{ t.hero.tag }}
       </div>
@@ -206,9 +202,7 @@ legend.fld-k { padding-top: 26px; }
       <p data-reveal="1" style="margin: clamp(22px, 3vh, 32px) 0 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.55; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 78%, transparent); text-wrap: pretty;">{{ t.hero.sub }}</p>
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(24px, 3.5vh, 36px);">
         <a class="btn btn-primary" href="#contact" style="padding: 15px 22px; font-size: 15px;">{{ t.hero.cta1 }}</a>
-        <a class="btn btn-secondary" href="#services" style="padding: 15px 22px; font-size: 15px;">{{ t.hero.cta2 }}</a>
       </div>
-      <p style="margin: clamp(26px, 4vh, 40px) 0 0; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.hero.small }}</p>
     </section>
 
     <section id="services" ref="{{ sectionRef }}" aria-label="Services" style="border-top: 2px solid var(--color-divider); position: relative;">
@@ -350,7 +344,6 @@ legend.fld-k { padding-top: 26px; }
               <span class="send-msg">{{ t.form.error }}</span>
             </sc-if>
           </div>
-          <p class="fld-hint reply-note">{{ t.form.replyNote }}</p>
         </form>
       </div>
     </section>
@@ -379,9 +372,7 @@ const COPY = {
       tag: "Automation & software systems",
       title: "We save you time and make you money.",
       sub: "We find the repetitive work inside your business and automate it: lead follow-up, phone calls, reviews, paperwork, and everything in between.",
-      small: "LabergeTech. Built by Michael Laberge, Montreal.",
-      cta1: "Get a free automation audit",
-      cta2: "See what we build"
+      cta1: "Get a free automation audit"
     },
     services: { title: "What we build" },
     how: {
@@ -407,7 +398,6 @@ const COPY = {
       focusHint: "Select everything that applies.",
       context: "Tell us a little more (optional)",
       contextHint: "What would you like to automate?",
-      replyNote: "No sales pitch. We'll get back to you within 1 business day.",
       send: "Get My Free Automation Audit",
       sending: "Sending…",
       error: "Something went wrong. Email us at michael@labergetech.com.",
@@ -465,9 +455,7 @@ const COPY = {
       tag: "Automatisation & systèmes logiciels",
       title: "Nous vous faisons gagner du temps et de l'argent.",
       sub: "Nous trouvons le travail répétitif dans votre entreprise et nous l'automatisons : relance des leads, appels manqués, avis Google, paperasse, et tout le reste.",
-      small: "LabergeTech. Bâti par Michael Laberge, Montréal.",
-      cta1: "Obtenir un audit gratuit",
-      cta2: "Voir ce que nous bâtissons"
+      cta1: "Obtenir un audit gratuit"
     },
     services: { title: "Ce que nous bâtissons" },
     how: {
@@ -493,7 +481,6 @@ const COPY = {
       focusHint: "Sélectionnez tout ce qui s'applique.",
       context: "Dites-nous en un peu plus (optionnel)",
       contextHint: "Qu'aimeriez-vous automatiser?",
-      replyNote: "Aucune approche de vente. Nous vous répondons en moins d'un jour ouvrable.",
       picks: [
         { id: "Missed calls", label: "Appels manqués" },
         { id: "Lead follow-up", label: "Suivi des leads" },
