@@ -50,7 +50,59 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
    column; auto-fit cannot express an uneven split, hence the explicit query.
    The name/email/phone row is three columns rather than auto-fit, which was
    only fitting two and orphaning the phone field onto a line of its own. */
-.contact-grid { max-width: 760px; }
+/* Contact. Two panels split by a full-height rule: the form on the right is
+   the thing to fill in, the direct lines on the left are the alternative to
+   filling anything in. Small screens get the form only; the phone and email
+   are already in the footer, and repeating them here would just push the
+   form further down. */
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: clamp(32px, 4vw, 44px); align-items: start; }
+.contact-grid form { max-width: 760px; }
+.contact-lines { display: none; }
+
+@media (min-width: 900px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: 0;
+    align-items: stretch;   /* so the divider runs the full height of the row */
+  }
+  .contact-aside {
+    border-right: 2px solid var(--color-divider);
+    padding-right: clamp(36px, 4vw, 64px);
+  }
+  .contact-grid form { padding-left: clamp(36px, 4vw, 64px); }
+  .contact-lines { display: block; margin-top: clamp(30px, 5vh, 48px); }
+}
+
+.contact-lines {
+  background: var(--color-surface);
+  border: 2px solid var(--color-divider);
+  padding: clamp(16px, 1.8vw, 22px);
+}
+.contact-or {
+  margin: 0; font-family: var(--font-heading); font-weight: 800;
+  font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+.contact-lines a {
+  display: block; margin-top: 14px; padding-top: 14px;
+  border-top: 2px solid var(--color-divider);
+  text-decoration: none; color: var(--color-text);
+}
+.contact-lines .k {
+  display: block; margin-bottom: 3px; font-family: var(--font-heading); font-weight: 800;
+  font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+.contact-lines .v {
+  display: block; font-family: var(--font-heading); font-weight: 800;
+  font-size: clamp(15px, 1.15vw, 17px); letter-spacing: -0.02em; overflow-wrap: anywhere;
+}
+.contact-lines a:hover .v { color: var(--color-accent); }
+
+/* The card tracks are swiped, and the page-wide scrollbar styling would
+   otherwise park a 10px bar under each one. */
+.noscrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.noscrollbar::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none; }
 .contact-fields { display: grid; grid-template-columns: 1fr; column-gap: clamp(20px, 2vw, 34px); }
 @media (min-width: 560px) {
   .contact-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -128,7 +180,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
         <div ref="{{ headerRef }}" style="display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: clamp(16px, 2.5vh, 26px) clamp(20px, 5vw, 64px) clamp(14px, 2vh, 22px); max-width: 1680px; margin: 0 auto;">
           <h2 ref="{{ titleRef }}" style="font-size: clamp(38px, 9vw, 95px); line-height: 1.02; letter-spacing: -0.035em; margin: 0;">{{ t.services.title }}</h2>
         </div>
-        <div ref="{{ trackRef }}" style="display: flex; gap: clamp(14px, 1.4vw, 26px); padding: 0 clamp(20px, 5vw, 64px); will-change: transform;">
+        <div ref="{{ trackRef }}" class="noscrollbar" style="display: flex; gap: clamp(14px, 1.4vw, 26px); padding: 0 clamp(20px, 5vw, 64px); will-change: transform;">
           <sc-for list="{{ services }}" as="s" hint-placeholder-count="3">
             <article style="border: 2px solid var(--color-divider); background: var(--color-surface); padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 20px;">
               <div style="display: flex; align-items: baseline; gap: 14px;">
@@ -163,7 +215,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
 
     <section id="work" aria-label="Work" style="border-top: 2px solid var(--color-divider); padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
       <h2 data-reveal="1" style="font-size: clamp(28px, 3.6vw, 52px); letter-spacing: -0.03em; margin: 0 0 clamp(32px, 5vh, 56px); max-width: 26ch;">{{ t.work.title }}</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: clamp(24px, 2.6vw, 44px);">
+      <div class="noscrollbar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: clamp(24px, 2.6vw, 44px);">
         <sc-for list="{{ cases }}" as="c" hint-placeholder-count="4">
           <article data-reveal="1" style="padding: 0; display: flex; flex-direction: column; gap: 14px;">
             <div style="height: 88px; display: flex; align-items: center;">
@@ -202,7 +254,20 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
       </div>
     </section><section id="contact" aria-label="Contact" style="padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
       <div class="contact-grid">
-        <h2 data-reveal="1" style="font-size: clamp(30px, 4.2vw, 62px); line-height: 1.03; letter-spacing: -0.035em; margin: 0 0 clamp(28px, 4vh, 44px); max-width: 15ch;">{{ t.contact.title }}</h2>
+        <div class="contact-aside">
+          <h2 data-reveal="1" style="font-size: clamp(30px, 4.2vw, 62px); line-height: 1.03; letter-spacing: -0.035em; margin: 0; max-width: 15ch;">{{ t.contact.title }}</h2>
+          <div class="contact-lines">
+            <p class="contact-or">{{ t.contact.orLabel }}</p>
+            <a href="tel:+14384017040">
+              <span class="k">{{ t.contact.callLabel }}</span>
+              <span class="v">(438) 401-7040</span>
+            </a>
+            <a href="mailto:michael@labergetech.com">
+              <span class="k">Email</span>
+              <span class="v">michael@labergetech.com</span>
+            </a>
+          </div>
+        </div>
 
         <form onSubmit="{{ submit }}" style="display: grid; gap: 0;">
           <div class="contact-fields">
@@ -298,7 +363,8 @@ const COPY = {
     contact: {
       title: "Losing time on repetitive work?",
       sub: "Tell us what's taking too much time, costing you leads, or getting done manually. We'll tell you whether we can automate it.",
-      callLabel: "Call Michael"
+      callLabel: "Call Michael",
+      orLabel: "Or reach me directly"
     },
     form: {
       name: "Name", email: "Email", phone: "Phone",
@@ -385,7 +451,8 @@ const COPY = {
     contact: {
       title: "Du temps perdu sur du travail répétitif?",
       sub: "Dites-nous ce qui prend trop de temps, ce qui vous coûte des leads, ou ce qui se fait encore à la main. Nous vous disons si nous pouvons l'automatiser.",
-      callLabel: "Appeler Michael"
+      callLabel: "Appeler Michael",
+      orLabel: "Ou joignez-moi directement"
     },
     form: {
       name: "Nom", email: "Courriel", phone: "Téléphone",
