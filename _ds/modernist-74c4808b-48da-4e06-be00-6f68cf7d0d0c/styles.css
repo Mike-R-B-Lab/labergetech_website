@@ -3,43 +3,43 @@
 
 :root {
   --color-bg: #ffffff;
-  --color-surface: #eef1f4;
-  --color-text: #111111;
-  --color-accent: #15509c;
-  --color-accent-2: #2f6db1;
-  --color-divider: color-mix(in srgb, #111111 40%, transparent);
+  --color-surface: #f4f5f7;
+  --color-text: #111418;
+  --color-accent: #1659c4;
+  --color-accent-2: #2e72d8;
+  --color-divider: color-mix(in srgb, #111418 40%, transparent);
 
-  /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
-     same step of any role matches the others in visual value. */
-  --color-neutral-100: #f5f6f8;
-  --color-neutral-200: #e6e9ed;
-  --color-neutral-300: #d2d7de;
-  --color-neutral-400: #b2b9c4;
-  --color-neutral-500: #8f97a5;
-  --color-neutral-600: #707886;
-  --color-neutral-700: #545b68;
-  --color-neutral-800: #383e49;
-  --color-neutral-900: #1d222b;
+  /* Ink & Signal - black text, one blue lifted ABOVE the black so it reads as
+     signal rather than a fourth dark value. */
+  --color-neutral-100: #f6f7f8;
+  --color-neutral-200: #eceef0;
+  --color-neutral-300: #dcdfe3;
+  --color-neutral-400: #bcc1c8;
+  --color-neutral-500: #989ea7;
+  --color-neutral-600: #767d86;
+  --color-neutral-700: #575e66;
+  --color-neutral-800: #3a4048;
+  --color-neutral-900: #1f242a;
 
-  --color-accent-100: #eaf1fb;
-  --color-accent-200: #cfe0f5;
-  --color-accent-300: #a3c4ea;
-  --color-accent-400: #5f95d6;
-  --color-accent-500: #2a6cbd;
-  --color-accent-600: #15509c;
-  --color-accent-700: #103d78;
-  --color-accent-800: #0d253d;
-  --color-accent-900: #081a2b;
+  --color-accent-100: #eaf1fd;
+  --color-accent-200: #d0e0fa;
+  --color-accent-300: #a6c5f3;
+  --color-accent-400: #6b9de9;
+  --color-accent-500: #2e72d8;
+  --color-accent-600: #1250b0;
+  --color-accent-700: #0f4194;
+  --color-accent-800: #0c3273;
+  --color-accent-900: #0a2454;
 
-  --color-accent-2-100: #eaf3fb;
-  --color-accent-2-200: #d3e6f6;
-  --color-accent-2-300: #aecfec;
-  --color-accent-2-400: #74a9dc;
-  --color-accent-2-500: #2f6db1;
-  --color-accent-2-600: #235690;
-  --color-accent-2-700: #1a4270;
-  --color-accent-2-800: #123055;
-  --color-accent-2-900: #0d253d;
+  --color-accent-2-100: #eaf1fd;
+  --color-accent-2-200: #d5e3fa;
+  --color-accent-2-300: #b0cbf2;
+  --color-accent-2-400: #7ba7e6;
+  --color-accent-2-500: #2e72d8;
+  --color-accent-2-600: #2a63bb;
+  --color-accent-2-700: #204c93;
+  --color-accent-2-800: #17376b;
+  --color-accent-2-900: #0f2447;
 
   --font-heading: "Archivo", system-ui, sans-serif;
   --font-heading-weight: 800;
