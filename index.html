@@ -50,28 +50,30 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
    column; auto-fit cannot express an uneven split, hence the explicit query.
    The name/email/phone row is three columns rather than auto-fit, which was
    only fitting two and orphaning the phone field onto a line of its own. */
-.contact-grid { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 4vw, 64px); align-items: start; }
+.contact-grid { max-width: 760px; }
 .contact-fields { display: grid; grid-template-columns: 1fr; column-gap: clamp(20px, 2vw, 34px); }
 @media (min-width: 560px) {
   .contact-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (min-width: 900px) {
-  .contact-grid { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); gap: clamp(48px, 5vw, 92px); }
-}
 
-/* Work delivered, stacked layout. Side by side, a rule above each stat reads
-   as part of that card. Once the cards stack, the same rule reads as a divider
-   BETWEEN companies, so the stat below it looks like it belongs to the next
-   one. Stacked, move the rule to between the cards instead. !important is
-   required because the section is styled inline; the single column is forced
-   so this breakpoint governs rather than wherever auto-fit happens to wrap. */
-@media (max-width: 600px) {
-  #work > div { grid-template-columns: 1fr !important; }
-  #work article > div:nth-of-type(2) {
-    border-top: 0 !important; padding-top: 0 !important; margin-top: 2px !important;
+/* Work delivered scrolls sideways below the services breakpoint rather than
+   stacking into a long column, matching the services track. The negative
+   margin cancels the section's own padding so cards can run to the screen
+   edge, and the padding puts the first and last card back on the text margin.
+   !important is needed because the grid is set inline. */
+@media (max-width: 899px) {
+  #work > div {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: clamp(20px, 5vw, 64px);
+    margin-inline: calc(-1 * clamp(20px, 5vw, 64px));
+    padding-inline: clamp(20px, 5vw, 64px);
+    -webkit-overflow-scrolling: touch;
   }
-  #work article:not(:last-of-type) {
-    border-bottom: 2px solid var(--color-divider) !important; padding-bottom: 24px !important;
+  #work article {
+    flex: 0 0 min(76vw, 320px);
+    scroll-snap-align: start;
   }
 }
 </style>
@@ -200,20 +202,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
       </div>
     </section><section id="contact" aria-label="Contact" style="padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
       <div class="contact-grid">
-        <div>
-          <h2 data-reveal="1" style="font-size: clamp(30px, 4.2vw, 62px); line-height: 1.03; letter-spacing: -0.035em; margin: 0 0 24px; max-width: 15ch;">{{ t.contact.title }}</h2>
-          <p style="margin: 0 0 32px; font-size: 17px; line-height: 1.6; max-width: 46ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">{{ t.contact.sub }}</p>
-          <div style="display: flex; flex-direction: column; gap: 0; border-top: 2px solid var(--color-divider);">
-            <a href="tel:+14384017040" style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 2px solid var(--color-divider); text-decoration: none; color: var(--color-text);">
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.contact.callLabel }}</span>
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: clamp(16px, 1.4vw, 20px); letter-spacing: -0.02em;">(438) 401-7040</span>
-            </a>
-            <a href="mailto:michael@labergetech.com" style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 2px solid var(--color-divider); text-decoration: none; color: var(--color-text);">
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">Email</span>
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: clamp(14px, 1.2vw, 18px); letter-spacing: -0.02em;">michael@labergetech.com</span>
-            </a>
-          </div>
-        </div>
+        <h2 data-reveal="1" style="font-size: clamp(30px, 4.2vw, 62px); line-height: 1.03; letter-spacing: -0.035em; margin: 0 0 clamp(28px, 4vh, 44px); max-width: 15ch;">{{ t.contact.title }}</h2>
 
         <form onSubmit="{{ submit }}" style="display: grid; gap: 0;">
           <div class="contact-fields">
@@ -270,8 +259,8 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
     <div style="max-width: 1680px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 20px 40px; font-size: 13px;">
       <span style="display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-weight: 800; letter-spacing: -0.02em; font-size: 15px;"><img src="assets/logo.png" alt="" width="20" height="20" style="display: block; border-radius: 4px;">LabergeTech</span>
       <span style="color: color-mix(in srgb, var(--color-text) 60%, transparent);">Montreal, Quebec</span>
-      <a href="tel:+14384017040" style="color: var(--color-text); text-decoration: none;">(438) 401-7040</a>
-      <a href="mailto:michael@labergetech.com" style="color: var(--color-text); text-decoration: none;">michael@labergetech.com</a>
+      <a href="tel:+14384017040" style="font-family: var(--font-heading); font-weight: 800; font-size: 16px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">(438) 401-7040</a>
+      <a href="mailto:michael@labergetech.com" style="font-family: var(--font-heading); font-weight: 800; font-size: 16px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">michael@labergetech.com</a>
       <span style="display: flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-weight: 800;">
         <button type="button" onClick="{{ setEn }}" style="background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: {{ enColor }};">EN</button>
         <span aria-hidden="true" style="opacity: .35;">/</span>
@@ -592,6 +581,8 @@ class Component extends DCLogic {
       tr.style.flexDirection = "row";
       tr.style.alignItems = "stretch";
       tr.style.flex = "0 0 auto";
+      tr.style.overflowX = "visible";
+      tr.style.scrollSnapType = "none";
       tr.style.marginTop = "clamp(16px, 4vh, 56px)";
       tr.style.paddingBottom = "clamp(24px, 5vh, 64px)";
       cards.forEach((c) => {
@@ -599,6 +590,7 @@ class Component extends DCLogic {
         c.style.flex = "0 0 auto";
         c.style.height = "auto";
         c.style.minHeight = "min(62vh, 560px)";
+        c.style.scrollSnapAlign = "none";
         c.style.marginBottom = "0";
       });
       tr.lastElementChild && (tr.lastElementChild.style.borderRight = "2px solid var(--color-divider)");
@@ -626,17 +618,25 @@ class Component extends DCLogic {
         li.style.padding = "6px 8px";
       });
       tr.querySelectorAll("ul").forEach((ul) => { ul.style.gap = "6px"; });
-      tr.style.flexDirection = "column";
+      // Small screens swipe through the cards sideways rather than stacking
+      // them. The scroll lives on the track itself, so the pinned-scroll math
+      // above stays desktop-only and the transform has to be cleared.
+      tr.style.flexDirection = "row";
       tr.style.alignItems = "stretch";
       tr.style.marginTop = "clamp(8px, 2vh, 20px)";
       tr.style.flex = "0 0 auto";
       tr.style.transform = "none";
+      tr.style.overflowX = "auto";
+      tr.style.scrollSnapType = "x mandatory";
+      tr.style.scrollPaddingLeft = "clamp(20px, 5vw, 64px)";
+      tr.style.WebkitOverflowScrolling = "touch";
       tr.style.paddingBottom = "clamp(18px, 2.5vh, 30px)";
       cards.forEach((c) => {
-        c.style.width = "100%";
+        c.style.width = "min(80vw, 340px)";
         c.style.flex = "0 0 auto";
         c.style.height = "auto";
         c.style.minHeight = "0";
+        c.style.scrollSnapAlign = "start";
         c.style.borderRight = "2px solid var(--color-divider)";
       });
     }
