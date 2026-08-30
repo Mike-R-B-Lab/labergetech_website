@@ -364,7 +364,7 @@ legend.fld-k { padding-top: 26px; }
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;web3formsKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;3ef2cfed-c4ba-419b-809b-9d7c21197e36&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact form&quot;},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fr&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en' | 'fr'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;autoDetectLanguage&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Language&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;web3formsKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;d06badaf-dfc3-492f-9301-ad174bb63fdb&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact form&quot;},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fr&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;'en' | 'fr'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;autoDetectLanguage&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Language&quot;}}">
 const COPY = {
   en: {
     nav: { services: "Services", work: "Work", about: "About", cta: "Free automation audit" },
@@ -792,7 +792,7 @@ class Component extends DCLogic {
       focus: picked.join(", "), message: g("message"),
       language: this.state.lang, _subject: subject, subject: subject
     };
-    const key = this.props.web3formsKey || "3ef2cfed-c4ba-419b-809b-9d7c21197e36";
+    const key = this.props.web3formsKey || "d06badaf-dfc3-492f-9301-ad174bb63fdb";
     const endpoint = key ? "https://api.web3forms.com/submit" : (this.props.formEndpoint || "");
     if (key) {
       data.access_key = key;
