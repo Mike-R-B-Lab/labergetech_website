@@ -61,7 +61,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
 
 @media (min-width: 900px) {
   .contact-grid {
-    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
     gap: 0;
     align-items: stretch;   /* so the divider runs the full height of the row */
   }
@@ -69,7 +69,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
     border-right: 2px solid var(--color-divider);
     padding-right: clamp(36px, 4vw, 64px);
   }
-  .contact-grid form { padding-left: clamp(36px, 4vw, 64px); }
+  .contact-grid form { padding-left: clamp(48px, 5.5vw, 92px); }
   .contact-lines { display: block; margin-top: clamp(30px, 5vh, 48px); }
 }
 
@@ -78,16 +78,12 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
   border: 2px solid var(--color-divider);
   padding: clamp(16px, 1.8vw, 22px);
 }
-.contact-or {
-  margin: 0; font-family: var(--font-heading); font-weight: 800;
-  font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
-}
 .contact-lines a {
   display: block; margin-top: 14px; padding-top: 14px;
   border-top: 2px solid var(--color-divider);
   text-decoration: none; color: var(--color-text);
 }
+.contact-lines a:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 .contact-lines .k {
   display: block; margin-bottom: 3px; font-family: var(--font-heading); font-weight: 800;
   font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
@@ -257,7 +253,6 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
         <div class="contact-aside">
           <h2 data-reveal="1" style="font-size: clamp(30px, 4.2vw, 62px); line-height: 1.03; letter-spacing: -0.035em; margin: 0; max-width: 15ch;">{{ t.contact.title }}</h2>
           <div class="contact-lines">
-            <p class="contact-or">{{ t.contact.orLabel }}</p>
             <a href="tel:+14384017040">
               <span class="k">{{ t.contact.callLabel }}</span>
               <span class="v">(438) 401-7040</span>
@@ -363,8 +358,7 @@ const COPY = {
     contact: {
       title: "Losing time on repetitive work?",
       sub: "Tell us what's taking too much time, costing you leads, or getting done manually. We'll tell you whether we can automate it.",
-      callLabel: "Call Michael",
-      orLabel: "Or reach me directly"
+      callLabel: "Phone"
     },
     form: {
       name: "Name", email: "Email", phone: "Phone",
@@ -385,7 +379,7 @@ const COPY = {
         { id: "Google reviews", label: "Google reviews" },
         { id: "Paperwork and data entry", label: "Paperwork and data entry" },
         { id: "Custom software", label: "Custom software" },
-        { id: "Not sure yet", label: "Not sure yet" }
+        { id: "Something else", label: "Something else" }
       ]
     },
     steps: [
@@ -451,8 +445,7 @@ const COPY = {
     contact: {
       title: "Du temps perdu sur du travail répétitif?",
       sub: "Dites-nous ce qui prend trop de temps, ce qui vous coûte des leads, ou ce qui se fait encore à la main. Nous vous disons si nous pouvons l'automatiser.",
-      callLabel: "Appeler Michael",
-      orLabel: "Ou joignez-moi directement"
+      callLabel: "Téléphone"
     },
     form: {
       name: "Nom", email: "Courriel", phone: "Téléphone",
@@ -468,7 +461,7 @@ const COPY = {
         { id: "Google reviews", label: "Avis Google" },
         { id: "Paperwork and data entry", label: "Paperasse et saisie" },
         { id: "Custom software", label: "Logiciel sur mesure" },
-        { id: "Not sure yet", label: "Je ne sais pas encore" }
+        { id: "Something else", label: "Autre besoin" }
       ],
       send: "Obtenir un audit gratuit",
       sending: "Envoi…",
