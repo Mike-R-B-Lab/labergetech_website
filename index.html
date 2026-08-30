@@ -46,6 +46,19 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
 .pick:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .pick { transition: none; } }
 
+/* Contact layout. The form is the taller, denser half, so it takes the wider
+   column; auto-fit cannot express an uneven split, hence the explicit query.
+   The name/email/phone row is three columns rather than auto-fit, which was
+   only fitting two and orphaning the phone field onto a line of its own. */
+.contact-grid { display: grid; grid-template-columns: 1fr; gap: clamp(36px, 4vw, 64px); align-items: start; }
+.contact-fields { display: grid; grid-template-columns: 1fr; column-gap: clamp(20px, 2vw, 34px); }
+@media (min-width: 560px) {
+  .contact-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  .contact-grid { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); gap: clamp(48px, 5vw, 92px); }
+}
+
 /* Work delivered, stacked layout. Side by side, a rule above each stat reads
    as part of that card. Once the cards stack, the same rule reads as a divider
    BETWEEN companies, so the stat below it looks like it belongs to the next
@@ -186,7 +199,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
         </div>
       </div>
     </section><section id="contact" aria-label="Contact" style="padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: clamp(40px, 6vw, 120px); align-items: start;">
+      <div class="contact-grid">
         <div>
           <h2 data-reveal="1" style="font-size: clamp(30px, 4.2vw, 62px); line-height: 1.03; letter-spacing: -0.035em; margin: 0 0 24px; max-width: 15ch;">{{ t.contact.title }}</h2>
           <p style="margin: 0 0 32px; font-size: 17px; line-height: 1.6; max-width: 46ch; color: color-mix(in srgb, var(--color-text) 78%, transparent);">{{ t.contact.sub }}</p>
@@ -203,7 +216,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
         </div>
 
         <form onSubmit="{{ submit }}" style="display: grid; gap: 0;">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr)); column-gap: clamp(24px, 3vw, 48px);">
+          <div class="contact-fields">
             <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
               <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.name }}</span>
               <input name="name" type="text" required="required" autoComplete="name" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
