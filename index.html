@@ -27,6 +27,37 @@ body { margin: 0; overflow-x: hidden; }
 ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-text) 25%, transparent); }
 input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--color-text) 35%, transparent); font-size: 14px; }
 
+/* Form fields. Underline-only inputs read as decoration rather than as
+   somewhere to type, so each field carries a surface fill with the rule kept
+   underneath it. Labels sit at 78% rather than 55% so they stay legible. */
+.fld { display: grid; gap: 6px; padding: 16px 0 0; }
+.fld-k {
+  font-family: var(--font-heading); font-weight: 800; font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase; padding: 0;
+  color: color-mix(in srgb, var(--color-text) 78%, transparent);
+}
+.fld-i {
+  width: 100%; font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  color: var(--color-text); caret-color: var(--color-accent);
+  background: var(--color-surface);
+  border: 0; border-bottom: 2px solid color-mix(in srgb, var(--color-text) 30%, transparent);
+  padding: 11px 12px; border-radius: 0;
+}
+.fld-i:hover { border-bottom-color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+.fld-i:focus { border-bottom-color: var(--color-accent); }
+textarea.fld-i { resize: vertical; }
+.fld-set { border: 0; margin: 0; min-width: 0; padding: 0; }
+legend.fld-k { padding-top: 26px; }
+.fld-hint {
+  margin: 6px 0 14px; font-size: 13px;
+  color: color-mix(in srgb, var(--color-text) 62%, transparent);
+}
+.reply-note { margin: 12px 0 0; }
+.pick-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.send-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 26px; }
+.send-btn { padding: 18px 28px; font-size: 16px; }
+.send-msg { font-size: 13px; color: var(--color-accent); }
+
 /* Contact form, "what do you need help with" chips. Real checkboxes so the
    values submit natively and the keyboard works; the input itself is taken
    out of the flow and the label carries the whole appearance. */
@@ -34,7 +65,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
   display: inline-flex; align-items: center; cursor: pointer;
   -webkit-user-select: none; user-select: none;
   font-family: var(--font-heading); font-weight: 800; font-size: 12.5px;
-  padding: 10px 14px; border: 2px solid var(--color-divider);
+  padding: 8px 13px; border: 1px solid color-mix(in srgb, var(--color-text) 32%, transparent);
   color: var(--color-text);
   transition: background .12s ease, border-color .12s ease, color .12s ease;
 }
@@ -66,20 +97,22 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
     align-items: stretch;   /* so the divider runs the full height of the row */
   }
   .contact-aside {
+    display: flex; flex-direction: column;
     border-right: 2px solid var(--color-divider);
     padding-right: clamp(36px, 4vw, 64px);
   }
+  .contact-lines { margin-top: auto; }
   .contact-grid form { padding-left: clamp(48px, 5.5vw, 92px); }
-  .contact-lines { display: block; margin-top: clamp(30px, 5vh, 48px); }
+  .contact-lines { display: block; }
 }
 
 .contact-lines {
   background: var(--color-surface);
-  border: 2px solid var(--color-divider);
-  padding: clamp(16px, 1.8vw, 22px);
+  border: 1px solid color-mix(in srgb, var(--color-text) 30%, transparent);
+  padding: clamp(13px, 1.5vw, 18px);
 }
 .contact-lines a {
-  display: block; margin-top: 14px; padding-top: 14px;
+  display: block; margin-top: 12px; padding-top: 12px;
   border-top: 2px solid var(--color-divider);
   text-decoration: none; color: var(--color-text);
 }
@@ -91,7 +124,7 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
 }
 .contact-lines .v {
   display: block; font-family: var(--font-heading); font-weight: 800;
-  font-size: clamp(15px, 1.15vw, 17px); letter-spacing: -0.02em; overflow-wrap: anywhere;
+  font-size: clamp(13.5px, 1vw, 15px); letter-spacing: -0.02em; overflow-wrap: anywhere;
 }
 .contact-lines a:hover .v { color: var(--color-accent); }
 
@@ -248,10 +281,10 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
           <p style="margin: 0; font-family: var(--font-heading); font-weight: 800; font-size: clamp(17px, 1.7vw, 22px); line-height: 1.4; letter-spacing: -0.02em; max-width: 26ch; border-top: 2px solid var(--color-divider); padding-top: 24px;">{{ t.about.punch }}</p>
         </div>
       </div>
-    </section><section id="contact" aria-label="Contact" style="padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
+    </section><section id="contact" aria-label="Contact" style="padding: clamp(40px, 6vh, 76px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
       <div class="contact-grid">
         <div class="contact-aside">
-          <h2 data-reveal="1" style="font-size: clamp(30px, 4.2vw, 62px); line-height: 1.03; letter-spacing: -0.035em; margin: 0; max-width: 15ch;">{{ t.contact.title }}</h2>
+          <h2 data-reveal="1" style="font-size: clamp(27px, 3.6vw, 53px); line-height: 1.05; letter-spacing: -0.035em; margin: 0; max-width: 15ch;">{{ t.contact.title }}</h2>
           <div class="contact-lines">
             <a href="tel:+14384017040">
               <span class="k">{{ t.contact.callLabel }}</span>
@@ -266,24 +299,24 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
 
         <form onSubmit="{{ submit }}" style="display: grid; gap: 0;">
           <div class="contact-fields">
-            <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.name }}</span>
-              <input name="name" type="text" required="required" autoComplete="name" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
+            <label class="fld">
+              <span class="fld-k">{{ t.form.name }}</span>
+              <input class="fld-i" name="name" type="text" required="required" autoComplete="name">
             </label>
-            <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.email }}</span>
-              <input name="email" type="email" required="required" autoComplete="email" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
+            <label class="fld">
+              <span class="fld-k">{{ t.form.email }}</span>
+              <input class="fld-i" name="email" type="email" required="required" autoComplete="email">
             </label>
-            <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-              <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.phone }}</span>
-              <input name="phone" type="tel" autoComplete="tel" style="width: 100%; border: 0; background: transparent; padding: 4px 0; font-family: var(--font-body); font-size: 15px; color: var(--color-text);">
+            <label class="fld">
+              <span class="fld-k">{{ t.form.phone }}</span>
+              <input class="fld-i" name="phone" type="tel" autoComplete="tel">
             </label>
           </div>
 
-          <fieldset style="border: 0; margin: 0; min-width: 0; padding: 0 0 20px; border-bottom: 2px solid var(--color-divider);">
-            <legend style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent); padding: 26px 0 0;">{{ t.form.focus }}</legend>
-            <p style="margin: 6px 0 14px; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.focusHint }}</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <fieldset class="fld-set">
+            <legend class="fld-k">{{ t.form.focus }}</legend>
+            <p class="fld-hint">{{ t.form.focusHint }}</p>
+            <div class="pick-row">
               <sc-for list="{{ picks }}" as="p" hint-placeholder-count="7">
                 <label class="pick">
                   <input type="checkbox" name="focus" value="{{ p.id }}">
@@ -293,23 +326,23 @@ input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--colo
             </div>
           </fieldset>
 
-          <label style="display: grid; gap: 4px; padding: 16px 0 12px; border-bottom: 2px solid var(--color-divider);">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.context }}</span>
-            <textarea name="message" rows="3" placeholder="{{ t.form.contextHint }}" style="width: 100%; border: 0; background: transparent; padding: 4px 0; resize: vertical; font-family: var(--font-body); font-size: 15px; line-height: 1.5; color: var(--color-text);"></textarea>
+          <label class="fld">
+            <span class="fld-k">{{ t.form.context }}</span>
+            <textarea class="fld-i" name="message" rows="3" placeholder="{{ t.form.contextHint }}"></textarea>
           </label>
 
           <input type="text" name="_honey" tabIndex="-1" autoComplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;">
 
-          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 22px;">
-            <button class="btn btn-primary" type="submit" style="padding: 15px 22px; font-size: 15px; opacity: {{ sendOpacity }}; cursor: {{ sendCursor }};">{{ sendLabel }}</button>
+          <div class="send-row">
+            <button class="btn btn-primary send-btn" type="submit" style="opacity: {{ sendOpacity }}; cursor: {{ sendCursor }};">{{ sendLabel }}</button>
             <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
-              <span style="font-size: 13px; color: var(--color-accent);">{{ sentMessage }}</span>
+              <span class="send-msg">{{ sentMessage }}</span>
             </sc-if>
             <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
-              <span style="font-size: 13px; color: var(--color-accent);">{{ t.form.error }}</span>
+              <span class="send-msg">{{ t.form.error }}</span>
             </sc-if>
           </div>
-          <p style="margin: 12px 0 0; font-size: 13px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">{{ t.form.replyNote }}</p>
+          <p class="fld-hint reply-note">{{ t.form.replyNote }}</p>
         </form>
       </div>
     </section>
@@ -362,23 +395,23 @@ const COPY = {
     },
     form: {
       name: "Name", email: "Email", phone: "Phone",
-      focus: "What do you need help with?",
-      focusHint: "Pick as many as apply.",
-      context: "Anything else? (optional)",
-      contextHint: "A sentence or two is plenty.",
-      replyNote: "We reply within one business day.",
-      send: "Get a free automation audit",
+      focus: "What's eating up your time?",
+      focusHint: "Select everything that applies.",
+      context: "Tell us a little more (optional)",
+      contextHint: "What would you like to automate?",
+      replyNote: "No sales pitch. We'll get back to you within 1 business day.",
+      send: "Get My Free Automation Audit",
       sending: "Sending…",
       error: "Something went wrong. Email us at michael@labergetech.com.",
       sentDirect: "Thanks. We'll reply within a day.",
       sent: "Opening your email. Send it and we'll reply within a day.",
       picks: [
-        { id: "Website", label: "Website" },
         { id: "Missed calls", label: "Missed calls" },
         { id: "Lead follow-up", label: "Lead follow-up" },
-        { id: "Google reviews", label: "Google reviews" },
-        { id: "Paperwork and data entry", label: "Paperwork and data entry" },
-        { id: "Custom software", label: "Custom software" },
+        { id: "Reviews", label: "Reviews" },
+        { id: "Data entry", label: "Data entry" },
+        { id: "Paperwork", label: "Paperwork" },
+        { id: "Website", label: "Website" },
         { id: "Something else", label: "Something else" }
       ]
     },
@@ -449,21 +482,21 @@ const COPY = {
     },
     form: {
       name: "Nom", email: "Courriel", phone: "Téléphone",
-      focus: "Avec quoi avez-vous besoin d'aide?",
-      focusHint: "Choisissez tout ce qui s'applique.",
-      context: "Autre chose? (optionnel)",
-      contextHint: "Une ou deux phrases suffisent.",
-      replyNote: "Nous répondons en moins d'un jour ouvrable.",
+      focus: "Qu'est-ce qui vous gruge du temps?",
+      focusHint: "Sélectionnez tout ce qui s'applique.",
+      context: "Dites-nous en un peu plus (optionnel)",
+      contextHint: "Qu'aimeriez-vous automatiser?",
+      replyNote: "Aucune approche de vente. Nous vous répondons en moins d'un jour ouvrable.",
       picks: [
-        { id: "Website", label: "Site web" },
         { id: "Missed calls", label: "Appels manqués" },
         { id: "Lead follow-up", label: "Suivi des leads" },
-        { id: "Google reviews", label: "Avis Google" },
-        { id: "Paperwork and data entry", label: "Paperasse et saisie" },
-        { id: "Custom software", label: "Logiciel sur mesure" },
+        { id: "Reviews", label: "Avis" },
+        { id: "Data entry", label: "Saisie de données" },
+        { id: "Paperwork", label: "Paperasse" },
+        { id: "Website", label: "Site web" },
         { id: "Something else", label: "Autre besoin" }
       ],
-      send: "Obtenir un audit gratuit",
+      send: "Obtenir mon audit gratuit",
       sending: "Envoi…",
       error: "Une erreur est survenue. Écrivez-nous à michael@labergetech.com.",
       sentDirect: "Merci. Nous répondons en moins d'une journée.",
