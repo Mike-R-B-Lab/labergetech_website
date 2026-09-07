@@ -120,9 +120,15 @@ figcaption {
   background: transparent; border: 1px solid transparent;
   padding: var(--space-2) calc(var(--space-3) * 1.2);
   border-radius: var(--radius-md);
+  /* Press feedback on pointer-down, not release: a scale reads as "I felt
+     that" in a way a flat colour swap doesn't. Kept fast and small so it
+     never fights the .12s colour transitions below. */
+  transition: transform .1s ease-out, background-color .12s ease-out, border-color .12s ease-out;
 }
 .btn svg { display: block; }
+.btn:active { transform: scale(0.97); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn:disabled:active { transform: none; }
 .btn-primary { background: var(--color-accent); color: var(--color-bg); }
 .btn-primary:hover { background: var(--color-accent-600); }
 .btn-primary:active { background: var(--color-accent-700); }

@@ -68,6 +68,14 @@ legend.fld-k { padding-top: 26px; }
 .send-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 26px; }
 .send-btn { padding: 18px 28px; font-size: 16px; }
 .send-msg { font-size: 13px; color: var(--color-accent); }
+.spin {
+  width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--color-bg) 35%, transparent);
+  border-top-color: var(--color-bg);
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spin { animation: none; opacity: .7; } }
 
 /* Contact form, "what do you need help with" chips. Real checkboxes so the
    values submit natively and the keyboard works; the input itself is taken
@@ -83,11 +91,23 @@ legend.fld-k { padding-top: 26px; }
 }
 .pick input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
 .pick:hover { border-color: var(--color-accent); }
+.pick:active { background: color-mix(in srgb, var(--color-text) 12%, transparent); }
 .pick:has(input:checked) {
   background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg);
 }
 .pick:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) { .pick { transition: none; } }
+@keyframes menuIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.mobile-menu-anim { animation: menuIn .18s cubic-bezier(.2,.7,.2,1) both; }
+
+/* .btn:active and .pick:active are small, non-parallax press cues and stay on
+   under reduced motion. What goes off: the scroll-tied reveal fade (data-reveal
+   sets these via inline style in reveal() below, so !important is required to
+   win over it) and the menu's enter animation. */
+@media (prefers-reduced-motion: reduce) {
+  .pick { transition: none; }
+  .mobile-menu-anim { animation: none; }
+  [data-reveal] { transition: none !important; opacity: 1 !important; transform: none !important; }
+}
 @media (min-width: 900px) {
   .pick { font-size: 13px; padding: 8px 11px; }
   .pick-row { gap: 6px; }
@@ -195,7 +215,7 @@ legend.fld-k { padding-top: 26px; }
       </nav>
     </div>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-      <nav id="mobile-menu" aria-label="Mobile" style="border-top: 2px solid var(--color-divider); padding: 6px clamp(20px, 5vw, 64px) 14px; display: flex; flex-direction: column;">
+      <nav id="mobile-menu" aria-label="Mobile" class="mobile-menu-anim" style="border-top: 2px solid var(--color-divider); padding: 6px clamp(20px, 5vw, 64px) 14px; display: flex; flex-direction: column;">
         <a href="#services" onClick="{{ closeMenu }}" style="padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent); font-family: var(--font-heading); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">{{ t.nav.services }}</a>
         <a href="#work" onClick="{{ closeMenu }}" style="padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent); font-family: var(--font-heading); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">{{ t.nav.work }}</a>
         <a href="#about" onClick="{{ closeMenu }}" style="padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent); font-family: var(--font-heading); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">{{ t.nav.about }}</a>
@@ -348,7 +368,7 @@ legend.fld-k { padding-top: 26px; }
           <input type="text" name="_honey" tabIndex="-1" autoComplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;">
 
           <div class="send-row">
-            <button class="btn btn-primary send-btn" type="submit" style="opacity: {{ sendOpacity }}; cursor: {{ sendCursor }};">{{ sendLabel }}</button>
+            <button class="btn btn-primary send-btn" type="submit" style="opacity: {{ sendOpacity }}; cursor: {{ sendCursor }};"><span class="spin" aria-hidden="true" style="display: {{ sendSpinDisplay }};"></span>{{ sendLabel }}</button>
             <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
               <span class="send-msg">{{ sentMessage }}</span>
             </sc-if>
@@ -580,6 +600,7 @@ class Component extends DCLogic {
     this.sectionRef = this.sectionRef || React.createRef();
     document.documentElement.lang = this.state.lang;
     this.mq = window.matchMedia("(min-width: 900px)");
+    this.reduceMotionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
     this.onResize = () => this.layout();
     this.onScroll = () => {
       if (this.raf) return;
@@ -652,7 +673,10 @@ class Component extends DCLogic {
     const tr = this.trackRef && this.trackRef.current;
     if (!sec || !pin || !tr) return;
     const cards = Array.prototype.slice.call(tr.children);
-    this.desktop = this.mq.matches;
+    // Reduced motion routes desktop into the same static/swipe layout mobile
+    // already uses, instead of the scroll-scrubbed pin. That layout is fully
+    // exercised code, not a new path grafted on for this one preference.
+    this.desktop = this.mq.matches && !this.reduceMotionMq.matches;
     const hdr = this.headerRef && this.headerRef.current;
     const sp = this.spacerRef && this.spacerRef.current;
     if (this.desktop) {
@@ -880,6 +904,7 @@ class Component extends DCLogic {
       error: !!this.state.error,
       sendLabel: this.state.sending ? t.form.sending : t.form.send,
       sendOpacity: this.state.sending ? "0.45" : "1",
+      sendSpinDisplay: this.state.sending ? "inline-block" : "none",
       sendCursor: this.state.sending ? "not-allowed" : "pointer",
       picks: t.form.picks,
       // The mailto fallback has not sent anything yet, the visitor still has to
