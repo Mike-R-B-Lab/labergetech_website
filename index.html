@@ -126,7 +126,7 @@ body {
 .btn-lg { padding: 17px 26px; font-size: 16px; }
 
 /* ── hero ───────────────────────────────────────────────────────────── */
-.hero { padding-block: clamp(64px, 11vh, 128px) clamp(64px, 11vh, 120px); }
+.hero { padding-block: clamp(64px, 11vh, 128px) clamp(36px, 5vh, 68px); }
 .hero h1 { margin: 0 0 30px; font-size: clamp(44px, 7.4vw, 94px); line-height: .97;
   letter-spacing: -.045em; font-weight: 800; max-width: 15ch; text-wrap: balance; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -136,7 +136,11 @@ body {
    it; vertical scroll turns the ring. Cards stay upright the whole way so
    nothing ends up mirrored or upside down.
    ───────────────────────────────────────────────────────────────────── */
-.stage { position: relative; }
+/* The ring is centred in the pinned viewport, which always leaves a band of
+   empty above it before the stage pins. Pulling the stage up lets the far
+   cards rise into that band, so the section starts showing under the hero
+   instead of after a blank screen. Once pinned the composition is unchanged. */
+.stage { position: relative; margin-top: clamp(-140px, -9vh, -40px); }
 .stage-pin { position: sticky; top: 0; height: 100dvh; overflow: hidden;
   display: grid; place-items: center; padding-top: 68px; }
 .stage-pin > .ring, .stage-pin > .ring-core { grid-area: 1 / 1; }
@@ -633,8 +637,8 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
     if (orbiting) {
       stage.classList.remove('is-deck');
       ring.classList.remove('is-swipe');
-      rx = Math.min(innerWidth * 0.345, 520);
-      ry = Math.min(innerHeight * 0.235, 190);
+      rx = Math.min(innerWidth * 0.345, 620);
+      ry = Math.min(innerHeight * 0.235, 265);
       // one full turn of the ring, with enough scroll that it never feels twitchy
       stage.style.height = (innerHeight + Math.round(innerHeight * 2.2)) + 'px';
       if (hint) hint.textContent = 'Keep scrolling';
