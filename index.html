@@ -197,8 +197,10 @@ body {
 /* The track scrolls inside the wrap. A negative-margin full bleed buys a few
    pixels of edge and costs a horizontal page overflow when the maths is off. */
 .clients { display: flex; gap: clamp(14px, 1.6vw, 22px); overflow-x: auto;
-  scroll-snap-type: x mandatory; scrollbar-width: none;
-  padding-block: 6px 10px; }
+  scroll-snap-type: x proximity; scrollbar-width: none;
+  margin-inline: calc(clamp(20px, 4vw, 48px) * -1);
+  padding-block: 6px 10px; padding-inline: clamp(20px, 4vw, 48px);
+  scroll-padding-inline: clamp(20px, 4vw, 48px); }
 .clients::-webkit-scrollbar { display: none; }
 .client { flex: 0 0 clamp(238px, 25vw, 290px); scroll-snap-align: start;
   display: flex; flex-direction: column; gap: 14px; padding: 22px;
@@ -313,11 +315,6 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
 
   /* both decks run to the screen edge, so a half-visible card reads as
      "there is more" instead of as a card clipped by the gutter */
-  /* the snapport has to start at the gutter too, or mandatory snapping
-     scrolls the padding straight back off and card one sits flush left */
-  .clients { margin-inline: calc(clamp(20px, 4vw, 48px) * -1);
-    padding-inline: clamp(20px, 4vw, 48px);
-    scroll-padding-inline: clamp(20px, 4vw, 48px); }
   .client { flex: 0 0 74vw; max-width: 272px; }
 
   .portrait { max-width: 100%; aspect-ratio: 1 / 1; }
@@ -417,10 +414,10 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
     <h2 class="reveal">Work delivered.</h2>
     <div class="clients" id="clients" role="region" aria-label="Past customers">
       <article class="client edge">
-        <span class="client-mark"><img src="assets/mark-elia.png" alt="&Eacute;lia M&eacute;dico Esth&eacute;tique" loading="lazy" decoding="async"></span>
-        <p class="name">&Eacute;lia M&eacute;dico Esth&eacute;tique</p>
-        <p class="fig">15 &rarr; 80</p>
-        <p class="unit">Google reviews &middot; in 2 months</p>
+        <span class="client-mark"><img src="assets/mark-apollo.png" alt="Apollo Scooters" loading="lazy" decoding="async"></span>
+        <p class="name">Apollo Scooters</p>
+        <p class="fig">600 &rarr; 15</p>
+        <p class="unit">Backorders</p>
       </article>
       <article class="client edge">
         <span class="client-mark"><img src="assets/mark-attorre.png" alt="Attorre &amp; Fils" loading="lazy" decoding="async"></span>
@@ -429,10 +426,10 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
         <p class="unit">Saved every week</p>
       </article>
       <article class="client edge">
-        <span class="client-mark"><img src="assets/mark-apollo.png" alt="Apollo Scooters" loading="lazy" decoding="async"></span>
-        <p class="name">Apollo Scooters</p>
-        <p class="fig">600 &rarr; 15</p>
-        <p class="unit">Backorders</p>
+        <span class="client-mark"><img src="assets/mark-elia.png" alt="&Eacute;lia M&eacute;dico Esth&eacute;tique" loading="lazy" decoding="async"></span>
+        <p class="name">&Eacute;lia M&eacute;dico Esth&eacute;tique</p>
+        <p class="fig">15 &rarr; 80</p>
+        <p class="unit">Google reviews &middot; in 2 months</p>
       </article>
       <article class="client edge">
         <span class="client-mark"><img src="assets/mark-mentors.png" alt="Mentors &Eacute;ducation" loading="lazy" decoding="async"></span>
