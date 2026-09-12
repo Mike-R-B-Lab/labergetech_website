@@ -216,6 +216,14 @@ body {
   letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 .client .unit { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: .1em;
   text-transform: uppercase; color: var(--accent); }
+/* Four 290px cards want 1226px and the container is 1144px at every desktop
+   width, so the fourth was always clipped until you scrolled. Wide screens
+   get all four laid out to fit instead of a track that never rests right. */
+@media (min-width: 1040px) {
+  .clients { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible; margin-inline: 0; padding-inline: 0; }
+  .client { flex: none; }
+}
 
 /* ── who you work with ─────────────────────────────────────────────── */
 .about { padding-block: clamp(20px, 3vh, 40px) clamp(56px, 9vh, 100px); }
