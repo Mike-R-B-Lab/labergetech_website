@@ -49,7 +49,7 @@
   --shadow-card: 0 1px 1px rgba(17,20,24,.04), 0 8px 18px -6px rgba(17,20,24,.10), 0 28px 56px -20px rgba(17,20,24,.16);
   --shadow-lift: 0 2px 2px rgba(17,20,24,.05), 0 16px 30px -8px rgba(17,20,24,.14), 0 48px 84px -28px rgba(17,20,24,.22);
 
-  --r-container: 22px;
+  --r-container: 26px;
   --r-control: 12px;
   --ease: cubic-bezier(.16, 1, .3, 1);
 }
@@ -138,7 +138,7 @@ body {
    ───────────────────────────────────────────────────────────────────── */
 .stage { position: relative; }
 .stage-pin { position: sticky; top: 0; height: 100dvh; overflow: hidden;
-  display: grid; place-items: center; }
+  display: grid; place-items: center; padding-top: 68px; }
 .stage-pin > .ring, .stage-pin > .ring-core { grid-area: 1 / 1; }
 
 .ring { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
@@ -148,6 +148,7 @@ body {
   letter-spacing: -.045em; font-weight: 800; }
 
 .card { width: clamp(300px, 29vw, 424px); position: absolute; left: 50%; top: 50%;
+  min-height: clamp(168px, 24vh, 200px);
   display: flex; flex-direction: column; gap: 14px;
   padding: 30px 32px; border-radius: var(--r-container);
   background: var(--glass); border: 0; text-decoration: none; color: inherit;
@@ -156,7 +157,7 @@ body {
   will-change: transform, opacity; }
 .card h3 { margin: 0; font-size: 27px; line-height: 1.1; letter-spacing: -.032em;
   font-weight: 800; max-width: 14ch; }
-.card .flow { margin: 0; padding-top: 16px; border-top: 1px solid var(--glass-line);
+.card .flow { margin: 0; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--glass-line);
   font-size: 14.5px; line-height: 1.5; font-weight: 600; color: var(--accent); }
 .card .go { position: absolute; top: 22px; right: 22px; color: var(--ink-30);
   transition: color .2s var(--ease), transform .2s var(--ease); }
@@ -178,9 +179,6 @@ body {
 .ring.is-swipe::-webkit-scrollbar { display: none; }
 .ring.is-swipe .card { position: static; flex: 0 0 min(82vw, 340px); scroll-snap-align: center;
   transform: none !important; opacity: 1 !important; }
-/* stretched cards read as a row only if their rules line up, so the flow
-   line is pushed to the bottom of whichever card is tallest */
-.ring.is-swipe .card .flow { margin-top: auto; }
 
 .ring-foot { position: absolute; left: 0; right: 0; bottom: clamp(22px, 4vh, 40px); z-index: 50;
   display: flex; align-items: center; gap: 10px; padding: 0 clamp(20px, 4vw, 48px); }
@@ -636,7 +634,7 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
       stage.classList.remove('is-deck');
       ring.classList.remove('is-swipe');
       rx = Math.min(innerWidth * 0.345, 520);
-      ry = Math.min(innerHeight * 0.22, 172);
+      ry = Math.min(innerHeight * 0.235, 190);
       // one full turn of the ring, with enough scroll that it never feels twitchy
       stage.style.height = (innerHeight + Math.round(innerHeight * 2.2)) + 'px';
       if (hint) hint.textContent = 'Keep scrolling';
