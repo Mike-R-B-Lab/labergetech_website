@@ -103,7 +103,16 @@ body {
 .nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
 .nav-links a { font-size: 14px; color: var(--ink-70); text-decoration: none; transition: color .18s var(--ease); }
 .nav-links a:hover { color: var(--ink); }
-@media (max-width: 760px) { .nav-links { display: none; } }
+.nav .btn .sm { display: none; }
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .nav-in { height: 60px; gap: 12px; }
+  .brand { font-size: 15px; }
+  .brand-mark { width: 26px; height: 26px; }
+  .nav .btn { padding: 10px 15px; font-size: 13px; }
+  .nav .btn .lg { display: none; }
+  .nav .btn .sm { display: inline; }
+}
 
 /* ── buttons ────────────────────────────────────────────────────────── */
 .btn { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 600;
@@ -121,7 +130,7 @@ body {
 .btn-lg { padding: 17px 26px; font-size: 16px; }
 
 /* ── hero ───────────────────────────────────────────────────────────── */
-.hero { padding: clamp(64px, 11vh, 128px) 0 clamp(64px, 11vh, 120px); }
+.hero { padding-block: clamp(64px, 11vh, 128px) clamp(64px, 11vh, 120px); }
 .hero h1 { margin: 0 0 30px; font-size: clamp(44px, 7.4vw, 94px); line-height: .97;
   letter-spacing: -.045em; font-weight: 800; max-width: 15ch; text-wrap: balance; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -132,8 +141,9 @@ body {
    nothing ends up mirrored or upside down.
    ───────────────────────────────────────────────────────────────────── */
 .stage { position: relative; }
-.stage-pin { position: sticky; top: 0; height: 100vh; overflow: hidden;
+.stage-pin { position: sticky; top: 0; height: 100dvh; overflow: hidden;
   display: grid; place-items: center; }
+.stage-pin > .ring, .stage-pin > .ring-core { grid-area: 1 / 1; }
 
 .ring { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
 .ring-core { position: relative; z-index: 45; text-align: center; pointer-events: none;
@@ -157,14 +167,24 @@ body {
 .card:hover .go { color: var(--accent); transform: translate(2px, -2px); }
 
 /* small screens and reduced motion get a plain swipe deck instead */
-.ring.is-swipe { display: flex; align-items: center; gap: 16px; overflow-x: auto;
+.stage.is-deck .stage-pin { position: static; height: auto; overflow: visible; display: block;
+  place-items: normal; padding-block: clamp(46px, 8vh, 88px) clamp(34px, 5vh, 56px); }
+.stage.is-deck .ring-core { text-align: left; pointer-events: auto; padding: 0;
+  margin: 0 0 clamp(20px, 3.4vh, 30px); }
+.stage.is-deck .ring-core h2 { font-size: clamp(28px, 7.6vw, 46px); letter-spacing: -.042em; }
+.stage.is-deck .ring-foot { position: static; padding: clamp(16px, 2.6vh, 24px) 0 0; }
+.stage.is-deck .ring-core, .stage.is-deck .ring-foot { margin-inline: clamp(20px, 4vw, 48px); }
+
+.ring.is-swipe { display: flex; align-items: stretch; gap: 14px; overflow-x: auto;
+  width: 100%; min-width: 0; max-width: 100%; height: auto; place-items: initial;
   scroll-snap-type: x mandatory; scrollbar-width: none;
-  padding: 0 clamp(20px, 5vw, 48px); place-items: initial; }
+  padding: 4px clamp(20px, 4vw, 48px) 14px; }
 .ring.is-swipe::-webkit-scrollbar { display: none; }
-.ring.is-swipe .card { position: static; flex: 0 0 min(84vw, 340px); scroll-snap-align: center;
+.ring.is-swipe .card { position: static; flex: 0 0 min(82vw, 340px); scroll-snap-align: center;
   transform: none !important; opacity: 1 !important; }
-.ring.is-swipe .ring-core { position: static; flex: 0 0 auto; text-align: left;
-  padding-right: 8px; margin-right: 4px; }
+/* stretched cards read as a row only if their rules line up, so the flow
+   line is pushed to the bottom of whichever card is tallest */
+.ring.is-swipe .card .flow { margin-top: auto; }
 
 .ring-foot { position: absolute; left: 0; right: 0; bottom: clamp(22px, 4vh, 40px); z-index: 50;
   display: flex; align-items: center; gap: 10px; padding: 0 clamp(20px, 4vw, 48px); }
@@ -175,7 +195,7 @@ body {
 .hint { margin-left: auto; font-size: 12.5px; color: var(--ink-55); }
 
 /* ── work delivered, a deck of the real clients ─────────────────────── */
-.work { padding: clamp(64px, 10vh, 116px) 0 clamp(56px, 9vh, 100px); }
+.work { padding-block: clamp(64px, 10vh, 116px) clamp(56px, 9vh, 100px); }
 .work h2 { margin: 0 0 clamp(24px, 4vh, 40px); font-size: clamp(28px, 3.6vw, 46px);
   letter-spacing: -.042em; font-weight: 800; }
 /* The track scrolls inside the wrap. A negative-margin full bleed buys a few
@@ -200,7 +220,7 @@ body {
   text-transform: uppercase; color: var(--accent); }
 
 /* ── who you work with ─────────────────────────────────────────────── */
-.about { padding: clamp(20px, 3vh, 40px) 0 clamp(56px, 9vh, 100px); }
+.about { padding-block: clamp(20px, 3vh, 40px) clamp(56px, 9vh, 100px); }
 .about-grid { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 60px); align-items: start; }
 @media (min-width: 900px) {
   .about-grid { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; }
@@ -218,12 +238,12 @@ body {
   letter-spacing: -.03em; color: var(--ink); max-width: 21ch; }
 
 /* ── contact ────────────────────────────────────────────────────────── */
-.contact { padding: clamp(48px, 7vh, 80px) 0 clamp(64px, 10vh, 108px); }
+.contact { padding-block: clamp(48px, 7vh, 80px) clamp(64px, 10vh, 108px); }
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: clamp(32px, 4vw, 44px); align-items: start; }
 .contact-grid form { max-width: 900px; }
 .contact h2 { margin: 0; font-size: clamp(28px, 3.8vw, 50px); line-height: 1.03;
   letter-spacing: -.042em; font-weight: 800; max-width: 15ch; }
-.lines { display: none; background: var(--surface); border-radius: var(--r-control);
+.lines { display: block; margin-top: 24px; background: var(--surface); border-radius: var(--r-control);
   border: 1px solid var(--line); padding: 16px 18px; }
 .lines a { display: block; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--line);
   text-decoration: none; color: var(--ink); }
@@ -279,6 +299,42 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
 .foot a:hover { color: var(--accent); }
 .foot .muted { color: var(--ink-55); font-size: 13px; }
 
+/* ── phone ──────────────────────────────────────────────────────────── */
+@media (max-width: 620px) {
+  .hero { padding-block: clamp(36px, 6vh, 60px) clamp(40px, 7vh, 64px); }
+  .hero h1 { font-size: clamp(36px, 10.4vw, 52px); max-width: 100%; margin-bottom: 26px; }
+  .hero-actions { gap: 10px; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+
+  .card { padding: 24px 24px 26px; }
+  .card h3 { font-size: 24px; }
+  .card .flow { font-size: 14px; }
+  .card .go { top: 18px; right: 18px; }
+
+  .work { padding-block: 44px 40px; }
+  .about { padding-block: 4px 44px; }
+  .contact { padding-block: 36px 52px; }
+
+  /* both decks run to the screen edge, so a half-visible card reads as
+     "there is more" instead of as a card clipped by the gutter */
+  /* the snapport has to start at the gutter too, or mandatory snapping
+     scrolls the padding straight back off and card one sits flush left */
+  .clients { margin-inline: calc(clamp(20px, 4vw, 48px) * -1);
+    padding-inline: clamp(20px, 4vw, 48px);
+    scroll-padding-inline: clamp(20px, 4vw, 48px); }
+  .client { flex: 0 0 74vw; max-width: 272px; }
+
+  .portrait { max-width: 100%; aspect-ratio: 1 / 1; }
+
+  /* 16px or iOS zooms the whole page the moment a field takes focus */
+  .fld-i { font-size: 16px; padding: 13px 12px; }
+  .pick { font-size: 13px; padding: 10px 14px; }
+  .send-row .btn { width: 100%; justify-content: center; }
+
+  .foot-in { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .foot .brand { margin-right: 0; }
+}
+
 /* ── one authored entrance ──────────────────────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
   .reveal { opacity: 0; transform: translateY(14px); }
@@ -303,7 +359,7 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn btn-primary" href="#contact">Get a free automation audit</a>
+    <a class="btn btn-primary" href="#contact"><span class="lg">Get a free automation audit</span><span class="sm">Free audit</span></a>
   </div>
 </header>
 
@@ -317,11 +373,11 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
     </div>
   </section>
 
-  <section class="stage" id="build">
+  <section class="stage is-deck" id="build">
     <div class="stage-pin">
-      <div class="ring" id="ring" role="region" aria-label="What we build">
+      <div class="ring-core"><h2>What we build</h2></div>
 
-        <div class="ring-core"><h2>What we build</h2></div>
+      <div class="ring is-swipe" id="ring" role="region" aria-label="What we build">
 
         <a class="card edge" href="#contact"><svg class="go" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4.2M9 3v4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <h3>Speed-to-lead</h3>
@@ -357,7 +413,7 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
 
       <div class="ring-foot">
         <div class="dots" id="dots"></div>
-        <span class="hint" id="hint">Keep scrolling</span>
+        <span class="hint" id="hint">Swipe</span>
       </div>
     </div>
   </section>
@@ -568,11 +624,16 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
   var dots = [].slice.call(dotsBox.children);
 
   function useOrbit() { return !reduced && matchMedia('(min-width: 900px)').matches; }
+  // a touch screen never fires pointermove, so outside the orbit there is
+  // nothing on this page left to animate and the loop is pure battery
+  function hoverable() { return matchMedia('(hover: hover) and (pointer: fine)').matches; }
+  function needsLoop() { return orbiting || hoverable(); }
 
   function layout() {
     sizeField();
     orbiting = useOrbit();
     if (orbiting) {
+      stage.classList.remove('is-deck');
       ring.classList.remove('is-swipe');
       rx = Math.min(innerWidth * 0.345, 520);
       ry = Math.min(innerHeight * 0.22, 172);
@@ -580,12 +641,14 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
       stage.style.height = (innerHeight + Math.round(innerHeight * 2.2)) + 'px';
       if (hint) hint.textContent = 'Keep scrolling';
     } else {
+      stage.classList.add('is-deck');
       ring.classList.add('is-swipe');
       stage.style.height = '';
       cards.forEach(function (c) { c.style.transform = ''; c.style.opacity = ''; c.style.zIndex = ''; });
       if (hint) hint.textContent = 'Swipe';
     }
     place();
+    if (needsLoop()) start(); else { stop(); drawField(); }
   }
 
   function progress() {
@@ -636,18 +699,20 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
      visible and stops when it is not, so nothing burns in a background
      tab. No scroll handler anywhere. */
   function frame() { drawField(); place(); raf = requestAnimationFrame(frame); }
-  function start() { if (!raf) frame(); }
+  function start() { if (!raf && needsLoop()) frame(); }
   function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
 
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) stop(); else start();
+    if (document.hidden) stop(); else if (needsLoop()) start(); else drawField();
   });
   ring.addEventListener('scroll', place, { passive: true });
   addEventListener('resize', layout);
 
   // Tie the backing store to the canvas's own box, so a scrollbar appearing
   // or disappearing can never leave the field stretched.
-  if ('ResizeObserver' in window) new ResizeObserver(sizeField).observe(cv);
+  if ('ResizeObserver' in window) new ResizeObserver(function () {
+    sizeField(); if (!raf) drawField();
+  }).observe(cv);
 
   layout();
   start();
