@@ -127,9 +127,55 @@ body {
 
 /* ── hero ───────────────────────────────────────────────────────────── */
 .hero { padding-block: clamp(64px, 11vh, 128px) clamp(36px, 5vh, 68px); }
+.hero-grid { display: grid; grid-template-columns: 1fr; align-items: center;
+  gap: clamp(34px, 5vh, 54px); }
 .hero h1 { margin: 0 0 30px; font-size: clamp(44px, 7.4vw, 94px); line-height: .97;
   letter-spacing: -.045em; font-weight: 800; max-width: 15ch; text-wrap: balance; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (min-width: 1040px) {
+  .hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    gap: clamp(40px, 5vw, 80px); }
+  .hero h1 { font-size: clamp(40px, 4.1vw, 64px); max-width: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   The ledger. A week of repetitive work on the left of each row, the single
+   automated run that replaces it on the right. No invented figures: the one
+   number here is the result already published for Attorre & Fils further
+   down the page.
+   ───────────────────────────────────────────────────────────────────── */
+.ledger { margin: 0; padding: clamp(24px, 2.4vw, 32px); border-radius: var(--r-container);
+  background: var(--glass); backdrop-filter: blur(20px) saturate(1.55);
+  -webkit-backdrop-filter: blur(20px) saturate(1.55);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.9); }
+.ledger-cap { margin: 0 0 18px; font-size: 11px; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-55); }
+.row { display: grid; grid-template-columns: 32px minmax(0, 1fr) 44px;
+  align-items: center; gap: 12px; padding: 9px 0; }
+.day { font-size: 10.5px; font-weight: 800; letter-spacing: .08em; color: var(--ink-30); }
+.marks { display: flex; gap: 4px; min-width: 0; }
+.mark { flex: 1 1 0; min-width: 0; height: 10px; border-radius: 2px;
+  background: color-mix(in srgb, var(--ink) 26%, transparent); }
+.run { height: 10px; border-radius: 99px; background: var(--accent);
+  transform-origin: left center; }
+.ledger-out { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px;
+  margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--glass-line); }
+.ledger-out .fig { margin: 0; font-size: clamp(30px, 3vw, 40px); font-weight: 800;
+  letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.ledger-out .lab { margin: 0; font-size: 12.5px; font-weight: 800; letter-spacing: -.01em;
+  color: var(--ink-70); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .mark { transition: opacity .55s var(--ease), transform .55s var(--ease);
+    transition-delay: calc(var(--i) * 20ms); }
+  .ledger.in .mark { opacity: .5; }
+  .run { transform: scaleX(0);
+    transition: transform .6s var(--ease); transition-delay: calc(300ms + var(--r) * 80ms); }
+  .ledger.in .run { transform: scaleX(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark { opacity: .5; }
+}
 
 /* ─────────────────────────────────────────────────────────────────────────
    The orbit. The heading holds the centre and the six systems travel round
@@ -369,9 +415,26 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
 <main id="top">
 
   <section class="wrap hero">
-    <h1 class="reveal">We save you time and make you money.</h1>
-    <div class="hero-actions reveal">
-      <a class="btn btn-primary btn-lg" href="#contact">Get a free automation audit</a>
+    <div class="hero-grid">
+      <div>
+        <h1 class="reveal">We save you time and make you money.</h1>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary btn-lg" href="#contact">Get a free automation audit</a>
+        </div>
+      </div>
+      <figure class="ledger edge reveal" role="img"
+        aria-label="A week of repetitive tasks, each day replaced by a single automated run, returning 20 hours a week at Attorre and Fils.">
+        <p class="ledger-cap">Repetitive work, automated</p>
+          <div class="row"><span class="day">MON</span><span class="marks"><span class="mark" style="--i:0"></span><span class="mark" style="--i:1"></span><span class="mark" style="--i:2"></span><span class="mark" style="--i:3"></span><span class="mark" style="--i:4"></span><span class="mark" style="--i:5"></span><span class="mark" style="--i:6"></span><span class="mark" style="--i:7"></span><span class="mark" style="--i:8"></span><span class="mark" style="--i:9"></span><span class="mark" style="--i:10"></span><span class="mark" style="--i:11"></span><span class="mark" style="--i:12"></span><span class="mark" style="--i:13"></span><span class="mark" style="--i:14"></span><span class="mark" style="--i:15"></span><span class="mark" style="--i:16"></span><span class="mark" style="--i:17"></span><span class="mark" style="--i:18"></span><span class="mark" style="--i:19"></span><span class="mark" style="--i:20"></span><span class="mark" style="--i:21"></span><span class="mark" style="--i:22"></span><span class="mark" style="--i:23"></span></span><span class="run" style="--r:0"></span></div>
+          <div class="row"><span class="day">TUE</span><span class="marks"><span class="mark" style="--i:24"></span><span class="mark" style="--i:25"></span><span class="mark" style="--i:26"></span><span class="mark" style="--i:27"></span><span class="mark" style="--i:28"></span><span class="mark" style="--i:29"></span><span class="mark" style="--i:30"></span><span class="mark" style="--i:31"></span><span class="mark" style="--i:32"></span><span class="mark" style="--i:33"></span><span class="mark" style="--i:34"></span><span class="mark" style="--i:35"></span><span class="mark" style="--i:36"></span><span class="mark" style="--i:37"></span><span class="mark" style="--i:38"></span><span class="mark" style="--i:39"></span><span class="mark" style="--i:40"></span><span class="mark" style="--i:41"></span></span><span class="run" style="--r:1"></span></div>
+          <div class="row"><span class="day">WED</span><span class="marks"><span class="mark" style="--i:42"></span><span class="mark" style="--i:43"></span><span class="mark" style="--i:44"></span><span class="mark" style="--i:45"></span><span class="mark" style="--i:46"></span><span class="mark" style="--i:47"></span><span class="mark" style="--i:48"></span><span class="mark" style="--i:49"></span><span class="mark" style="--i:50"></span><span class="mark" style="--i:51"></span><span class="mark" style="--i:52"></span><span class="mark" style="--i:53"></span><span class="mark" style="--i:54"></span><span class="mark" style="--i:55"></span><span class="mark" style="--i:56"></span><span class="mark" style="--i:57"></span><span class="mark" style="--i:58"></span><span class="mark" style="--i:59"></span><span class="mark" style="--i:60"></span><span class="mark" style="--i:61"></span><span class="mark" style="--i:62"></span><span class="mark" style="--i:63"></span><span class="mark" style="--i:64"></span><span class="mark" style="--i:65"></span><span class="mark" style="--i:66"></span><span class="mark" style="--i:67"></span></span><span class="run" style="--r:2"></span></div>
+          <div class="row"><span class="day">THU</span><span class="marks"><span class="mark" style="--i:68"></span><span class="mark" style="--i:69"></span><span class="mark" style="--i:70"></span><span class="mark" style="--i:71"></span><span class="mark" style="--i:72"></span><span class="mark" style="--i:73"></span><span class="mark" style="--i:74"></span><span class="mark" style="--i:75"></span><span class="mark" style="--i:76"></span><span class="mark" style="--i:77"></span><span class="mark" style="--i:78"></span><span class="mark" style="--i:79"></span><span class="mark" style="--i:80"></span><span class="mark" style="--i:81"></span><span class="mark" style="--i:82"></span></span><span class="run" style="--r:3"></span></div>
+          <div class="row"><span class="day">FRI</span><span class="marks"><span class="mark" style="--i:83"></span><span class="mark" style="--i:84"></span><span class="mark" style="--i:85"></span><span class="mark" style="--i:86"></span><span class="mark" style="--i:87"></span><span class="mark" style="--i:88"></span><span class="mark" style="--i:89"></span><span class="mark" style="--i:90"></span><span class="mark" style="--i:91"></span><span class="mark" style="--i:92"></span><span class="mark" style="--i:93"></span><span class="mark" style="--i:94"></span><span class="mark" style="--i:95"></span><span class="mark" style="--i:96"></span><span class="mark" style="--i:97"></span><span class="mark" style="--i:98"></span><span class="mark" style="--i:99"></span><span class="mark" style="--i:100"></span><span class="mark" style="--i:101"></span><span class="mark" style="--i:102"></span><span class="mark" style="--i:103"></span></span><span class="run" style="--r:4"></span></div>
+        <div class="ledger-out">
+          <p class="fig">20 h</p>
+          <p class="lab">back every week at Attorre &amp; Fils</p>
+        </div>
+      </figure>
     </div>
   </section>
 
