@@ -1,925 +1,717 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
-<title>LabergeTech | Automatisation et systèmes IA</title>
-<meta name="description" content="Nous trouvons le travail répétitif dans votre entreprise et nous l'automatisons : relance des leads, appels manqués, avis Google, paperasse.">
-<meta property="og:title" content="LabergeTech | Automatisation et systèmes IA">
-<meta property="og:description" content="Nous trouvons le travail répétitif dans votre entreprise et nous l'automatisons : relance des leads, appels manqués, avis Google, paperasse.">
+<title>LabergeTech | Automation and AI systems</title>
+<meta name="description" content="We find the repetitive work in your business and automate it: lead follow-up, missed calls, Google reviews, paperwork.">
+<link rel="canonical" href="https://labergetech.com/">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<meta property="og:title" content="LabergeTech | Automation and AI systems">
+<meta property="og:description" content="We find the repetitive work in your business and automate it: lead follow-up, missed calls, Google reviews, paperwork.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LabergeTech">
 <meta property="og:url" content="https://labergetech.com/">
-<meta property="og:locale" content="fr_CA">
-<meta property="og:locale:alternate" content="en_CA">
+<meta property="og:locale" content="en_CA">
 <meta property="og:image" content="https://labergetech.com/assets/og.png">
 <meta property="og:image:secure_url" content="https://labergetech.com/assets/og.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="LabergeTech : automatisation, agents IA et systèmes logiciels.">
+<meta property="og:image:alt" content="LabergeTech: automation, AI agents and software systems.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="LabergeTech | Automatisation et systèmes IA">
-<meta name="twitter:description" content="Nous trouvons le travail répétitif dans votre entreprise et nous l'automatisons : relance des leads, appels manqués, avis Google, paperasse.">
+<meta name="twitter:title" content="LabergeTech | Automation and AI systems">
+<meta name="twitter:description" content="We find the repetitive work in your business and automate it: lead follow-up, missed calls, Google reviews, paperwork.">
 <meta name="twitter:image" content="https://labergetech.com/assets/og.png">
-<link rel="icon" type="image/png" href="assets/logo.png">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="_ds/modernist-74c4808b-48da-4e06-be00-6f68cf7d0d0c/styles.css">
-<script src="_ds/modernist-74c4808b-48da-4e06-be00-6f68cf7d0d0c/_ds_bundle.js"></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"LabergeTech","description":"Practical automation, AI agents and software systems for businesses.","founder":{"@type":"Person","name":"Michael Laberge","jobTitle":"Founder"},"address":{"@type":"PostalAddress","addressLocality":"Montreal","addressRegion":"QC","addressCountry":"CA"},"telephone":"+1-438-401-7040","email":"michael@labergetech.com","areaServed":"CA","availableLanguage":["en","fr"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"LabergeTech","description":"Practical automation, AI agents and software systems for businesses.","url":"https://labergetech.com/","founder":{"@type":"Person","name":"Michael Laberge","jobTitle":"Founder"},"address":{"@type":"PostalAddress","addressLocality":"Montreal","addressRegion":"QC","addressCountry":"CA"},"telephone":"+1-438-401-7040","email":"michael@labergetech.com","areaServed":"CA","availableLanguage":["en","fr"]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap">
 <style>
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
-body { margin: 0; overflow-x: hidden; }
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-text) 25%, transparent); }
-input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--color-text) 35%, transparent); font-size: 14px; }
+/* ─────────────────────────────────────────────────────────────────────────
+   Ink & Signal, unchanged. Additions are only the depths the glass needs.
+   ───────────────────────────────────────────────────────────────────── */
+:root {
+  --bg:       #ffffff;
+  --surface:  #f4f5f7;
+  --ink:      #111418;
+  --accent:   #1659c4;
+  --accent-2: #2e72d8;
 
-/* Form fields. Underline-only inputs read as decoration rather than as
-   somewhere to type, so each field carries a surface fill with the rule kept
-   underneath it. Labels sit at 78% rather than 55% so they stay legible. */
-.fld { display: grid; gap: 6px; padding: 16px 0 0; }
-.fld-k {
-  font-family: var(--font-heading); font-weight: 800; font-size: 11px;
-  letter-spacing: 0.12em; text-transform: uppercase; padding: 0;
-  color: color-mix(in srgb, var(--color-text) 78%, transparent);
-}
-.fld-i {
-  width: 100%; font-family: var(--font-body); font-size: 15px; line-height: 1.5;
-  color: var(--color-text); caret-color: var(--color-accent);
-  background: var(--color-surface);
-  border: 0; border-bottom: 2px solid color-mix(in srgb, var(--color-text) 30%, transparent);
-  padding: 11px 12px; border-radius: 0;
-}
-.fld-i:hover { border-bottom-color: color-mix(in srgb, var(--color-text) 55%, transparent); }
-.fld-i:focus { border-bottom-color: var(--color-accent); }
-textarea.fld-i { resize: vertical; }
-.fld-set { border: 0; margin: 0; min-width: 0; padding: 0; }
-legend.fld-k { padding-top: 26px; }
-.fld-hint {
-  margin: 6px 0 14px; font-size: 13px;
-  color: color-mix(in srgb, var(--color-text) 62%, transparent);
-}
-.pick-row { display: flex; flex-wrap: wrap; gap: 7px; }
-.send-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 26px; }
-.send-btn { padding: 18px 28px; font-size: 16px; }
-.send-msg { font-size: 13px; color: var(--color-accent); }
-.spin {
-  width: 14px; height: 14px; flex-shrink: 0; border-radius: 50%;
-  border: 2px solid color-mix(in srgb, var(--color-bg) 35%, transparent);
-  border-top-color: var(--color-bg);
-  animation: spin .7s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .spin { animation: none; opacity: .7; } }
+  --ink-70: color-mix(in srgb, var(--ink) 70%, transparent);
+  --ink-55: color-mix(in srgb, var(--ink) 55%, transparent);
+  --ink-30: color-mix(in srgb, var(--ink) 30%, transparent);
+  --line:   color-mix(in srgb, var(--ink) 12%, transparent);
 
-/* Contact form, "what do you need help with" chips. Real checkboxes so the
-   values submit natively and the keyboard works; the input itself is taken
-   out of the flow and the label carries the whole appearance. */
-.pick {
-  display: inline-flex; align-items: center; cursor: pointer;
-  -webkit-user-select: none; user-select: none;
-  font-family: var(--font-heading); font-weight: 800; font-size: 12.5px;
-  white-space: nowrap;
-  padding: 9px 13px; border: 1px solid color-mix(in srgb, var(--color-text) 32%, transparent);
-  color: var(--color-text);
-  transition: background .12s ease, border-color .12s ease, color .12s ease;
-}
-.pick input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
-.pick:hover { border-color: var(--color-accent); }
-.pick:active { background: color-mix(in srgb, var(--color-text) 12%, transparent); }
-.pick:has(input:checked) {
-  background: var(--color-accent); border-color: var(--color-accent); color: var(--color-bg);
-}
-.pick:has(input:focus-visible) { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-@keyframes menuIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-.mobile-menu-anim { animation: menuIn .18s cubic-bezier(.2,.7,.2,1) both; }
+  --glass: rgba(255, 255, 255, 0.76);
+  --glass-line: color-mix(in srgb, var(--ink) 8%, transparent);
 
-/* .btn:active and .pick:active are small, non-parallax press cues and stay on
-   under reduced motion. What goes off: the scroll-tied reveal fade (data-reveal
-   sets these via inline style in reveal() below, so !important is required to
-   win over it) and the menu's enter animation. */
-@media (prefers-reduced-motion: reduce) {
-  .pick { transition: none; }
-  .mobile-menu-anim { animation: none; }
-  [data-reveal] { transition: none !important; opacity: 1 !important; transform: none !important; }
+  --shadow-card: 0 1px 1px rgba(17,20,24,.04), 0 8px 18px -6px rgba(17,20,24,.10), 0 28px 56px -20px rgba(17,20,24,.16);
+  --shadow-lift: 0 2px 2px rgba(17,20,24,.05), 0 16px 30px -8px rgba(17,20,24,.14), 0 48px 84px -28px rgba(17,20,24,.22);
+
+  --r-container: 22px;
+  --r-control: 12px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
 }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Archivo", system-ui, sans-serif;
+  font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+}
+
+/* the reactive field sits behind the whole document */
+#field { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0;
+  display: block; pointer-events: none; }
+.nav, main, .foot { position: relative; z-index: 1; }
+
+::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--ink); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+* { scrollbar-width: thin; scrollbar-color: var(--ink-30) transparent; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ink-30); border: 3px solid var(--bg); border-radius: 99px; }
+
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+/* directional light edge, wherever glass meets the field */
+.edge { position: relative; }
+.edge::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  padding: 1px; pointer-events: none; z-index: 3;
+  background: linear-gradient(155deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.55) 26%,
+              rgba(255,255,255,.12) 52%, color-mix(in srgb, var(--ink) 9%, transparent) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* ── nav ────────────────────────────────────────────────────────────── */
+.nav { position: sticky; top: 0; z-index: 60;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px);
+  border-bottom: 1px solid var(--glass-line); }
+.nav-in { max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px);
+  height: 68px; display: flex; align-items: center; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto;
+  font-weight: 800; font-size: 17px; letter-spacing: -.025em; color: var(--ink); text-decoration: none; }
+.brand-mark { width: 30px; height: 30px; border-radius: 7px; flex: none; display: block; }
+.foot .brand-mark { width: 22px; height: 22px; border-radius: 5px; }
+.nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
+.nav-links a { font-size: 14px; color: var(--ink-70); text-decoration: none; transition: color .18s var(--ease); }
+.nav-links a:hover { color: var(--ink); }
+@media (max-width: 760px) { .nav-links { display: none; } }
+
+/* ── buttons ────────────────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 600;
+  font-size: 14px; letter-spacing: -.01em; padding: 12px 20px; border-radius: var(--r-control);
+  border: 1px solid transparent; cursor: pointer; text-decoration: none;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease); }
+.btn-primary { background: var(--accent); color: #fff;
+  box-shadow: 0 1px 1px rgba(17,20,24,.06), 0 6px 14px -4px color-mix(in srgb, var(--accent) 45%, transparent); }
+.btn-primary:hover { background: var(--accent-2); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-glass { background: var(--glass); color: var(--ink); border-color: transparent;
+  backdrop-filter: blur(14px) saturate(1.5); -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  box-shadow: var(--shadow-card); }
+.btn-glass:hover { transform: translateY(-1px); box-shadow: var(--shadow-lift); }
+.btn-lg { padding: 17px 26px; font-size: 16px; }
+
+/* ── hero ───────────────────────────────────────────────────────────── */
+.hero { padding: clamp(64px, 11vh, 128px) 0 clamp(64px, 11vh, 120px); }
+.hero h1 { margin: 0 0 30px; font-size: clamp(44px, 7.4vw, 94px); line-height: .97;
+  letter-spacing: -.045em; font-weight: 800; max-width: 15ch; text-wrap: balance; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   The orbit. The heading holds the centre and the six systems travel round
+   it; vertical scroll turns the ring. Cards stay upright the whole way so
+   nothing ends up mirrored or upside down.
+   ───────────────────────────────────────────────────────────────────── */
+.stage { position: relative; }
+.stage-pin { position: sticky; top: 0; height: 100vh; overflow: hidden;
+  display: grid; place-items: center; }
+
+.ring { position: relative; width: 100%; height: 100%; display: grid; place-items: center; }
+.ring-core { position: relative; z-index: 45; text-align: center; pointer-events: none;
+  padding: 20px 30px; border-radius: var(--r-container); }
+.ring-core h2 { margin: 0; font-size: clamp(30px, 4.4vw, 56px); line-height: 1;
+  letter-spacing: -.045em; font-weight: 800; }
+
+.card { width: clamp(300px, 29vw, 424px); position: absolute; left: 50%; top: 50%;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 30px 32px; border-radius: var(--r-container);
+  background: var(--glass); border: 0; text-decoration: none; color: inherit;
+  backdrop-filter: blur(20px) saturate(1.55); -webkit-backdrop-filter: blur(20px) saturate(1.55);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.9);
+  will-change: transform, opacity; }
+.card h3 { margin: 0; font-size: 27px; line-height: 1.1; letter-spacing: -.032em;
+  font-weight: 800; max-width: 14ch; }
+.card .flow { margin: 0; padding-top: 16px; border-top: 1px solid var(--glass-line);
+  font-size: 14.5px; line-height: 1.5; font-weight: 600; color: var(--accent); }
+.card .go { position: absolute; top: 22px; right: 22px; color: var(--ink-30);
+  transition: color .2s var(--ease), transform .2s var(--ease); }
+.card:hover .go { color: var(--accent); transform: translate(2px, -2px); }
+
+/* small screens and reduced motion get a plain swipe deck instead */
+.ring.is-swipe { display: flex; align-items: center; gap: 16px; overflow-x: auto;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding: 0 clamp(20px, 5vw, 48px); place-items: initial; }
+.ring.is-swipe::-webkit-scrollbar { display: none; }
+.ring.is-swipe .card { position: static; flex: 0 0 min(84vw, 340px); scroll-snap-align: center;
+  transform: none !important; opacity: 1 !important; }
+.ring.is-swipe .ring-core { position: static; flex: 0 0 auto; text-align: left;
+  padding-right: 8px; margin-right: 4px; }
+
+.ring-foot { position: absolute; left: 0; right: 0; bottom: clamp(22px, 4vh, 40px); z-index: 50;
+  display: flex; align-items: center; gap: 10px; padding: 0 clamp(20px, 4vw, 48px); }
+.dots { display: flex; gap: 7px; }
+.dot { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 99px; background: var(--ink-30);
+  cursor: pointer; transition: background .22s var(--ease), width .22s var(--ease); }
+.dot[aria-current="true"] { background: var(--accent); width: 22px; }
+.hint { margin-left: auto; font-size: 12.5px; color: var(--ink-55); }
+
+/* ── work delivered, a deck of the real clients ─────────────────────── */
+.work { padding: clamp(64px, 10vh, 116px) 0 clamp(56px, 9vh, 100px); }
+.work h2 { margin: 0 0 clamp(24px, 4vh, 40px); font-size: clamp(28px, 3.6vw, 46px);
+  letter-spacing: -.042em; font-weight: 800; }
+/* The track scrolls inside the wrap. A negative-margin full bleed buys a few
+   pixels of edge and costs a horizontal page overflow when the maths is off. */
+.clients { display: flex; gap: clamp(14px, 1.6vw, 22px); overflow-x: auto;
+  scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding-block: 6px 10px; }
+.clients::-webkit-scrollbar { display: none; }
+.client { flex: 0 0 clamp(238px, 25vw, 290px); scroll-snap-align: start;
+  display: flex; flex-direction: column; gap: 14px; padding: 22px;
+  border-radius: var(--r-container); background: var(--glass); border: 0; position: relative;
+  backdrop-filter: blur(18px) saturate(1.5); -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.9); }
+.client-mark { width: 56px; height: 56px; border-radius: 14px; overflow: hidden; flex: none;
+  background: #fff; display: grid; place-items: center; border: 1px solid var(--glass-line); }
+.client-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.client .name { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: .11em;
+  text-transform: uppercase; color: var(--ink-55); }
+.client .fig { margin: 0; font-size: clamp(30px, 3.2vw, 40px); font-weight: 800;
+  letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.client .unit { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent); }
+
+/* ── who you work with ─────────────────────────────────────────────── */
+.about { padding: clamp(20px, 3vh, 40px) 0 clamp(56px, 9vh, 100px); }
+.about-grid { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 60px); align-items: start; }
 @media (min-width: 900px) {
-  .pick { font-size: 13px; padding: 8px 11px; }
-  .pick-row { gap: 6px; }
+  .about-grid { grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; }
 }
+.portrait { position: relative; aspect-ratio: 4 / 5; max-width: 430px; overflow: hidden;
+  border-radius: var(--r-container); background: var(--surface); box-shadow: var(--shadow-card); }
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 15%; display: block; }
+.about h2 { margin: 0 0 24px; font-size: clamp(28px, 3.6vw, 46px); line-height: 1.02;
+  letter-spacing: -.042em; font-weight: 800; max-width: 12ch; }
+.about p { margin: 0 0 15px; font-size: 16px; line-height: 1.62;
+  color: color-mix(in srgb, var(--ink) 88%, transparent); max-width: 56ch; }
+.about .punch { margin: 28px 0 0; padding-top: 24px; border-top: 1px solid var(--line);
+  font-size: clamp(19px, 2vw, 23px); line-height: 1.25; font-weight: 800;
+  letter-spacing: -.03em; color: var(--ink); max-width: 21ch; }
 
-/* Contact layout. The form is the taller, denser half, so it takes the wider
-   column; auto-fit cannot express an uneven split, hence the explicit query.
-   The name/email/phone row is three columns rather than auto-fit, which was
-   only fitting two and orphaning the phone field onto a line of its own. */
-/* Contact. Two panels split by a full-height rule: the form on the right is
-   the thing to fill in, the direct lines on the left are the alternative to
-   filling anything in. Small screens get the form only; the phone and email
-   are already in the footer, and repeating them here would just push the
-   form further down. */
+/* ── contact ────────────────────────────────────────────────────────── */
+.contact { padding: clamp(48px, 7vh, 80px) 0 clamp(64px, 10vh, 108px); }
 .contact-grid { display: grid; grid-template-columns: 1fr; gap: clamp(32px, 4vw, 44px); align-items: start; }
 .contact-grid form { max-width: 900px; }
-.contact-lines { display: none; }
-
-@media (min-width: 900px) {
-  .contact-grid {
-    grid-template-columns: minmax(0, 0.54fr) minmax(0, 1.46fr);
-    gap: 0;
-    align-items: stretch;   /* so the divider runs the full height of the row */
-  }
-  .contact-aside {
-    display: flex; flex-direction: column;
-    border-right: 2px solid var(--color-divider);
-    padding-right: clamp(36px, 4vw, 64px);
-  }
-  .contact-lines { margin-top: clamp(26px, 4vh, 38px); }
-  .contact-grid form { padding-left: clamp(36px, 4.8vw, 88px); }
-  .contact-lines { display: block; }
+.contact h2 { margin: 0; font-size: clamp(28px, 3.8vw, 50px); line-height: 1.03;
+  letter-spacing: -.042em; font-weight: 800; max-width: 15ch; }
+.lines { display: none; background: var(--surface); border-radius: var(--r-control);
+  border: 1px solid var(--line); padding: 16px 18px; }
+.lines a { display: block; padding-top: 12px; margin-top: 12px; border-top: 1px solid var(--line);
+  text-decoration: none; color: var(--ink); }
+.lines a:first-child { padding-top: 0; margin-top: 0; border-top: 0; }
+.lines .k { display: block; margin-bottom: 3px; font-size: 11px; font-weight: 800;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-55); }
+.lines .v { display: block; font-size: 15px; font-weight: 800; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.lines a:hover .v { color: var(--accent); }
+@media (min-width: 1080px) {
+  .contact-grid { grid-template-columns: minmax(0, .56fr) minmax(0, 1.44fr); gap: 0; align-items: stretch; }
+  .contact-aside { display: flex; flex-direction: column; border-right: 1px solid var(--line);
+    padding-right: clamp(36px, 4vw, 64px); }
+  .contact-grid form { padding-left: clamp(36px, 4.8vw, 92px); }
+  .lines { display: block; margin-top: clamp(26px, 4vh, 38px); }
 }
 
-.contact-lines {
-  background: var(--color-surface);
-  border: 1px solid color-mix(in srgb, var(--color-text) 30%, transparent);
-  padding: clamp(13px, 1.5vw, 18px);
-}
-.contact-lines a {
-  display: block; margin-top: 12px; padding-top: 12px;
-  border-top: 2px solid var(--color-divider);
-  text-decoration: none; color: var(--color-text);
-}
-.contact-lines a:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
-.contact-lines .k {
-  display: block; margin-bottom: 3px; font-family: var(--font-heading); font-weight: 800;
-  font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-text) 55%, transparent);
-}
-.contact-lines .v {
-  display: block; font-family: var(--font-heading); font-weight: 800;
-  font-size: clamp(13.5px, 1vw, 15px); letter-spacing: -0.02em; overflow-wrap: anywhere;
-}
-.contact-lines a:hover .v { color: var(--color-accent); }
+.fields { display: grid; grid-template-columns: 1fr; column-gap: clamp(20px, 2vw, 34px); }
+@media (min-width: 560px) { .fields { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.fld { display: grid; gap: 6px; padding: 16px 0 0; }
+.fld-k { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 78%, transparent); padding: 0; }
+.ask { font-size: 15px; font-weight: 600; letter-spacing: -.01em;
+  color: color-mix(in srgb, var(--ink) 82%, transparent); text-transform: none; padding: 0; }
+legend.ask { padding-top: 28px; padding-bottom: 12px; }
+.fld-i { width: 100%; font: inherit; font-size: 15px; color: var(--ink); caret-color: var(--accent);
+  background: var(--surface); border: 0; border-bottom: 2px solid var(--ink-30);
+  padding: 11px 12px; border-radius: 0; }
+.fld-i:hover { border-bottom-color: var(--ink-55); }
+.fld-i:focus { border-bottom-color: var(--accent); }
+textarea.fld-i { resize: vertical; line-height: 1.5; }
+.fld-set { border: 0; margin: 0; min-width: 0; padding: 0; }
+.pick-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.pick { display: inline-flex; align-items: center; cursor: pointer; -webkit-user-select: none; user-select: none;
+  font-weight: 800; font-size: 12.5px; white-space: nowrap; padding: 9px 13px;
+  border: 1px solid color-mix(in srgb, var(--ink) 32%, transparent); border-radius: var(--r-control);
+  transition: background .12s var(--ease), border-color .12s var(--ease), color .12s var(--ease); }
+.pick input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.pick:hover { border-color: var(--accent); }
+.pick:has(input:checked) { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pick:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (min-width: 900px) { .pick { font-size: 11.5px; padding: 6px 10px; } .pick-row { gap: 6px; } }
+.send-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 26px; }
+.status { margin: 0; font-size: 14px; font-weight: 600; color: var(--ink-70); }
+.status.err { color: #b3261e; }
+.status a { color: inherit; }
+.btn[disabled] { opacity: .62; cursor: default; transform: none; }
 
-/* The card tracks are swiped, and the page-wide scrollbar styling would
-   otherwise park a 10px bar under each one. */
-.noscrollbar { scrollbar-width: none; -ms-overflow-style: none; }
-.noscrollbar::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none; }
-.contact-fields { display: grid; grid-template-columns: 1fr; column-gap: clamp(20px, 2vw, 34px); }
-@media (min-width: 560px) {
-  .contact-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
+/* ── footer ─────────────────────────────────────────────────────────── */
+.foot { border-top: 1px solid var(--line); padding: 26px 0 40px; }
+.foot-in { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 32px; }
+.foot .brand { margin-right: auto; font-size: 15px; }
+.foot a { color: var(--ink); text-decoration: none; font-weight: 800; font-size: 15px; letter-spacing: -.02em; }
+.foot a:hover { color: var(--accent); }
+.foot .muted { color: var(--ink-55); font-size: 13px; }
 
-/* Work delivered scrolls sideways below the services breakpoint rather than
-   stacking into a long column, matching the services track. The negative
-   margin cancels the section's own padding so cards can run to the screen
-   edge, and the padding puts the first and last card back on the text margin.
-   !important is needed because the grid is set inline. */
-@media (max-width: 899px) {
-  #work > div {
-    display: flex !important;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-left: clamp(20px, 5vw, 64px);
-    margin-inline: calc(-1 * clamp(20px, 5vw, 64px));
-    padding-inline: clamp(20px, 5vw, 64px);
-    -webkit-overflow-scrolling: touch;
-  }
-  #work article {
-    flex: 0 0 min(76vw, 320px);
-    scroll-snap-align: start;
-  }
+/* ── one authored entrance ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(14px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .7s var(--ease), transform .7s var(--ease); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pick, .btn, .card { transition: none; }
 }
 </style>
-</helmet>
+</head>
+<body>
 
-<div style="background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); max-width: 100vw; overflow-x: clip;">
+<canvas id="field" aria-hidden="true"></canvas>
 
-  <header style="position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--color-bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 2px solid var(--color-divider);">
-    <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 clamp(20px, 5vw, 64px); height: 72px; max-width: 1680px; margin: 0 auto;">
-      <a href="#top" style="display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-weight: 800; font-size: 17px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;"><img src="assets/logo.png" alt="LabergeTech" width="30" height="30" style="display: block; border-radius: 6px;">LabergeTech</a>
-      <nav aria-label="Primary" style="display: flex; align-items: center; gap: clamp(16px, 2.4vw, 34px);">
-        <a href="#services" style="display: none; font-size: 14px; color: var(--color-text); text-decoration: none;" data-navlink="1">{{ t.nav.services }}</a>
-        <a href="#work" style="display: none; font-size: 14px; color: var(--color-text); text-decoration: none;" data-navlink="1">{{ t.nav.work }}</a>
-        <a href="#about" style="display: none; font-size: 14px; color: var(--color-text); text-decoration: none;" data-navlink="1">{{ t.nav.about }}</a>
-        <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-family: var(--font-heading); font-weight: 800;">
-          <button type="button" onClick="{{ setEn }}" aria-label="English" style="background: none; border: 0; padding: 2px 2px; cursor: pointer; font: inherit; color: {{ enColor }};">EN</button>
-          <span aria-hidden="true" style="opacity: .35;">/</span>
-          <button type="button" onClick="{{ setFr }}" aria-label="Français" style="background: none; border: 0; padding: 2px 2px; cursor: pointer; font: inherit; color: {{ frColor }};">FR</button>
-        </div>
-        <a class="btn btn-primary" href="#contact" data-navcta="1" style="padding: 10px 16px; font-size: 13px;">{{ t.nav.cta }}</a>
-        <button type="button" data-menutoggle="1" onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-controls="mobile-menu" style="display: none; background: none; border: 0; padding: 4px 0 4px 4px; cursor: pointer; font-family: var(--font-heading); font-weight: 800; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text);">{{ menuLabel }}</button>
-      </nav>
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><img class="brand-mark" src="assets/logo.png" alt="" width="30" height="30">LabergeTech</a>
+    <nav class="nav-links">
+      <a href="#build">Services</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Get a free automation audit</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="wrap hero">
+    <h1 class="reveal">We save you time and make you money.</h1>
+    <div class="hero-actions reveal">
+      <a class="btn btn-primary btn-lg" href="#contact">Get a free automation audit</a>
+      <a class="btn btn-glass btn-lg edge" href="#build">See what we build</a>
     </div>
-    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
-      <nav id="mobile-menu" aria-label="Mobile" class="mobile-menu-anim" style="border-top: 2px solid var(--color-divider); padding: 6px clamp(20px, 5vw, 64px) 14px; display: flex; flex-direction: column;">
-        <a href="#services" onClick="{{ closeMenu }}" style="padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent); font-family: var(--font-heading); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">{{ t.nav.services }}</a>
-        <a href="#work" onClick="{{ closeMenu }}" style="padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent); font-family: var(--font-heading); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">{{ t.nav.work }}</a>
-        <a href="#about" onClick="{{ closeMenu }}" style="padding: 14px 0; border-bottom: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent); font-family: var(--font-heading); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">{{ t.nav.about }}</a>
-        <a class="btn btn-primary" href="#contact" onClick="{{ closeMenu }}" style="margin-top: 16px; padding: 14px 18px; font-size: 14px;">{{ t.nav.cta }}</a>
-      </nav>
-    </sc-if>
-  </header>
+  </section>
 
-  <main id="top">
+  <section class="stage" id="build">
+    <div class="stage-pin">
+      <div class="ring" id="ring" role="region" aria-label="What we build">
 
-    <section style="padding: clamp(36px, 6vh, 72px) clamp(20px, 5vw, 64px) clamp(34px, 5vh, 58px); max-width: 1680px; margin: 0 auto;">
-      <div style="font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-accent); margin-bottom: clamp(20px, 3vh, 36px);">
-        {{ t.hero.tag }}
+        <div class="ring-core"><h2>What we build</h2></div>
+
+        <a class="card edge" href="#contact"><svg class="go" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4.2M9 3v4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Speed-to-lead</h3>
+          <p class="flow">Lead comes in &rarr; replied in seconds &rarr; qualified &rarr; booked</p>
+        </a>
+
+        <a class="card edge" href="#contact"><svg class="go" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4.2M9 3v4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>AI Receptionist</h3>
+          <p class="flow">Missed call &rarr; AI answers &rarr; qualifies caller &rarr; texts your team</p>
+        </a>
+
+        <a class="card edge" href="#contact"><svg class="go" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4.2M9 3v4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Google Reviews</h3>
+          <p class="flow">Job completed &rarr; customer receives a text &rarr; review comes in</p>
+        </a>
+
+        <a class="card edge" href="#contact"><svg class="go" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4.2M9 3v4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Business workflows</h3>
+          <p class="flow">Email comes in &rarr; CRM updated &rarr; document generated &rarr; team notified</p>
+        </a>
+
+        <a class="card edge" href="#contact"><svg class="go" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4.2M9 3v4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Custom AI Systems</h3>
+          <p class="flow">Your process &rarr; the AI decides &rarr; the task is done &rarr; your team is notified</p>
+        </a>
+
+        <a class="card edge" href="#contact"><svg class="go" width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 9L9 3M9 3H4.2M9 3v4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Websites</h3>
+          <p class="flow">Site built &rarr; structured for search &rarr; found on Google and by AI assistants</p>
+        </a>
+
       </div>
-      <h1 data-reveal="1" style="font-size: clamp(40px, 7.4vw, 104px); line-height: 1.02; letter-spacing: -0.035em; margin: 0; max-width: 17ch; text-wrap: balance;">{{ t.hero.title }}</h1>
-      <p data-reveal="1" style="margin: clamp(22px, 3vh, 32px) 0 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.55; max-width: 60ch; color: color-mix(in srgb, var(--color-text) 78%, transparent); text-wrap: pretty;">{{ t.hero.sub }}</p>
-      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(24px, 3.5vh, 36px);">
-        <a class="btn btn-primary" href="#contact" style="padding: 15px 22px; font-size: 15px;">{{ t.hero.cta1 }}</a>
+
+      <div class="ring-foot">
+        <div class="dots" id="dots"></div>
+        <span class="hint" id="hint">Keep scrolling</span>
       </div>
-    </section>
-
-    <section id="services" ref="{{ sectionRef }}" aria-label="Services" style="border-top: 2px solid var(--color-divider); position: relative;">
-      
-    <div ref="{{ pinRef }}">
-        <div ref="{{ headerRef }}" style="display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: clamp(16px, 2.5vh, 26px) clamp(20px, 5vw, 64px) clamp(14px, 2vh, 22px); max-width: 1680px; margin: 0 auto;">
-          <h2 ref="{{ titleRef }}" style="font-size: clamp(38px, 9vw, 95px); line-height: 1.02; letter-spacing: -0.035em; margin: 0;">{{ t.services.title }}</h2>
-        </div>
-        <div ref="{{ trackRef }}" class="noscrollbar" style="display: flex; gap: clamp(14px, 1.4vw, 26px); padding: 0 clamp(20px, 5vw, 64px); will-change: transform;">
-          <sc-for list="{{ services }}" as="s" hint-placeholder-count="3">
-            <article style="border: 2px solid var(--color-divider); background: var(--color-surface); padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 20px;">
-              <div style="display: flex; align-items: baseline; gap: 14px;">
-                <span style="font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-accent);">{{ s.num }}</span>
-                <span style="font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent);">{{ s.eyebrow }}</span>
-              </div>
-              <h3 style="font-size: clamp(30px, 3.6vw, 50px); line-height: 1.02; letter-spacing: -0.032em; margin: 0; max-width: 14ch;">{{ s.title }}</h3>
-              <p style="margin: 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.4; letter-spacing: -0.015em; max-width: 24ch;">{{ s.benefit }}</p>
-              <p style="margin: auto 0 0; font-family: var(--font-heading); font-weight: 800; font-size: clamp(12.5px, 1.05vw, 14px); line-height: 1.6; letter-spacing: -0.01em; color: var(--color-accent); border-top: 2px solid var(--color-divider); border-bottom: 2px solid var(--color-divider); padding: 12px 0;">{{ s.flow }}</p>
-              <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px;">
-                <sc-for list="{{ s.items }}" as="it" hint-placeholder-count="4">
-                  <li style="font-size: 12px; line-height: 1; padding: 7px 10px; border: 1px solid color-mix(in srgb, var(--color-text) 22%, transparent); color: color-mix(in srgb, var(--color-text) 68%, transparent);">{{ it }}</li>
-                </sc-for>
-              </ul>
-            </article>
-          </sc-for>
-        </div>
-        <div ref="{{ spacerRef }}" aria-hidden="true"></div>
-      </div></section>
-
-    <section aria-label="How it works" style="border-top: 2px solid var(--color-divider); padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
-      <h2 data-reveal="1" style="font-size: clamp(28px, 3.6vw, 52px); letter-spacing: -0.03em; margin: 0 0 clamp(32px, 5vh, 56px); max-width: 20ch;">{{ t.how.title }}</h2>      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0;">
-        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
-          <div data-reveal="1" style="padding: 0 26px 34px 0;">
-            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 13px; color: var(--color-accent);">{{ st.num }}</span>
-            <h3 style="font-size: clamp(20px, 1.9vw, 26px); letter-spacing: -0.02em; margin: 14px 0 10px;">{{ st.title }}</h3>
-            <p style="margin: 0; font-size: 15px; line-height: 1.6; max-width: 34ch; color: color-mix(in srgb, var(--color-text) 75%, transparent);">{{ st.body }}</p>
-          </div>
-        </sc-for>
-      </div>
-    </section>
-
-    <section id="work" aria-label="Work" style="border-top: 2px solid var(--color-divider); padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
-      <h2 data-reveal="1" style="font-size: clamp(28px, 3.6vw, 52px); letter-spacing: -0.03em; margin: 0 0 clamp(32px, 5vh, 56px); max-width: 26ch;">{{ t.work.title }}</h2>
-      <div class="noscrollbar" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: clamp(24px, 2.6vw, 44px);">
-        <sc-for list="{{ cases }}" as="c" hint-placeholder-count="4">
-          <article data-reveal="1" style="padding: 0; display: flex; flex-direction: column; gap: 14px;">
-            <div style="height: 88px; display: flex; align-items: center;">
-              <sc-if value="{{ c.logo }}" hint-placeholder-val="{{ true }}">
-                <span class="grayscale" style="display: block; height: 88px; width: 180px; overflow: hidden; background: {{ c.logoBg }}; padding: {{ c.logoPad }};">
-                  <img src="{{ c.logo }}" alt="{{ c.name }}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain; object-position: left center;">
-                </span>
-              </sc-if>
-            </div>
-            <h3 style="font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; color: color-mix(in srgb, var(--color-text) 50%, transparent);">{{ c.name }}</h3>
-            <div style="margin-top: 6px; border-top: 2px solid var(--color-divider); padding-top: 16px;">
-              <p style="margin: 0; font-family: var(--font-heading); font-weight: 800; font-size: clamp(32px, 3vw, 46px); line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;">{{ c.value }}<sc-if value="{{ c.suffix }}" hint-placeholder-val="{{ true }}"><span style="margin-left: 0.22em; font-size: 38px">{{ c.suffix }}</span></sc-if></p>
-              <p style="margin: 8px 0 0; font-family: var(--font-heading); font-weight: 800; font-size: 11px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--color-accent);">{{ c.unit }}</p>
-            </div>
-            <p style="margin: 0; font-size: 14.5px; line-height: 1.55; max-width: 32ch; color: color-mix(in srgb, var(--color-text) 70%, transparent);">{{ c.note }}</p>
-          </article>
-        </sc-for>
-      </div>
-    </section>
-
-    
-
-    <section id="about" aria-label="About" style="border-top: 2px solid var(--color-divider); border-bottom: 2px solid var(--color-divider); padding: clamp(56px, 9vh, 110px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: clamp(28px, 4vw, 64px); align-items: center;">
-        
-        <figure data-reveal="1" ref="{{ photoRef }}" style="margin: 0; position: relative; min-height: 420px; overflow: hidden; height: 500px">
-          <img src="assets/michael.jpeg" alt="Michael Laberge, founder of LabergeTech, Montreal" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%">
-        </figure><div data-reveal="1" ref="{{ aboutTextRef }}">
-          <h2 style="font-size: clamp(28px, 3.6vw, 52px); letter-spacing: -0.03em; margin: 0 0 26px; max-width: 16ch;">{{ t.about.title }}</h2>
-          <p style="margin: 0 0 16px; font-size: 16.5px; line-height: 1.65; max-width: 52ch;">{{ t.about.p1 }}</p>
-          <p style="margin: 0 0 16px; font-size: 16.5px; line-height: 1.65; max-width: 52ch;">{{ t.about.p2 }}</p>
-          <p style="margin: 0 0 16px; font-size: 16.5px; line-height: 1.65; max-width: 52ch;">{{ t.about.p3 }}</p>
-          <p style="margin: 0 0 28px; font-size: 16.5px; line-height: 1.65; max-width: 52ch;">{{ t.about.p4 }}</p>
-          <p style="margin: 0; font-family: var(--font-heading); font-weight: 800; font-size: clamp(17px, 1.7vw, 22px); line-height: 1.4; letter-spacing: -0.02em; max-width: 26ch; border-top: 2px solid var(--color-divider); padding-top: 24px;">{{ t.about.punch }}</p>
-        </div>
-      </div>
-    </section><section id="contact" aria-label="Contact" style="padding: clamp(40px, 6vh, 76px) clamp(20px, 5vw, 64px); max-width: 1680px; margin: 0 auto;">
-      <div class="contact-grid">
-        <div class="contact-aside">
-          <h2 data-reveal="1" style="font-size: clamp(27px, 3.6vw, 53px); line-height: 1.05; letter-spacing: -0.035em; margin: 0; max-width: 15ch;">{{ t.contact.title }}</h2>
-          <div class="contact-lines">
-            <a href="tel:+14384017040">
-              <span class="k">{{ t.contact.callLabel }}</span>
-              <span class="v">(438) 401-7040</span>
-            </a>
-            <a href="mailto:michael@labergetech.com">
-              <span class="k">Email</span>
-              <span class="v">michael@labergetech.com</span>
-            </a>
-          </div>
-        </div>
-
-        <form onSubmit="{{ submit }}" style="display: grid; gap: 0;">
-          <div class="contact-fields">
-            <label class="fld">
-              <span class="fld-k">{{ t.form.name }}</span>
-              <input class="fld-i" name="name" type="text" required="required" autoComplete="name">
-            </label>
-            <label class="fld">
-              <span class="fld-k">{{ t.form.email }}</span>
-              <input class="fld-i" name="email" type="email" required="required" autoComplete="email">
-            </label>
-            <label class="fld">
-              <span class="fld-k">{{ t.form.phone }}</span>
-              <input class="fld-i" name="phone" type="tel" autoComplete="tel">
-            </label>
-          </div>
-
-          <fieldset class="fld-set">
-            <legend class="fld-k">{{ t.form.focus }}</legend>
-            <p class="fld-hint">{{ t.form.focusHint }}</p>
-            <div class="pick-row">
-              <sc-for list="{{ picks }}" as="p" hint-placeholder-count="6">
-                <label class="pick">
-                  <input type="checkbox" name="focus" value="{{ p.id }}">
-                  <span>{{ p.label }}</span>
-                </label>
-              </sc-for>
-            </div>
-          </fieldset>
-
-          <label class="fld">
-            <span class="fld-k">{{ t.form.context }}</span>
-            <textarea class="fld-i" name="message" rows="3" placeholder="{{ t.form.contextHint }}"></textarea>
-          </label>
-
-          <input type="text" name="_honey" tabIndex="-1" autoComplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;">
-
-          <div class="send-row">
-            <button class="btn btn-primary send-btn" type="submit" style="opacity: {{ sendOpacity }}; cursor: {{ sendCursor }};"><span class="spin" aria-hidden="true" style="display: {{ sendSpinDisplay }};"></span>{{ sendLabel }}</button>
-            <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
-              <span class="send-msg">{{ sentMessage }}</span>
-            </sc-if>
-            <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
-              <span class="send-msg">{{ t.form.error }}</span>
-            </sc-if>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer style="border-top: 2px solid var(--color-divider); padding: clamp(32px, 5vh, 52px) clamp(20px, 5vw, 64px);">
-    <div style="max-width: 1680px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 20px 40px; font-size: 13px;">
-      <span style="display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-weight: 800; letter-spacing: -0.02em; font-size: 15px;"><img src="assets/logo.png" alt="" width="20" height="20" style="display: block; border-radius: 4px;">LabergeTech</span>
-      <span style="color: color-mix(in srgb, var(--color-text) 60%, transparent);">Montreal, Quebec</span>
-      <a href="tel:+14384017040" style="font-family: var(--font-heading); font-weight: 800; font-size: 16px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">(438) 401-7040</a>
-      <a href="mailto:michael@labergetech.com" style="font-family: var(--font-heading); font-weight: 800; font-size: 16px; letter-spacing: -0.02em; color: var(--color-text); text-decoration: none;">michael@labergetech.com</a>
-      <span style="display: flex; align-items: center; gap: 6px; font-family: var(--font-heading); font-weight: 800;">
-        <button type="button" onClick="{{ setEn }}" style="background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: {{ enColor }};">EN</button>
-        <span aria-hidden="true" style="opacity: .35;">/</span>
-        <button type="button" onClick="{{ setFr }}" style="background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: {{ frColor }};">FR</button>
-      </span>
     </div>
-  </footer>
-</div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;web3formsKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;d06badaf-dfc3-492f-9301-ad174bb63fdb&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact form&quot;},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fr&quot;],&quot;default&quot;:&quot;fr&quot;,&quot;tsType&quot;:&quot;'en' | 'fr'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;autoDetectLanguage&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Language&quot;}}">
-const COPY = {
-  en: {
-    nav: { services: "Services", work: "Work", about: "About", cta: "Free automation audit" },
-    hero: {
-      tag: "Automation & software systems",
-      title: "We save you time and make you money.",
-      sub: "We find the repetitive work inside your business and automate it: lead follow-up, phone calls, reviews, paperwork, and everything in between.",
-      cta1: "Get a free automation audit"
-    },
-    services: { title: "What we build" },
-    how: {
-      title: "Three steps."
-    },
-    work: { title: "Work delivered." },
-    about: {
-      title: "Who you work with.",
-      p1: "I'm Michael Laberge, founder of LabergeTech, based in Montreal.",
-      p2: "I build automation and software systems for businesses, and I do the implementation myself.",
-      p3: "My background is in mechanical engineering, business intelligence, and operations. Before LabergeTech, I worked on forecasting and operational systems at Apollo Scooters.",
-      p4: "I also completed MIT's Applied Data Science Program.",
-      punch: "You deal directly with the person building your system."
-    },
-    contact: {
-      title: "Losing time on repetitive work?",
-      sub: "Tell us what's taking too much time, costing you leads, or getting done manually. We'll tell you whether we can automate it.",
-      callLabel: "Phone"
-    },
-    form: {
-      name: "Name", email: "Email", phone: "Phone",
-      focus: "What's eating up your time?",
-      focusHint: "Select everything that applies.",
-      context: "Tell us a little more (optional)",
-      contextHint: "What would you like to automate?",
-      send: "Get My Free Automation Audit",
-      sending: "Sending…",
-      error: "Something went wrong. Email us at michael@labergetech.com.",
-      sentDirect: "Thanks. We'll reply within a day.",
-      sent: "Opening your email. Send it and we'll reply within a day.",
-      picks: [
-        { id: "Missed calls", label: "Missed calls" },
-        { id: "Lead follow-up", label: "Lead follow-up" },
-        { id: "Google reviews", label: "Google reviews" },
-        { id: "Paperwork and data entry", label: "Paperwork & data entry" },
-        { id: "Website", label: "Website" },
-        { id: "Other", label: "Other" }
-      ]
-    },
-    steps: [
-      { num: "01", title: "Find the bottleneck", body: "We look at where time, leads, or money are being lost." },
-      { num: "02", title: "Build the system", body: "We design and implement the automation around the tools you already use." },
-      { num: "03", title: "Hand it over", body: "You get the working system, documentation, and training if you want it." }
-    ],
-    services_list: [
-      { num: "01", eyebrow: "Get more leads", title: "Speed-to-lead",
-        flow: "Lead comes in → replied in seconds → qualified → booked",
-        items: ["Missed calls", "Web leads", "SMS follow-up", "Booking"],
-        benefit: "Respond while the lead is still looking." },
-      { num: "02", eyebrow: "Answer every call", title: "AI Receptionist",
-        flow: "Missed call → AI answers → qualifies caller → texts your team",
-        items: ["Qualify callers", "Flag urgent calls", "Book appointments", "Send summaries"],
-        benefit: "Stop losing opportunities because nobody picked up." },
-      { num: "03", eyebrow: "Get more reviews", title: "Google Reviews",
-        flow: "Job completed → customer receives a text → review comes in",
-        items: ["Personalized requests", "Automatic reminders", "Works with your CRM"],
-        benefit: "Turn completed jobs into more public proof." },
-      { num: "04", eyebrow: "Automate the work", title: "Business workflows",
-        flow: "Email comes in → CRM updated → document generated → team notified",
-        items: ["Paperwork", "Data entry", "CRM updates", "Reporting"],
-        benefit: "Remove the work nobody should be doing manually." },
-      { num: "05", eyebrow: "Put AI to work", title: "Custom AI Systems",
-        flow: "Your process → the AI decides → the task is done → your team is notified",
-        items: ["Reads your data", "Decides the next step", "Completes the task", "Flags what needs you"],
-        benefit: "Software that uses AI to make the routine decisions and finish the work." },
-      { num: "06", eyebrow: "Get found online", title: "Websites",
-        flow: "Site built → structured for search → found on Google and by AI assistants",
-        items: ["Google SEO", "AI and LLM search", "Fast pages", "Built to convert"],
-        benefit: "A site people find on Google and that AI assistants can read." }
-    ],
-    cases_meta: [
-      { unit: "Google reviews", unitSuffix: "in 2 months", suffix: "", note: "Automated Google review requests." },
-      { unit: "Saved every week", suffix: "", note: "Automated repetitive project-management work." },
-      { unit: "Backorders", suffix: "", note: "Built forecasting and supply-chain systems." },
-      { unit: "Sales funnels, built and automated", suffix: "funnels", note: "Automated sales follow-up across both products." }    ]
-  },
-  fr: {
-    nav: { services: "Services", work: "Réalisations", about: "À propos", cta: "Audit gratuit" },
-    hero: {
-      tag: "Automatisation & systèmes logiciels",
-      title: "Nous vous faisons gagner du temps et de l'argent.",
-      sub: "Nous trouvons le travail répétitif dans votre entreprise et nous l'automatisons : relance des leads, appels manqués, avis Google, paperasse, et tout le reste.",
-      cta1: "Obtenir un audit gratuit"
-    },
-    services: { title: "Ce que nous bâtissons" },
-    how: {
-      title: "Trois étapes."
-    },
-    work: { title: "Travaux accomplis." },
-    about: {
-      title: "Avec qui vous travaillez.",
-      p1: "Je suis Michael Laberge, fondateur de LabergeTech, basé à Montréal.",
-      p2: "Je bâtis des systèmes d'automatisation et de logiciel pour les entreprises et je fais l'implantation moi-même.",
-      p3: "Mon parcours : génie mécanique, intelligence d'affaires et opérations. Avant LabergeTech, je travaillais sur les systèmes de prévision et d'opérations chez Apollo Scooters.",
-      p4: "J'ai aussi complété le Applied Data Science Program du MIT.",
-      punch: "Vous parlez directement à la personne qui bâtit votre système."
-    },
-    contact: {
-      title: "Du temps perdu sur du travail répétitif?",
-      sub: "Dites-nous ce qui prend trop de temps, ce qui vous coûte des leads, ou ce qui se fait encore à la main. Nous vous disons si nous pouvons l'automatiser.",
-      callLabel: "Téléphone"
-    },
-    form: {
-      name: "Nom", email: "Courriel", phone: "Téléphone",
-      focus: "Qu'est-ce qui vous gruge du temps?",
-      focusHint: "Sélectionnez tout ce qui s'applique.",
-      context: "Dites-nous en un peu plus (optionnel)",
-      contextHint: "Qu'aimeriez-vous automatiser?",
-      picks: [
-        { id: "Missed calls", label: "Appels manqués" },
-        { id: "Lead follow-up", label: "Suivi des leads" },
-        { id: "Google reviews", label: "Avis Google" },
-        { id: "Paperwork and data entry", label: "Paperasse et saisie" },
-        { id: "Website", label: "Site web" },
-        { id: "Other", label: "Autre" }
-      ],
-      send: "Obtenir mon audit gratuit",
-      sending: "Envoi…",
-      error: "Une erreur est survenue. Écrivez-nous à michael@labergetech.com.",
-      sentDirect: "Merci. Nous répondons en moins d'une journée.",
-      sent: "Votre courriel s'ouvre. Envoyez-le et nous répondons en moins d'une journée."
-    },
-    steps: [
-      { num: "01", title: "Trouver le goulot", body: "On regarde où le temps, les leads ou l'argent se perdent." },
-      { num: "02", title: "Bâtir le système", body: "Nous concevons et implantons l'automatisation autour des outils que vous utilisez déjà." },
-      { num: "03", title: "Vous le remettre", body: "Vous repartez avec le système fonctionnel, la documentation, et la formation si vous la voulez." }
-    ],
-    services_list: [
-      { num: "01", eyebrow: "Plus de leads", title: "Suivi de vos leads",
-        flow: "Lead entre → réponse en secondes → qualifié → rendez-vous pris",
-        items: ["Appels manqués", "Leads web", "Relance SMS", "Prise de rendez-vous"],
-        benefit: "Répondez pendant que le client magasine encore." },
-      { num: "02", eyebrow: "Répondre à chaque appel", title: "Réceptionniste IA",
-        flow: "Appel manqué → l'IA répond → qualifie → texte à l'équipe",
-        items: ["Qualifier les appels", "Détecter les urgences", "Prendre les rendez-vous", "Envoyer les résumés"],
-        benefit: "Arrêtez de perdre des clients parce que personne n'a répondu." },
-      { num: "03", eyebrow: "Plus d'avis", title: "Avis Google",
-        flow: "Job terminée → le client reçoit un texto → l'avis entre",
-        items: ["Demandes personnalisées", "Rappels automatiques", "Branché à votre CRM"],
-        benefit: "Transformez vos jobs terminées en preuve publique." },
-      { num: "04", eyebrow: "Automatiser le travail", title: "Processus d'affaires",
-        flow: "Courriel reçu → CRM mis à jour → document généré → équipe avisée",
-        items: ["Paperasse", "Saisie de données", "Mises à jour CRM", "Rapports"],
-        benefit: "Enlevez le travail que personne ne devrait faire à la main." },
-      { num: "05", eyebrow: "Mettre l'IA au travail", title: "Systèmes IA sur mesure",
-        flow: "Votre processus → l'IA décide → la tâche est faite → votre équipe est avisée",
-        items: ["Lit vos données", "Décide la prochaine étape", "Complète la tâche", "Signale ce qui vous revient"],
-        benefit: "Un logiciel qui utilise l'IA pour prendre les décisions de routine et finir le travail." },
-      { num: "06", eyebrow: "Être trouvé en ligne", title: "Sites web",
-        flow: "Site bâti → structuré pour la recherche → trouvé sur Google et par les assistants IA",
-        items: ["SEO Google", "Recherche IA et LLM", "Pages rapides", "Bâti pour convertir"],
-        benefit: "Un site que les gens trouvent sur Google et que les assistants IA peuvent lire." }
-    ],
-    cases_meta: [
-      { unit: "Avis Google", unitSuffix: "en 2 mois", suffix: "", note: "Demandes d'avis Google automatisées." },
-      { unit: "Économisées chaque semaine", suffix: "", note: "Gestion de projet répétitive automatisée." },
-      { unit: "Commandes en attente", suffix: "", note: "Systèmes de prévision et de chaîne d'approvisionnement." },
-      { unit: "Tunnels de vente, bâtis et automatisés", suffix: "systèmes", note: "Relance des ventes automatisée pour les deux produits." }
-    ]
+  </section>
+
+  <section class="wrap work" id="work">
+    <h2 class="reveal">Work delivered.</h2>
+    <div class="clients" id="clients" role="region" aria-label="Past customers">
+      <article class="client edge">
+        <span class="client-mark"><img src="assets/mark-elia.png" alt="&Eacute;lia M&eacute;dico Esth&eacute;tique" loading="lazy" decoding="async"></span>
+        <p class="name">&Eacute;lia M&eacute;dico Esth&eacute;tique</p>
+        <p class="fig">15 &rarr; 80</p>
+        <p class="unit">Google reviews &middot; in 2 months</p>
+      </article>
+      <article class="client edge">
+        <span class="client-mark"><img src="assets/mark-attorre.png" alt="Attorre &amp; Fils" loading="lazy" decoding="async"></span>
+        <p class="name">Attorre &amp; Fils</p>
+        <p class="fig">20 h</p>
+        <p class="unit">Saved every week</p>
+      </article>
+      <article class="client edge">
+        <span class="client-mark"><img src="assets/mark-apollo.png" alt="Apollo Scooters" loading="lazy" decoding="async"></span>
+        <p class="name">Apollo Scooters</p>
+        <p class="fig">600 &rarr; 15</p>
+        <p class="unit">Backorders</p>
+      </article>
+      <article class="client edge">
+        <span class="client-mark"><img src="assets/mark-mentors.png" alt="Mentors &Eacute;ducation" loading="lazy" decoding="async"></span>
+        <p class="name">Mentors &Eacute;ducation</p>
+        <p class="fig">2 funnels</p>
+        <p class="unit">Built and automated</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap about" id="about">
+    <div class="about-grid">
+      <div class="portrait edge reveal">
+        <img src="assets/michael.jpeg" alt="Michael Laberge, founder of LabergeTech, Montreal" loading="lazy" decoding="async">
+      </div>
+      <div class="reveal">
+        <h2>Who you work with.</h2>
+        <p>I'm Michael Laberge, founder of LabergeTech, based in Montreal.</p>
+        <p>I build automation and software systems for businesses, and I do the implementation myself.</p>
+        <p>My background is in mechanical engineering, business intelligence, and operations. Before LabergeTech, I worked on forecasting and operational systems at Apollo Scooters.</p>
+        <p>I also completed MIT's Applied Data Science Program.</p>
+        <p class="punch">You deal directly with the person building your system.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap contact" id="contact">
+    <div class="contact-grid">
+      <div class="contact-aside">
+        <h2 class="reveal">Losing time on repetitive work?</h2>
+        <div class="lines">
+          <a href="tel:+14384017040"><span class="k">Phone</span><span class="v">(438) 401-7040</span></a>
+          <a href="mailto:michael@labergetech.com"><span class="k">Email</span><span class="v">michael@labergetech.com</span></a>
+        </div>
+      </div>
+
+      <form id="lead">
+        <div class="fields">
+          <label class="fld"><span class="fld-k">Name</span>
+            <input class="fld-i" name="name" type="text" required autocomplete="name"></label>
+          <label class="fld"><span class="fld-k">Email</span>
+            <input class="fld-i" name="email" type="email" required autocomplete="email"></label>
+          <label class="fld"><span class="fld-k">Phone</span>
+            <input class="fld-i" name="phone" type="tel" autocomplete="tel"></label>
+        </div>
+
+        <fieldset class="fld-set">
+          <legend class="ask">What's eating up your time?</legend>
+          <div class="pick-row">
+            <label class="pick"><input type="checkbox" name="focus" value="Missed calls"><span>Missed calls</span></label>
+            <label class="pick"><input type="checkbox" name="focus" value="Lead follow-up"><span>Lead follow-up</span></label>
+            <label class="pick"><input type="checkbox" name="focus" value="Google reviews"><span>Google reviews</span></label>
+            <label class="pick"><input type="checkbox" name="focus" value="Paperwork and data entry"><span>Paperwork &amp; data entry</span></label>
+            <label class="pick"><input type="checkbox" name="focus" value="Website"><span>Website</span></label>
+            <label class="pick"><input type="checkbox" name="focus" value="Other"><span>Other</span></label>
+          </div>
+        </fieldset>
+
+        <label class="fld"><span class="ask">Tell us a little more (optional)</span>
+          <textarea class="fld-i" name="message" rows="3" placeholder="What would you like to automate?"></textarea></label>
+
+        <div class="send-row">
+          <button class="btn btn-primary btn-lg" type="submit" id="send">Get a free automation audit</button>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span class="brand"><img class="brand-mark" src="assets/logo.png" alt="" width="22" height="22">LabergeTech</span>
+    <span class="muted">Montreal, Quebec</span>
+    <a href="tel:+14384017040">(438) 401-7040</a>
+    <a href="mailto:michael@labergetech.com">michael@labergetech.com</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ───────────────────────────────────────────────────────────────────
+     Field: contour lines behind the whole document. The pointer bends
+     them away from itself and carries a light with it. Fixed to the
+     viewport, so it costs one viewport of drawing no matter how long
+     the page gets.
+     ─────────────────────────────────────────────────────────────── */
+  var cv = document.getElementById('field');
+  var ctx = cv.getContext('2d');
+  var W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2);
+  var px = -9999, py = -9999, mx = -9999, my = -9999;
+  var strength = 0, want = 0, t = 0, raf = null;
+
+  function sizeField() {
+    var rect = cv.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-};
 
-const CASES = [
-  { name: "Élia Médico Esthétique", value: "15 → 80", logo: "assets/elia.png", logoBg: "transparent", logoPad: "0" },
-  { name: "Attorre & Fils", value: "20 h", logo: "assets/attorre.jpg", logoBg: "#fff", logoPad: "12px" },
-  { name: "Apollo Scooters", value: "600 → 15", logo: "assets/apollo.png", logoBg: "transparent", logoPad: "0" },
-  { name: "Mentors Éducation", value: "2", logo: "assets/mentors.jpeg", logoBg: "transparent", logoPad: "0" }
-];
+  function drawField() {
+    ctx.clearRect(0, 0, W, H);
+    if (mx < -9000) { mx = px; my = py; }
+    mx += (px - mx) * 0.07;
+    my += (py - my) * 0.07;
+    strength += (want - strength) * 0.045;
 
-class Component extends DCLogic {
-  state = { lang: this.initialLang(), active: 0, sent: false, menuOpen: false };
+    var gap = 24, radius = 400, lift = 74, step = 12;
+    var rows = Math.ceil(H / gap) + 2;
 
-  initialLang() {
-    const p = this.props || {};
-    try {
-      const stored = window.localStorage.getItem("sb-lang");
-      if (stored === "en" || stored === "fr") return stored;
-    } catch (e) {}
-    if (p.autoDetectLanguage !== false) {
-      const n = ((navigator.languages && navigator.languages[0]) || navigator.language || "fr").toLowerCase();
-      if (n.indexOf("fr") === 0) return "fr";
+    if (strength > 0.01) {
+      var g = ctx.createRadialGradient(mx, my, 0, mx, my, radius * 1.25);
+      g.addColorStop(0, 'rgba(22,89,196,' + (0.07 * strength).toFixed(3) + ')');
+      g.addColorStop(0.42, 'rgba(46,114,216,' + (0.032 * strength).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(46,114,216,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     }
-    return p.defaultLang || "fr";
-  }
 
-  setLang = (lang) => {
-    try { window.localStorage.setItem("sb-lang", lang); } catch (e) {}
-    document.documentElement.lang = lang;
-    this.setState({ lang });
-  };
-
-  componentDidMount() {
-    this.sectionRef = this.sectionRef || React.createRef();
-    document.documentElement.lang = this.state.lang;
-    this.mq = window.matchMedia("(min-width: 900px)");
-    this.reduceMotionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    this.onResize = () => this.layout();
-    this.onScroll = () => {
-      if (this.raf) return;
-      this.raf = requestAnimationFrame(() => { this.raf = null; this.update(); });
-    };
-    window.addEventListener("resize", this.onResize);
-    window.addEventListener("scroll", this.onScroll, { passive: true });
-    this.layout();
-    this.reveal();
-    setTimeout(() => this.sizePhoto(), 300);
-    window.addEventListener("load", () => this.sizePhoto());    this.navLinks();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.onResize);
-    window.removeEventListener("scroll", this.onScroll);
-    window.removeEventListener("resize", this.onNavResize);
-    if (this.io) this.io.disconnect();
-  }
-
-  navLinks() {
-    // links are hidden by default so they never flash on narrow screens
-    this.onNavResize = () => {
-      const wide = window.innerWidth >= 760;
-      document.querySelectorAll("[data-navlink]").forEach((a) => { a.style.display = wide ? "inline" : "none"; });
-      document.querySelectorAll("[data-menutoggle]").forEach((b) => { b.style.display = wide ? "none" : "inline-flex"; });
-      document.querySelectorAll("[data-navcta]").forEach((b) => { b.style.display = wide ? "inline-flex" : "none"; });
-      if (wide && this.state.menuOpen) this.setState({ menuOpen: false });
-    };
-    this.onNavResize();
-    window.addEventListener("resize", this.onNavResize);
-  }
-
-  toggleMenu = () => this.setState((s) => ({ menuOpen: !s.menuOpen }));
-  closeMenu = () => this.setState({ menuOpen: false });
-
-  sizePhoto() {
-    const fig = this.photoRef && this.photoRef.current;
-    if (!fig) return;
-    const img = fig.querySelector("img");
-    if (!img) return;
-    if (window.innerWidth < 760) {
-      // scale the desktop crop box (553x517 shown through a 500px-tall frame) to the column
-      const w = fig.clientWidth || fig.getBoundingClientRect().width;
-      if (!w) return;
-      const k = w / 553;
-      fig.style.height = Math.round(452 * k) + "px";
-      fig.style.minHeight = "0";
-      img.style.width = Math.round(553 * k) + "px";
-      img.style.height = Math.round(517 * k) + "px";
-      img.style.left = Math.round(2 * k) + "px";
-      img.style.top = Math.round(-14 * k) + "px";
-      img.style.objectFit = "contain";
-      img.style.objectPosition = "50% 4%";
-    } else {
-      fig.style.height = "500px";
-      fig.style.minHeight = "420px";
-      img.style.width = "553px";
-      img.style.height = "517px";
-      img.style.left = "2px";
-      img.style.top = "0px";
-      img.style.objectFit = "contain";
-      img.style.objectPosition = "50% 4%";
-    }
-  }
-
-  layout() {
-    const sec = this.sectionRef && this.sectionRef.current;
-    const pin = this.pinRef && this.pinRef.current;
-    const tr = this.trackRef && this.trackRef.current;
-    if (!sec || !pin || !tr) return;
-    const cards = Array.prototype.slice.call(tr.children);
-    // Reduced motion routes desktop into the same static/swipe layout mobile
-    // already uses, instead of the scroll-scrubbed pin. That layout is fully
-    // exercised code, not a new path grafted on for this one preference.
-    this.desktop = this.mq.matches && !this.reduceMotionMq.matches;
-    const hdr = this.headerRef && this.headerRef.current;
-    const sp = this.spacerRef && this.spacerRef.current;
-    if (this.desktop) {
-      sec.style.height = (100 + (cards.length - 1) * 44) + "vh";
-      pin.style.position = "sticky";
-      pin.style.top = "0";
-      pin.style.height = "100vh";
-      pin.style.overflow = "hidden";
-      pin.style.display = "flex";
-      pin.style.flexDirection = "column";
-      pin.style.justifyContent = "flex-start";
-      pin.style.paddingBottom = "0";
-      if (hdr) {
-        hdr.style.flex = "1 1 0";
-        hdr.style.alignItems = "center";
-        hdr.style.paddingTop = "0";
-        hdr.style.paddingBottom = "0";
+    for (var r = 0; r < rows; r++) {
+      var baseY = r * gap - gap;
+      ctx.beginPath();
+      for (var x = -step; x <= W + step; x += step) {
+        var y = baseY + Math.sin((x * 0.0055) + t + r * 0.28) * 5;
+        var dx = x - mx, dy = baseY - my, d2 = dx * dx + dy * dy;
+        if (d2 < radius * radius) {
+          var d = Math.sqrt(d2);
+          var u = 1 - d / radius;
+          var f = u * u * u * (u * (u * 6 - 15) + 10) * strength;
+          // a smooth odd function instead of a sign test: a row the cursor is
+          // sitting on barely moves, and the parting opens over ~a row either
+          // way rather than flipping the full lift the instant dy changes sign
+          var sgn = dy / Math.sqrt(dy * dy + 324);
+          y += sgn * f * lift * (1 - Math.abs(dx) / radius * 0.35);
+        }
+        if (x === -step) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
-      if (sp) { sp.style.display = "block"; sp.style.flex = "1 1 0"; }
-      const how2 = document.querySelector('[aria-label="How it works"]');
-      if (how2) how2.style.paddingTop = "clamp(56px, 9vh, 110px)";
-      tr.querySelectorAll("ul li").forEach((li) => { li.style.fontSize = "12px"; li.style.padding = "7px 10px"; });
-      tr.querySelectorAll("ul").forEach((ul) => { ul.style.gap = "8px"; });
-      tr.style.flexDirection = "row";
-      tr.style.alignItems = "stretch";
-      tr.style.flex = "0 0 auto";
-      tr.style.overflowX = "visible";
-      tr.style.scrollSnapType = "none";
-      tr.style.marginTop = "clamp(16px, 4vh, 56px)";
-      tr.style.paddingBottom = "clamp(24px, 5vh, 64px)";
-      cards.forEach((c) => {
-        c.style.width = "min(58vw, 660px)";
-        c.style.flex = "0 0 auto";
-        c.style.height = "auto";
-        c.style.minHeight = "min(62vh, 560px)";
-        c.style.scrollSnapAlign = "none";
-        c.style.marginBottom = "0";
-      });
-      tr.lastElementChild && (tr.lastElementChild.style.borderRight = "2px solid var(--color-divider)");
-    } else {
-      sec.style.height = "auto";
-      pin.style.position = "static";
-      pin.style.height = "auto";
-      pin.style.overflow = "visible";
-      pin.style.paddingBottom = "0";
-      pin.style.display = "block";
-      if (hdr) {
-        hdr.style.flex = "";
-        hdr.style.alignItems = "baseline";
-        hdr.style.paddingTop = "";
-        hdr.style.paddingBottom = "";
+      var depth = 0.055 + (baseY / H) * 0.075;
+      var lit = Math.max(0, 1 - Math.abs(baseY - my) / (radius * 1.15));
+      var near = lit * lit * (3 - 2 * lit) * strength;
+      ctx.strokeStyle = 'rgba(' + Math.round(17 + 5 * near) + ',' +
+        Math.round(20 + 69 * near) + ',' + Math.round(24 + 172 * near) + ',' +
+        (depth + near * 0.26).toFixed(3) + ')';
+      ctx.lineWidth = 1 + near * 0.45;
+      ctx.stroke();
+    }
+    if (!reduced) t += 0.004;
+  }
+
+  addEventListener('pointermove', function (e) {
+    px = e.clientX; py = e.clientY; want = 1;
+  }, { passive: true });
+  document.addEventListener('pointerleave', function () { want = 0; }, { passive: true });
+
+  /* ───────────────────────────────────────────────────────────────────
+     Orbit: the heading holds the centre, the six systems travel round
+     it, and vertical scroll turns the ring. Cards stay upright, so the
+     far half reads the same way up as the near half.
+     ─────────────────────────────────────────────────────────────── */
+  var stage = document.querySelector('.stage');
+  var ring = document.getElementById('ring');
+  var cards = [].slice.call(ring.querySelectorAll('.card'));
+  var dotsBox = document.getElementById('dots');
+  var hint = document.getElementById('hint');
+  var N = cards.length, TAU = Math.PI * 2;
+  var orbiting = false, rx = 0, ry = 0;
+
+  cards.forEach(function (c, i) {
+    var b = document.createElement('button');
+    b.className = 'dot'; b.type = 'button';
+    b.setAttribute('aria-label', c.querySelector('h3').textContent);
+    b.addEventListener('click', function () {
+      if (!orbiting) {
+        ring.scrollTo({ left: c.offsetLeft - ring.clientWidth / 2 + c.offsetWidth / 2, behavior: 'smooth' });
+        return;
       }
-      if (sp) sp.style.display = "none";
-      const ttl = this.titleRef && this.titleRef.current;
-      if (ttl) { ttl.style.opacity = "1"; ttl.style.transform = "none"; }
-      if (hdr) hdr.style.paddingTop = "clamp(34px, 5vh, 48px)";
-      const how = document.querySelector('[aria-label="How it works"]');
-      if (how) how.style.paddingTop = "clamp(32px, 4.5vh, 48px)";
-      tr.querySelectorAll("ul li").forEach((li) => {
-        li.style.fontSize = "11px";
-        li.style.padding = "6px 8px";
-      });
-      tr.querySelectorAll("ul").forEach((ul) => { ul.style.gap = "6px"; });
-      // Small screens swipe through the cards sideways rather than stacking
-      // them. The scroll lives on the track itself, so the pinned-scroll math
-      // above stays desktop-only and the transform has to be cleared.
-      tr.style.flexDirection = "row";
-      tr.style.alignItems = "stretch";
-      tr.style.marginTop = "clamp(8px, 2vh, 20px)";
-      tr.style.flex = "0 0 auto";
-      tr.style.transform = "none";
-      tr.style.overflowX = "auto";
-      tr.style.scrollSnapType = "x mandatory";
-      tr.style.scrollPaddingLeft = "clamp(20px, 5vw, 64px)";
-      tr.style.WebkitOverflowScrolling = "touch";
-      tr.style.paddingBottom = "clamp(18px, 2.5vh, 30px)";
-      cards.forEach((c) => {
-        c.style.width = "min(80vw, 340px)";
-        c.style.flex = "0 0 auto";
-        c.style.height = "auto";
-        c.style.minHeight = "0";
-        c.style.scrollSnapAlign = "start";
-        c.style.borderRight = "2px solid var(--color-divider)";
-      });
-    }
-    this.sizePhoto();
-    this.update();
-  }
-
-  update() {
-    const sec = this.sectionRef && this.sectionRef.current;
-    const pin = this.pinRef && this.pinRef.current;
-    const tr = this.trackRef && this.trackRef.current;
-    const counter = this.counterRef && this.counterRef.current;
-    if (!sec || !pin || !tr) return;
-    if (!this.desktop) { if (counter) counter.style.opacity = "0"; return; }
-    if (counter) counter.style.opacity = "1";
-    const rect = sec.getBoundingClientRect();
-    const dist = rect.height - window.innerHeight;
-    let p = dist > 0 ? -rect.top / dist : 0;
-    p = Math.max(0, Math.min(1, p));
-    const max = Math.max(0, tr.scrollWidth - pin.clientWidth);
-    tr.style.transform = "translate3d(" + (-p * max).toFixed(2) + "px,0,0)";
-    const n = tr.children.length;
-    const active = Math.min(n - 1, Math.max(0, Math.round(p * (n - 1))));
-    const hdr = this.titleRef && this.titleRef.current;
-    if (hdr) {
-      const o = Math.max(0, 1 - p * 4);
-      hdr.style.opacity = o;
-      hdr.style.transform = "translateY(" + (-64 * (1 - o)).toFixed(1) + "px)";
-      hdr.style.transition = "none";
-    }
-    if (active !== this.state.active) this.setState({ active });
-  }
-
-  reveal() {
-    if (!("IntersectionObserver" in window)) return;
-    this.io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        e.target.style.opacity = "1";
-        e.target.style.transform = "none";
-        this.io.unobserve(e.target);
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-    document.querySelectorAll("[data-reveal]").forEach((el) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(18px)";
-      el.style.transition = "opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1)";
-      this.io.observe(el);
+      // card i sits at the front when the ring has turned (1 - i/N) of a turn
+      var p = i / N;
+      scrollTo({ top: stage.offsetTop + (stage.offsetHeight - innerHeight) * p, behavior: reduced ? 'auto' : 'smooth' });
     });
+    dotsBox.appendChild(b);
+  });
+  var dots = [].slice.call(dotsBox.children);
+
+  function useOrbit() { return !reduced && matchMedia('(min-width: 900px)').matches; }
+
+  function layout() {
+    sizeField();
+    orbiting = useOrbit();
+    if (orbiting) {
+      ring.classList.remove('is-swipe');
+      rx = Math.min(innerWidth * 0.345, 520);
+      ry = Math.min(innerHeight * 0.22, 172);
+      // one full turn of the ring, with enough scroll that it never feels twitchy
+      stage.style.height = (innerHeight + Math.round(innerHeight * 2.2)) + 'px';
+      if (hint) hint.textContent = 'Keep scrolling';
+    } else {
+      ring.classList.add('is-swipe');
+      stage.style.height = '';
+      cards.forEach(function (c) { c.style.transform = ''; c.style.opacity = ''; c.style.zIndex = ''; });
+      if (hint) hint.textContent = 'Swipe';
+    }
+    place();
   }
 
-  submit = (e) => {
-    e.preventDefault();
-    if (this.state.sending) return;          // a second click while in flight would send twice
-    const f = e.target;
-    const g = (k) => (f.elements[k] && f.elements[k].value ? f.elements[k].value.trim() : "");
-    // Honeypot: real people never see this field, so anything in it is a bot.
-    // Report success rather than an error so the bot has nothing to tune against.
-    if (g("_honey")) { this.setState({ sent: true, sentVia: "post" }); return; }
-    const picked = Array.prototype.slice
-      .call(f.querySelectorAll('input[name="focus"]:checked'))
-      .map((c) => c.value);
-    const fr = this.state.lang === "fr";
-    const subject = (fr ? "Audit d'automatisation : " : "Automation audit: ") + (g("name") || g("email"));
-    const data = {
-      name: g("name"), email: g("email"), phone: g("phone"),
-      focus: picked.join(", "), message: g("message"),
-      language: this.state.lang, _subject: subject, subject: subject
-    };
-    const key = this.props.web3formsKey || "d06badaf-dfc3-492f-9301-ad174bb63fdb";
-    const endpoint = key ? "https://api.web3forms.com/submit" : (this.props.formEndpoint || "");
-    if (key) {
-      data.access_key = key;
-      data.from_name = "LabergeTech website";
-      data.replyto = data.email;
-    }
-    if (endpoint) {
-      this.setState({ sending: true, error: false });
-      fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(data)
-      }).then((r) => {
-        if (!r.ok) throw new Error("bad status");
-        f.reset();
-        this.setState({ sending: false, sent: true, sentVia: "post", error: false });
-      }).catch(() => {
-        this.setState({ sending: false, error: true });
+  function progress() {
+    var span = stage.offsetHeight - innerHeight;
+    if (span <= 0) return 0;
+    return Math.max(0, Math.min(1, -stage.getBoundingClientRect().top / span));
+  }
+
+  function place() {
+    if (!orbiting) {
+      var mid = ring.scrollLeft + ring.clientWidth / 2, best = Infinity, k = 0;
+      cards.forEach(function (c, i) {
+        var d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid);
+        if (d < best) { best = d; k = i; }
       });
+      dots.forEach(function (d, i) { d.setAttribute('aria-current', i === k ? 'true' : 'false'); });
       return;
     }
-    const lines = [
-      (fr ? "Nom : " : "Name: ") + data.name,
-      (fr ? "Courriel : " : "Email: ") + data.email,
-      (fr ? "Téléphone : " : "Phone: ") + data.phone,
-      (fr ? "Besoins : " : "Needs: ") + data.focus,
-      "",
-      data.message
-    ];
-    window.location.href = "mailto:michael@labergetech.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines.join("\n"));
-    this.setState({ sent: true, sentVia: "mail" });
-  };
 
-  renderVals() {
-    const lang = this.state.lang === "fr" ? "fr" : "en";
-    const t = COPY[lang];
-    const dim = "color-mix(in srgb, var(--color-text) 45%, transparent)";
-    this.sectionRef = this.sectionRef || React.createRef();
-    this.pinRef = this.pinRef || React.createRef();
-    this.trackRef = this.trackRef || React.createRef();
-    this.counterRef = this.counterRef || React.createRef();
-    this.headerRef = this.headerRef || React.createRef();
-    this.titleRef = this.titleRef || React.createRef();
-    this.spacerRef = this.spacerRef || React.createRef();
-    this.photoRef = this.photoRef || React.createRef();
-    this.aboutTextRef = this.aboutTextRef || React.createRef();
-    const pad = (n) => (n < 10 ? "0" + n : "" + n);
-    const services = [3, 4, 5, 0, 1, 2].map((i, idx) => Object.assign({}, t.services_list[i], { num: pad(idx + 1) }));
-    const cases = CASES.map((c, i) => {
-      const m = t.cases_meta[i];
-      return Object.assign({}, c, m, { unit: m.unitSuffix ? m.unit + " · " + m.unitSuffix : m.unit });
+    var turn = progress() * TAU;
+    var front = 0, bestGap = Infinity;
+
+    cards.forEach(function (card, i) {
+      // PI is the near side facing the reader, so the offset puts card 0
+      // at the front on arrival and the rest follow in listed order
+      var th = Math.PI + (i / N) * TAU - turn;
+      var depth = Math.cos(th);            //  1 far  ..  -1 near
+      var near = (1 - depth) / 2;          //  0 far  ..   1 near
+      var x = Math.sin(th) * rx;
+      var y = -depth * ry;
+      var sc = 0.58 + near * 0.42;
+
+      card.style.transform = 'translate(-50%, -50%) translate3d(' +
+        x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) scale(' + sc.toFixed(3) + ')';
+      card.style.opacity = (0.3 + near * 0.7).toFixed(3);
+      card.style.zIndex = String(Math.round(near * 80));
+
+      var a = ((th % TAU) + TAU) % TAU;
+      var gapToFront = Math.abs(a - Math.PI);
+      if (gapToFront < bestGap) { bestGap = gapToFront; front = i; }
     });
-    return {
-      t,
-      lang,
-      services,
-      cases,
-      steps: t.steps,
-      menuOpen: this.state.menuOpen,
-      menuLabel: this.state.menuOpen ? (lang === "fr" ? "Fermer" : "Close") : "Menu",
-      toggleMenu: this.toggleMenu,
-      closeMenu: this.closeMenu,
-      activeLabel: pad(this.state.active + 1) + " / " + pad(services.length),
-      enColor: lang === "en" ? "var(--color-accent)" : dim,
-      frColor: lang === "fr" ? "var(--color-accent)" : dim,
-      setEn: () => this.setLang("en"),
-      setFr: () => this.setLang("fr"),
-      photoRef: this.photoRef,
-      aboutTextRef: this.aboutTextRef,
-      submit: this.submit,
-      sent: this.state.sent,
-      sending: !!this.state.sending,
-      error: !!this.state.error,
-      sendLabel: this.state.sending ? t.form.sending : t.form.send,
-      sendOpacity: this.state.sending ? "0.45" : "1",
-      sendSpinDisplay: this.state.sending ? "inline-block" : "none",
-      sendCursor: this.state.sending ? "not-allowed" : "pointer",
-      picks: t.form.picks,
-      // The mailto fallback has not sent anything yet, the visitor still has to
-      // press send in their mail client, so it needs its own wording.
-      sentMessage: this.state.sentVia === "mail" ? t.form.sent : t.form.sentDirect,
-      sectionRef: this.sectionRef,
-      pinRef: this.pinRef,
-      trackRef: this.trackRef,
-      counterRef: this.counterRef,
-      headerRef: this.headerRef,
-      titleRef: this.titleRef,
-      spacerRef: this.spacerRef
-    };
+
+    dots.forEach(function (d, i) { d.setAttribute('aria-current', i === front ? 'true' : 'false'); });
+    if (hint) hint.textContent = progress() > 0.97 ? 'That is all six' : 'Keep scrolling';
   }
-}
+
+  /* One rAF drives the field and the ring. It runs while the tab is
+     visible and stops when it is not, so nothing burns in a background
+     tab. No scroll handler anywhere. */
+  function frame() { drawField(); place(); raf = requestAnimationFrame(frame); }
+  function start() { if (!raf) frame(); }
+  function stop() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop(); else start();
+  });
+  ring.addEventListener('scroll', place, { passive: true });
+  addEventListener('resize', layout);
+
+  // Tie the backing store to the canvas's own box, so a scrollbar appearing
+  // or disappearing can never leave the field stretched.
+  if ('ResizeObserver' in window) new ResizeObserver(sizeField).observe(cv);
+
+  layout();
+  start();
+  addEventListener('load', layout);
+
+  /* entrance */
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el, i) {
+      el.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ───────────────────────────────────────────────────────────────────
+     Lead form. Native validation gates the submit event, so by the time
+     we are here the required fields are filled. On a failed POST the
+     address is put in front of the reader rather than swallowed, because
+     a silently dropped lead is the one failure that actually costs money.
+     ─────────────────────────────────────────────────────────────── */
+  var form = document.getElementById('lead');
+  if (form) {
+    var btn = document.getElementById('send');
+    var note = document.getElementById('status');
+    var label = btn.textContent;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var g = function (n) { var el = form.elements[n]; return el ? el.value.trim() : ''; };
+      var focus = [].slice.call(form.querySelectorAll('input[name="focus"]:checked'))
+        .map(function (i) { return i.value; });
+      var subject = 'Automation audit: ' + (g('name') || g('email'));
+
+      btn.disabled = true; btn.textContent = 'Sending';
+      note.className = 'status'; note.textContent = '';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: 'd06badaf-dfc3-492f-9301-ad174bb63fdb',
+          from_name: 'LabergeTech website',
+          replyto: g('email'),
+          name: g('name'), email: g('email'), phone: g('phone'),
+          focus: focus.join(', '), message: g('message'),
+          language: 'en', subject: subject, _subject: subject
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error('bad status');
+        form.reset();
+        btn.disabled = false; btn.textContent = label;
+        note.textContent = 'Thanks. We will get back to you shortly.';
+      }).catch(function () {
+        btn.disabled = false; btn.textContent = label;
+        note.className = 'status err';
+        note.innerHTML = 'That did not send. Email ' +
+          '<a href="mailto:michael@labergetech.com">michael@labergetech.com</a> instead.';
+      });
+    });
+  }
+})();
 </script>
 </body>
 </html>
