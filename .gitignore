@@ -1,3 +1,7 @@
 .DS_Store
-.thumbnail
-*.dc.html
+
+# Raw AI generation exports for artwork that is no longer on the site. Kept on
+# disk, never published: the repo is public and rule 5 in the Playbook is
+# specifically about not showing AI-generated imagery.
+assets/Sep 12 - 10_53.zip
+assets/Sep 12 - 10_53/
