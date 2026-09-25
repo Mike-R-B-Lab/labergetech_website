@@ -21,7 +21,7 @@
         "Excel, Word ou Google Sheets"
       ],
       "after_flow": [
-        "Le technicien prend le bon en photo",
+        "Vous prenez le bon en photo",
         "L'IA lit la photo",
         "Heures et prix vérifiés",
         "Brouillon créé dans {logiciel}",
@@ -34,7 +34,7 @@
       "steps": [
         {
           "tool": "Votre téléphone",
-          "text": "À la fin des travaux, le technicien prend le bon en photo et l'envoie par texto ou par courriel. Aucune application à installer."
+          "text": "À la fin des travaux, vous prenez le bon en photo et l'envoyez par texto ou par courriel. Aucune application à installer."
         },
         {
           "tool": "IA",
@@ -56,7 +56,7 @@
       "exceptions": [
         {
           "case": "Bon de travail illisible",
-          "handling": "La photo est refusée tout de suite et le technicien reçoit un texto pour la reprendre."
+          "handling": "La photo est refusée tout de suite et vous recevez un texto pour la reprendre."
         },
         {
           "case": "Client introuvable",
@@ -169,7 +169,7 @@
         "Excel, Word ou Google Sheets"
       ],
       "after_flow": [
-        "Le client envoie son bon par courriel",
+        "Vous recevez un bon de commande par courriel",
         "L'IA lit le bon",
         "Les prix sont vérifiés",
         "Brouillon créé dans {logiciel}",
@@ -244,9 +244,9 @@
       ],
       "after_flow": [
         "La soumission Excel est acceptée",
-        "L'IA lit la soumission",
         "Votre équipe marque le travail terminé",
-        "Brouillon créé dans {logiciel}",
+        "L'IA lit la soumission",
+        "Brouillon créé dans {logiciel}, extras inclus",
         "Vous approuvez",
         "La facture part au client"
       ],
@@ -260,12 +260,12 @@
           "text": "Vos soumissions restent dans Excel, dans le même dossier et avec le même gabarit qu'aujourd'hui."
         },
         {
-          "tool": "IA",
-          "text": "Quand une soumission est acceptée, l'IA récupère le client, les lignes, les quantités et les prix, même si le gabarit change d'une soumission à l'autre."
+          "tool": "Votre téléphone",
+          "text": "Votre équipe marque le travail terminé, sur son téléphone ou dans votre calendrier."
         },
         {
-          "tool": "Automatisation",
-          "text": "Le projet est suivi jusqu'à ce que votre équipe marque le travail terminé, sur son téléphone ou dans votre calendrier."
+          "tool": "IA",
+          "text": "L'IA lit alors la soumission acceptée : client, lignes, quantités et prix, même si le gabarit change d'une soumission à l'autre."
         },
         {
           "tool": "{logiciel}",
@@ -321,9 +321,9 @@
         "Le client commande sur son portail",
         "Les commandes sont récupérées chaque jour",
         "Elles sont regroupées par client",
-        "Facture du mois créée dans {logiciel}",
+        "Factures créées dans {logiciel}",
         "Vous approuvez",
-        "La facture part au client"
+        "Les factures partent aux clients"
       ],
       "human_steps": [
         "Vous approuvez"
@@ -449,81 +449,6 @@
       }
     },
     {
-      "id": "phone-dictation-to-invoice",
-      "name": "Commande au téléphone → vous répétez la commande à l'IA → facture créée dans {logiciel}",
-      "description": "Après l'appel, vous dictez la commande en 30 secondes et la facture se prépare.",
-      "triggers": {
-        "q3": [
-          "Commandes par téléphone"
-        ],
-        "q6": []
-      },
-      "priority": 7,
-      "supported_software": [
-        "QuickBooks",
-        "Sage 50",
-        "Acomba",
-        "Genius ERP",
-        "Excel, Word ou Google Sheets"
-      ],
-      "after_flow": [
-        "Le client commande au téléphone",
-        "Vous répétez la commande à l'IA",
-        "L'IA remplit la fiche",
-        "Facture créée dans {logiciel}",
-        "Vous approuvez",
-        "La facture part au client"
-      ],
-      "human_steps": [
-        "Vous répétez la commande à l'IA",
-        "Vous approuvez"
-      ],
-      "steps": [
-        {
-          "tool": "Votre téléphone",
-          "text": "Après l'appel, vous répétez la commande à voix haute dans une note vocale : client, produits, quantités. Environ 30 secondes."
-        },
-        {
-          "tool": "IA",
-          "text": "L'IA transcrit la note et en fait une fiche de commande complète."
-        },
-        {
-          "tool": "Automatisation",
-          "text": "La fiche est validée contre vos clients et vos produits. S'il manque quelque chose, vous recevez une question par texto."
-        },
-        {
-          "tool": "{logiciel}",
-          "text": "Une facture est créée dans {logiciel}, prête à approuver."
-        },
-        {
-          "tool": "Vous",
-          "text": "Vous approuvez, et aucune commande prise au téléphone n'est oubliée."
-        }
-      ],
-      "exceptions": [
-        {
-          "case": "Note vocale incomplète",
-          "handling": "L'IA vous demande par texto ce qui manque avant de préparer la facture."
-        },
-        {
-          "case": "Nom de client mal compris",
-          "handling": "Le client le plus proche est proposé, et rien n'est créé avant votre confirmation."
-        },
-        {
-          "case": "Produit inconnu",
-          "handling": "La ligne est signalée avec le produit le plus proche de votre catalogue."
-        },
-        {
-          "case": "Commande dictée deux fois",
-          "handling": "Le doublon est repéré et vous choisissez laquelle garder."
-        }
-      ],
-      "diy": {
-        "setup_time": "3 à 5 semaines",
-        "difficulty": "élevée"
-      }
-    },
-    {
       "id": "invoice-on-completion",
       "name": "Travail marqué terminé → facture envoyée le jour même",
       "description": "Dès qu'un travail est terminé, la facture part le jour même au lieu d'attendre la fin du mois.",
@@ -533,7 +458,7 @@
           "Factures envoyées trop tard"
         ]
       },
-      "priority": 8,
+      "priority": 7,
       "supported_software": [
         "QuickBooks",
         "Sage 50",
@@ -601,7 +526,7 @@
           "Trop de suivis manuels"
         ]
       },
-      "priority": 9,
+      "priority": 8,
       "supported_software": [
         "QuickBooks",
         "Sage 50",

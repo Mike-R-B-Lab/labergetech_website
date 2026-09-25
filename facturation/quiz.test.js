@@ -28,17 +28,29 @@ test('days, weeks, then full-time people', () => {
   assert.strictEqual(Q.figure(5380).unit, "personnes à temps plein, à l'année");
 });
 
-test('today flow: source, copy, create, check, send', () => {
-  assert.deepStrictEqual(Q.todayFlow(A({ q3: ['soumission', 'courriel'] })).map(n => n.label), [
-    'Le client envoie son bon par courriel + La soumission Excel est acceptée', 'Vous recopiez les données',
-    'Vous créez la facture', 'Vous la vérifiez', "Vous l'envoyez"]);
-  assert.strictEqual(Q.todayFlow(A({ q2: 'papier' }))[2].label, 'Vous écrivez la facture');
+test('today flow: steps of the featured source, in their software', () => {
+  const flow = a => Q.todayFlow(A(a), Q.selectPatterns(A(a), cfg.patterns).primary).map(n => n.label);
+  assert.deepStrictEqual(flow({ q2: 'sage50', q3: ['courriel'] }), ['Vous recevez un bon de commande par courriel',
+    'Vous ouvrez le PDF', 'Vous retapez les lignes dans Sage 50', 'Vous vérifiez les prix', 'Vous envoyez la facture']);
+  assert.strictEqual(flow({ q2: 'excel', q3: ['textos'] })[2], 'Vous retapez la commande dans votre gabarit Excel');
+  assert.strictEqual(flow({ q2: 'papier', q3: ['textos'] })[2], 'Vous écrivez la facture à la main');
+  assert.strictEqual(flow({ q2: 'autre', q2_other: 'Maestro', q3: ['livraison'] })[2], 'Vous retapez la livraison dans Maestro');
+  assert.strictEqual(flow({ q2: 'excel', q3: ['courriel', 'papier'] })[0], 'Vous remplissez un bon de travail papier',
+    'several sources: only the featured one, so both flows compare the same thing');
+  const s = Q.todayFlow(A({ q3: ['soumission'] }));
+  assert.deepStrictEqual(s.slice(0, 2).map(n => n.kind), ['source', 'plain'], 'waiting for the job is not manual work');
+  Q.QUESTIONS[1].options.forEach(o =>
+    assert.strictEqual(Q.todayFlow(A({ q3: [o.v] })).filter(n => n.kind === 'manual').length, 4, o.v + ': 4 manual steps'));
 });
 
 test('automated flow: who does what, with the software named', () => {
   const p = cfg.patterns.find(x => x.id === 'email-po-to-invoice-draft');
-  assert.deepStrictEqual(Q.afterFlow(p, A({ q2: 'excel' })).map(n => n.label), ['Le client envoie son bon par courriel',
-    "L'IA lit le bon", 'Les prix sont vérifiés', 'Brouillon créé dans Excel ou Google Sheets', 'Vous approuvez', 'La facture part au client']);
+  assert.deepStrictEqual(Q.afterFlow(p, A({ q2: 'excel' })).map(n => n.label), ['Vous recevez un bon de commande par courriel',
+    "L'IA lit le bon", 'Les prix sont vérifiés', 'Facture préparée dans votre gabarit Excel', 'Vous approuvez', 'La facture part au client']);
+  assert.strictEqual(Q.afterFlow(p, A({ q2: 'papier' }))[3].label, 'Facture préparée dans un logiciel de facturation');
+  assert.strictEqual(Q.afterFlow(p, A({ q2: 'autre' }))[3].label, 'Brouillon créé dans votre logiciel');
+  const portal = cfg.patterns.find(x => x.id === 'portal-orders-to-monthly-invoice');
+  assert.strictEqual(Q.afterFlow(portal, A({ q2: 'excel' }))[3].label, 'Factures préparées dans votre gabarit Excel');
   const t = cfg.patterns.find(x => x.id === 'text-screenshot-to-invoice');
   assert.deepStrictEqual(Q.afterFlow(t, base).filter(n => n.kind === 'human').map(n => n.label),
     ["Vous envoyez une capture d'écran", 'Vous approuvez']);
@@ -67,7 +79,6 @@ test('confidence', () => {
   assert.strictEqual(conf({ q2: 'excel' }), 'forte');
   assert.strictEqual(conf({ q2: 'papier' }), 'valider');
   assert.strictEqual(conf({ q2: 'autre', q2_other: 'Maestro' }), 'valider');
-  assert.strictEqual(conf({ q3: ['appels'] }), 'valider');
   assert.strictEqual(conf({ q3: ['textos'] }), 'valider');
   assert.strictEqual(Q.selectPatterns(A({ q6: 'suivis' }), cfg.patterns).others[0].confidence, 'forte');
 });
@@ -97,7 +108,7 @@ test('steps carry a short tool tag', () => {
 });
 
 test('answers survive the URL hash; junk is rejected', () => {
-  const a = A({ q3: ['papier', 'textos', 'appels'] });
+  const a = A({ q3: ['papier', 'textos', 'portail'] });
   assert.deepStrictEqual(Q.decodeAnswers('#' + Q.encodeAnswers(a)), a);
   assert.strictEqual(Q.decodeAnswers('#q2=papier'), null);
   assert.strictEqual(Q.decodeAnswers('#' + Q.encodeAnswers(a).replace('q4=30-100', 'q4=<b>')), null);
@@ -116,7 +127,7 @@ test('payload carries answers, figure, patterns and UTM', () => {
 
 test('patterns.json is complete and the copy has no dashes', () => {
   const ids = cfg.patterns.map(p => p.id);
-  assert.strictEqual(new Set(ids).size, 9);
+  assert.strictEqual(new Set(ids).size, 8);
   const sources = Q.QUESTIONS[1].options.map(o => o.label);
   const q6 = Q.QUESTIONS[3].options.map(o => o.label);
   const software = Q.QUESTIONS[0].options.map(o => o.label);
@@ -133,5 +144,43 @@ test('patterns.json is complete and the copy has no dashes', () => {
   for (const f of ['patterns.json', 'index.html', 'quiz.js']) {
     const text = fs.readFileSync(path.join(__dirname, f), 'utf8');
     assert.doesNotMatch(text, /[\u2013\u2014]/, f + ' has an en or em dash');
+  }
+});
+
+test('English: same automation, English words, complete texts', () => {
+  const en = JSON.parse(fs.readFileSync(path.join(__dirname, 'patterns.en.json'), 'utf8'));
+  cfg.patterns.forEach(p => {
+    const t = en[p.id];
+    assert.ok(t, p.id + ': no English text');
+    assert.strictEqual(t.after_flow.length, p.after_flow.length, p.id + ': flow length differs');
+    assert.strictEqual(t.steps.length, p.steps.length, p.id + ': step count differs');
+    assert.strictEqual(t.exceptions.length, p.exceptions.length, p.id + ': exception count differs');
+    t.human_steps.forEach(s => assert.ok(t.after_flow.includes(s), p.id + ': English human step not in flow'));
+  });
+  Q.QUESTIONS.forEach(q => q.options.forEach(o => assert.ok(o.label && Q.shown(q.id, o.v).label, q.id + '.' + o.v)));
+  Q.setLang('en');
+  try {
+    const patterns = Q.localize(cfg.patterns, en);
+    const a = A({ q2: 'sage50', q3: ['courriel'] });
+    const p = Q.selectPatterns(a, patterns).primary;
+    assert.strictEqual(p.id, 'email-po-to-invoice-draft');
+    assert.deepStrictEqual(Q.todayFlow(a, p).map(n => n.label), ['You receive a purchase order by email', 'You open the PDF',
+      'You retype the lines into Sage 50', 'You check the prices', 'You send the invoice']);
+    assert.deepStrictEqual(Q.afterFlow(p, a).map(n => n.label), ['You receive a purchase order by email', 'AI reads the order',
+      'Prices are checked', 'Draft created in Sage 50', 'You approve', 'The invoice goes to the client']);
+    assert.strictEqual(Q.afterFlow(p, A({ q2: 'excel' }))[3].label, 'Invoice prepared in your Excel template');
+    assert.strictEqual(Q.afterFlow(p, A({ q2: 'papier' }))[3].label, 'Invoice prepared in invoicing software');
+    assert.strictEqual(Q.todayFlow(A({ q2: 'papier', q3: ['textos'] }))[2].label, 'You write the invoice by hand');
+    assert.strictEqual(Q.fill('Draft in {logiciel}', A({ q2: 'autre' })), 'Draft in your software');
+    assert.strictEqual(Q.confidenceLabel('forte'), 'Strong fit');
+    assert.strictEqual(Q.payload(a, { first_name: 'J', company: 'X', email: 'j@x.ca', phone: '', website: '' }, { patterns },
+      'https://labergetech.com/invoicing/').software, 'Sage 50');
+    assert.strictEqual(Q.payload(A({ q2: 'papier' }), { first_name: 'J', company: 'X', email: 'j@x.ca', phone: '', website: '' },
+      { patterns }, 'https://labergetech.com/invoicing/').software, 'Sur papier', 'the Sheet keeps the French labels');
+  } finally {
+    Q.setLang('fr');
+  }
+  for (const f of ['patterns.en.json', '../invoicing/index.html', '../privacy/index.html']) {
+    assert.doesNotMatch(fs.readFileSync(path.join(__dirname, f), 'utf8'), /[–—]/, f + ' has an en or em dash');
   }
 });
