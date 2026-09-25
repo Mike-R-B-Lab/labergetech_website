@@ -147,18 +147,19 @@ a { color: var(--accent); }
 .unit { font-size: 18px; font-weight: 600; margin-top: 8px; line-height: 1.35; }
 .small { margin-top: 12px; font-size: 13px; color: var(--ink-55); }
 /* what they could get back, with the booking button */
-.gain { display: grid; grid-template-columns: 1fr 92px; grid-template-areas: "text photo" "cta cta"; gap: 16px 16px; align-items: start;
-  margin: 4px 0 8px; padding: 24px 22px; border-radius: 22px;
+.gain { display: grid; grid-template-columns: 76px 1fr; grid-template-areas: "photo head" "text text" "cta cta";
+  gap: 14px 16px; align-items: center; margin: 4px 0 8px; padding: 22px 20px; border-radius: 22px;
   background: color-mix(in srgb, var(--accent) 7%, var(--bg)); }
-.gain h2 { font-size: 21px; font-weight: 800; line-height: 1.25; }
-.gain-t { margin-top: 10px; color: var(--ink-70); }
-.gain .btn { margin-top: 18px; }
-.gain-text { grid-area: text; }
+.gain h2 { grid-area: head; font-size: 20px; font-weight: 800; line-height: 1.25; }
+.gain-t { grid-area: text; color: var(--ink-70); }
 .gain-cta { grid-area: cta; }
-.gain-cta .btn { margin-top: 2px; }
-.gain img { grid-area: photo; align-self: center; width: 100%; height: auto; aspect-ratio: 265 / 320; object-fit: cover; border-radius: 16px; }
+.gain-cta .btn { margin-top: 4px; }
+.gain img { grid-area: photo; width: 100%; height: auto; aspect-ratio: 265 / 320; object-fit: cover; border-radius: 12px; }
 @media (min-width: 560px) {
-  .gain { grid-template-columns: 1fr 150px; grid-template-areas: "text photo" "cta photo"; gap: 18px 24px; }
+  .gain { grid-template-columns: 1fr 150px; grid-template-areas: "head photo" "text photo" "cta photo";
+    gap: 12px 24px; align-items: start; padding: 24px 22px; }
+  .gain h2 { font-size: 21px; }
+  .gain img { align-self: center; border-radius: 16px; }
 }
 .cta-note { margin-top: 10px; font-size: 14px; color: var(--ink-70); }
 .sent { margin-top: 12px; font-size: 14px; color: var(--ink-70); }

@@ -525,7 +525,8 @@ if (typeof document !== 'undefined') {
       h += block(T.change, flowHTML(afterFlow(p, a)) + `<p class="elim">${T.elim(n)}</p>`);
     }
     h += `<section class="gain">
-      <div class="gain-text"><h2>${T.gainTitle}</h2><p class="gain-t">${T.gainText}</p></div>
+      <h2>${T.gainTitle}</h2>
+      <p class="gain-t">${T.gainText}</p>
       <img src="../assets/michael-320.jpg" alt="Michael Laberge" width="265" height="320" loading="lazy">
       <div class="gain-cta">${b.low ? sent + bookLink : bookBtn + sent}</div>
     </section>`;
