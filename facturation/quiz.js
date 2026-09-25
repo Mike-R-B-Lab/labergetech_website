@@ -25,7 +25,7 @@ const QUESTIONS = [
       today: ['Vous retapez les lignes{dans}', 'Vous ajoutez les extras', 'Vous vérifiez la facture', 'Vous envoyez la facture'] },
     { v: 'portail', label: 'Portail ou plateforme client', short: 'Le client commande sur son portail',
       today: ['Vous vous connectez au portail', 'Vous retapez les commandes{dans}', 'Vous regroupez par client', 'Vous envoyez les factures'] },
-    { v: 'crm', label: 'Mon CRM', other: true, short: 'Une vente est conclue dans {crm}',
+    { v: 'crm', label: 'Mon CRM', other: true, required: true, placeholder: 'Ex.\u00a0: HubSpot, Pipedrive, Salesforce', short: 'Une vente est conclue dans {crm}',
       today: ['Vous ouvrez la vente dans {crm}', 'Vous retapez les lignes{dans}', 'Vous vérifiez les prix', 'Vous envoyez la facture'] },
     { v: 'textos', label: 'Commandes par texto', short: 'Le client commande par texto',
       today: ['Vous retrouvez le texto', 'Vous retapez la commande{dans}', 'Vous vérifiez la facture', "Vous l'envoyez"] }
@@ -68,7 +68,7 @@ const EN = {
       today: ['You retype the lines{dans}', 'You add the extras', 'You check the invoice', 'You send the invoice'] },
     portail: { label: 'Client portal or platform', short: 'The client orders on their portal',
       today: ['You log into the portal', 'You retype the orders{dans}', 'You group them by client', 'You send the invoices'] },
-    crm: { label: 'My CRM', short: 'A sale is closed in {crm}',
+    crm: { label: 'My CRM', placeholder: 'e.g. HubSpot, Pipedrive, Salesforce', short: 'A sale is closed in {crm}',
       today: ['You open the sale in {crm}', 'You retype the lines{dans}', 'You check the prices', 'You send the invoice'] },
     textos: { label: 'Orders by text message', short: 'The client orders by text',
       today: ['You find the text', 'You retype the order{dans}', 'You check the invoice', 'You send it'] } } },
@@ -409,6 +409,14 @@ if (typeof document !== 'undefined') {
     next.addEventListener('click', () => { state.a.q5 = input.value; go(state.i + 1); });
   }
 
+  // A question is answered when something is picked, and a required name (their CRM) is filled in.
+  function canGo(q) {
+    const sel = selected(q);
+    const withText = q.options.find(o => o.other);
+    const missing = withText && withText.required && sel.includes(withText.v) && !String(state.a[q.id + '_other'] || '').trim();
+    return sel.length > 0 && !missing;
+  }
+
   function questionHTML(q) {
     if (q.slider) return sliderHTML(q);
     const sel = selected(q);
@@ -417,12 +425,13 @@ if (typeof document !== 'undefined') {
     const withText = q.options.find(o => o.other);
     const other = withText
       ? `<label class="fld other" ${sel.includes(withText.v) ? '' : 'hidden'}><span>${T.which}</span>
-         <input type="text" maxlength="60" value="${esc(state.a[q.id + '_other'])}" autocomplete="off"></label>` : '';
+         <input type="text" maxlength="60" value="${esc(state.a[q.id + '_other'])}" autocomplete="off"${withText.required ? ' required' : ''}
+           placeholder="${esc(shown(q.id, withText.v).placeholder || '')}"></label>` : '';
     const needsNext = q.multi || (withText && sel.includes(withText.v));
     return `<h2 tabindex="-1">${esc(titleOf(q))}</h2>` +
       (q.multi ? `<p class="hint">${esc(T.hint)}</p>` : '') +
       `<div class="chips${q.multi ? ' multi' : ''}" role="group" aria-label="${esc(titleOf(q))}">${chips}</div>${other}` +
-      `<button type="button" class="btn btn-primary wide next" ${needsNext ? '' : 'hidden'} ${sel.length ? '' : 'disabled'}>${T.next}</button>`;
+      `<button type="button" class="btn btn-primary wide next" ${needsNext ? '' : 'hidden'} ${canGo(q) ? '' : 'disabled'}>${T.next}</button>`;
   }
 
   function bindQuestion(q) {
@@ -430,7 +439,10 @@ if (typeof document !== 'undefined') {
     const next = $('#step .next');
     next.addEventListener('click', () => go(state.i + 1));
     const otherBox = $('#step .other');
-    if (otherBox) otherBox.querySelector('input').addEventListener('input', e => { state.a[q.id + '_other'] = e.target.value; });
+    if (otherBox) otherBox.querySelector('input').addEventListener('input', e => {
+      state.a[q.id + '_other'] = e.target.value;
+      next.disabled = !canGo(q);
+    });
     $('#step .chips').addEventListener('click', e => {
       const b = e.target.closest('.chip');
       if (!b) return;
@@ -446,7 +458,7 @@ if (typeof document !== 'undefined') {
       }
       const sel = selected(q);
       $('#step .chips').querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', sel.includes(c.dataset.v)));
-      next.disabled = !sel.length;
+      next.disabled = !canGo(q);
       if (q.multi) {
         const withText = q.options.find(x => x.other);
         if (withText && otherBox) {
