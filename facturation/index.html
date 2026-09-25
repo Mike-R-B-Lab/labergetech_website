@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Combien de temps passez-vous à traiter vos factures? | LabergeTech</title>
+<meta name="description" content="4 questions, 1 minute. On analyse comment vous facturez vos clients et identifie ce qu'on peut automatiser.">
+<link rel="canonical" href="https://labergetech.com/facturation/">
+<link rel="icon" type="image/png" href="../assets/logo.png">
+<meta property="og:title" content="Combien de temps passez-vous à traiter vos factures?">
+<meta property="og:description" content="4 questions, 1 minute. On analyse comment vous facturez vos clients et identifie ce qu'on peut automatiser.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LabergeTech">
+<meta property="og:url" content="https://labergetech.com/facturation/">
+<meta property="og:locale" content="fr_CA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap">
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f4f5f7;
+  --ink: #111418;
+  --accent: #1659c4;
+  --accent-2: #2e72d8;
+  --ink-70: color-mix(in srgb, var(--ink) 70%, transparent);
+  --ink-55: color-mix(in srgb, var(--ink) 55%, transparent);
+  --ink-30: color-mix(in srgb, var(--ink) 30%, transparent);
+  --line: color-mix(in srgb, var(--ink) 12%, transparent);
+  /* workflow colours, used for the flows and nothing else */
+  --red: #c62d22;
+  --green: #1d8052;
+  --grey: #9aa1a9;
+  --r: 12px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3, h4 { margin: 0; letter-spacing: -.02em; line-height: 1.2; }
+p { margin: 0; }
+a { color: var(--accent); }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+.nw { white-space: nowrap; }
+
+/* top bar */
+.top { padding: 18px 0; }
+.brand { display: inline-flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none;
+  font-weight: 800; font-size: 15px; letter-spacing: -.02em; }
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px;
+  font: inherit; font-weight: 600; font-size: 16px; padding: 12px 22px; border-radius: var(--r);
+  border: 1px solid transparent; cursor: pointer; text-decoration: none; text-align: center;
+  transition: background .2s var(--ease), transform .2s var(--ease); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-primary:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .45; cursor: default; }
+.btn-lg { padding: 15px 26px; font-size: 17px; }
+.wide { width: 100%; }
+@media (min-width: 560px) { .wide { width: auto; min-width: 240px; } }
+
+/* intro */
+.intro { padding: 36px 0 64px; }
+.intro h1 { font-size: clamp(32px, 8.5vw, 50px); font-weight: 800; letter-spacing: -.03em; line-height: 1.06; }
+.intro .meta { margin-top: 14px; font-size: 15px; font-weight: 700; color: var(--accent); }
+.intro .sub { margin-top: 10px; font-size: 19px; color: var(--ink-70); max-width: 32em; }
+.intro .btn { margin-top: 30px; }
+.intro .fine { margin-top: 12px; font-size: 14px; color: var(--ink-55); }
+.get-t { margin-top: 40px; font-size: 15px; font-weight: 700; color: var(--ink-70); letter-spacing: 0; }
+.get { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.get li { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 600; }
+.get svg { width: 38px; height: 38px; padding: 9px; flex: none; border-radius: 10px;
+  color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--bg)); }
+
+/* questionnaire */
+.quiz { padding: 12px 0 40px; }
+.prog-t { font-size: 14px; font-weight: 600; color: var(--ink-70); }
+.bar { height: 6px; background: var(--surface); border-radius: 99px; margin-top: 8px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 99px;
+  transition: width .3s var(--ease); }
+#step { padding-top: 18px; min-height: 420px; }
+#step h2 { font-size: clamp(22px, 5.6vw, 28px); font-weight: 800; outline: none; }
+.back { font: inherit; font-size: 15px; font-weight: 600; color: var(--ink-70); background: none; border: 0;
+  padding: 10px 0; margin: -6px 0 8px; min-height: 44px; cursor: pointer; }
+.back:hover { color: var(--ink); }
+.hint { margin-top: 6px; color: var(--ink-55); font-size: 15px; }
+.chips { display: grid; gap: 10px; margin-top: 20px; }
+.chip { font: inherit; font-size: 16px; font-weight: 500; text-align: left; color: var(--ink); min-height: 52px;
+  padding: 13px 16px 13px 46px; position: relative; background: var(--bg); cursor: pointer;
+  border: 1.5px solid color-mix(in srgb, var(--ink) 22%, transparent); border-radius: var(--r);
+  transition: border-color .15s var(--ease), background .15s var(--ease); -webkit-tap-highlight-color: transparent; }
+.chip::before { content: ""; position: absolute; left: 16px; top: 50%; width: 18px; height: 18px; margin-top: -9px;
+  border-radius: 50%; border: 1.5px solid var(--ink-30); background: var(--bg); }
+.chips.multi .chip::before { border-radius: 5px; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--bg)); }
+.chip[aria-pressed="true"]::before { border-color: var(--accent); background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg); }
+.next { margin-top: 20px; }
+.fld { display: grid; gap: 6px; margin-top: 16px; }
+.fld span { font-size: 14px; font-weight: 600; color: var(--ink-70); }
+.fld em { font-style: normal; font-weight: 500; color: var(--ink-55); }
+.fld input { width: 100%; font: inherit; font-size: 17px; color: var(--ink); min-height: 50px; padding: 11px 14px;
+  background: var(--surface); border: 1.5px solid transparent; border-radius: var(--r); }
+.fld input:focus { outline: none; border-color: var(--accent); background: var(--bg); }
+#contact { margin-top: 4px; }
+#contact .btn { margin-top: 24px; }
+.notice { margin-top: 12px; font-size: 13px; color: var(--ink-55); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* result: headline card with the figure and the booking button */
+#resultat { padding: 12px 0 104px; }
+.rhead h1 { font-size: clamp(28px, 7.4vw, 40px); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+.fig { margin-top: 18px; background: var(--surface); border-radius: 22px; padding: 22px 22px 24px; }
+.big { font-size: clamp(60px, 18vw, 92px); font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+.big span { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+.unit { font-size: 18px; font-weight: 600; margin-top: 8px; line-height: 1.35; }
+.small { margin-top: 12px; font-size: 13px; color: var(--ink-55); }
+/* what they could get back, with the booking button */
+.gain { margin: 4px 0 8px; padding: 24px 22px; border-radius: 22px;
+  background: color-mix(in srgb, var(--accent) 7%, var(--bg)); }
+.gain h2 { font-size: 21px; font-weight: 800; line-height: 1.25; }
+.gain-t { margin-top: 10px; color: var(--ink-70); }
+.gain .btn { margin-top: 18px; }
+.cta-note { margin-top: 10px; font-size: 14px; color: var(--ink-70); }
+.sent { margin-top: 12px; font-size: 14px; color: var(--ink-70); }
+.sent.main { margin-top: 22px; padding: 14px 16px; background: var(--bg); border-radius: var(--r); color: var(--ink); font-size: 15px; }
+.booklink { margin-top: 12px; font-weight: 600; }
+
+.rblock { padding: 30px 0; border-top: 1px solid var(--line); }
+.rhead + .rblock, .gain + .rblock { border-top: 0; }
+.rblock > h2 { font-size: 22px; font-weight: 800; margin-bottom: 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: -4px 0 14px; padding: 0; list-style: none;
+  font-size: 13px; color: var(--ink-70); }
+.legend li { display: inline-flex; align-items: center; gap: 6px; }
+.legend li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+.manual { --c: var(--red); }
+.auto { --c: var(--green); }
+.human { --c: var(--grey); }
+
+/* flows: one line read left to right; on a phone it scrolls sideways */
+.panel { background: var(--surface); border-radius: 18px; padding: 18px 10px 14px; }
+.flow { list-style: none; margin: 0; padding: 0; display: flex; overflow-x: auto; scroll-snap-type: x proximity;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.flow::-webkit-scrollbar { display: none; }
+.flow.more { -webkit-mask-image: linear-gradient(to right, #000 75%, transparent);
+  mask-image: linear-gradient(to right, #000 75%, transparent); }
+.flow li { flex: 1 0 100px; position: relative; padding: 28px 6px 0; scroll-snap-align: start;
+  text-align: center; font-size: 13.5px; font-weight: 600; line-height: 1.3; }
+.flow li.source { flex-basis: 120px; font-weight: 800; }
+.flow li::before { content: ""; position: absolute; z-index: 1; top: 3px; left: 50%; margin-left: -8px;
+  width: 16px; height: 16px; border-radius: 50%; background: var(--c, var(--bg));
+  box-shadow: inset 0 0 0 2px var(--c, var(--ink-30)); }
+.flow li::after { content: ""; position: absolute; top: 10px; left: 50%; width: 100%; height: 2px; background: var(--ink-30); }
+.flow li:last-child::after { display: none; }
+.swipe { margin-top: 12px; text-align: right; font-size: 13px; font-weight: 700; color: var(--accent);
+  animation: nudge 1.4s var(--ease) 3; }
+@keyframes nudge { 50% { transform: translateX(-6px); } }
+@media (prefers-reduced-motion: reduce) { .swipe { animation: none; } }
+.elim { margin-top: 14px; font-weight: 700; color: var(--green); }
+
+.card { background: var(--surface); border-radius: 18px; padding: 20px; }
+.card h3 { font-size: 19px; font-weight: 800; margin-top: 10px; }
+.card.mini { padding: 16px 18px; margin-top: 10px; }
+.card.mini h4 { font-size: 16px; font-weight: 700; }
+.card.mini .desc { font-size: 15px; color: var(--ink-70); margin-top: 4px; }
+.card.mini .tag { margin-top: 10px; }
+.others-t { font-size: 16px; font-weight: 800; margin: 24px 0 2px; }
+.tag { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 4px 10px; border-radius: 99px; }
+.tag.forte { background: color-mix(in srgb, var(--accent) 12%, var(--bg)); color: var(--accent); }
+.tag.valider { background: var(--bg); color: var(--ink-70); box-shadow: inset 0 0 0 1px var(--line); }
+.steps { margin: 14px 0 0; padding-left: 22px; }
+.tools { margin-top: 8px; font-size: 14px; color: var(--ink-70); }
+.steps li { margin-top: 12px; padding-left: 4px; }
+.tool { display: inline-block; margin-right: 8px; padding: 2px 8px; border-radius: 6px; vertical-align: 1px;
+  font-size: 12px; font-weight: 800; background: var(--bg); color: var(--ink-70); box-shadow: inset 0 0 0 1px var(--line); }
+.tool.ai { background: color-mix(in srgb, var(--accent) 12%, var(--bg)); color: var(--accent); box-shadow: none; }
+.tool.you { background: color-mix(in srgb, var(--ink) 8%, var(--bg)); color: var(--ink); box-shadow: none; }
+.exc { list-style: none; margin: 0; padding: 0; }
+.exc li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.exc li:first-child { padding-top: 0; }
+.diy { margin-top: 14px; font-size: 15px; color: var(--ink-70); }
+.cta p { color: var(--ink-70); }
+.cta .btn { margin-top: 20px; }
+.me { display: flex; align-items: center; gap: 14px; margin-top: 28px; }
+.me img { width: 64px; height: 77px; object-fit: cover; border-radius: 12px; flex: none; }
+.me p { font-size: 15px; color: var(--ink-70); }
+.me strong { color: var(--ink); }
+
+/* booking bar, shown while neither booking button is on screen */
+.sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--bg) 92%, transparent); border-top: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.sticky .btn { display: flex; width: 100%; max-width: 680px; margin: 0 auto; }
+
+.foot { border-top: 1px solid var(--line); padding: 22px 0 40px; font-size: 14px; color: var(--ink-55); }
+.foot .wrap { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.foot a { color: var(--ink-70); text-decoration: none; }
+.foot a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="../fr/"><img src="../assets/logo.png" alt="" width="28" height="28">LabergeTech</a>
+</div></header>
+
+<main>
+  <section class="intro" id="intro"><div class="wrap">
+    <h1>Combien de temps <span class="nw">passez-vous</span> à traiter vos factures?</h1>
+    <p class="meta">4 questions · 1 minute</p>
+    <p class="sub">On analyse comment vous facturez vos clients et identifie ce qu'on peut automatiser.</p>
+    <button type="button" class="btn btn-primary btn-lg wide" id="start">Commencer →</button>
+    <p class="fine">Résultat instantané · Gratuit · 1 minute</p>
+    <h2 class="get-t">À la fin, vous verrez :</h2>
+    <ul class="get">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg>Votre temps administratif annuel</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>Les étapes manuelles de votre processus</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 10.27 7 3.34"/><path d="m11 13.73-4 6.93"/><path d="M12 22v-2"/><path d="M12 2v2"/><path d="M14 12h8"/><path d="m17 20.66-1-1.73"/><path d="m17 3.34-1 1.73"/><path d="M2 12h2"/><path d="m20.66 17-1.73-1"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m3.34 7 1.73 1"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="8"/></svg>Comment vous pouvez automatiser</li>
+    </ul>
+    <!-- Icons: Lucide (lucide.dev), ISC license -->
+  </div></section>
+
+  <section class="quiz" id="questionnaire" aria-label="Questionnaire" hidden><div class="wrap">
+    <div class="prog"><p class="prog-t" id="prog-t" aria-live="polite">Question 1 de 4</p><div class="bar"><span id="bar"></span></div></div>
+    <div id="step"></div>
+  </div></section>
+
+  <section id="resultat" aria-label="Votre résultat" hidden></section>
+</main>
+
+<div class="sticky" id="sticky" hidden><a class="btn btn-primary btn-lg" target="_blank" rel="noopener">On regarde ça ensemble →</a></div>
+
+<footer class="foot"><div class="wrap">
+  <span>LabergeTech</span>
+  <a href="mailto:michael@labergetech.com">michael@labergetech.com</a>
+  <a href="../confidentialite/">Confidentialité</a>
+</div></footer>
+
+<script src="quiz.js"></script>
+</body>
+</html>

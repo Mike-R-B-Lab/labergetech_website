@@ -1,0 +1,664 @@
+{
+  "booking_url": "https://calendar.app.google/xFeJxXv8wQndKuGy9",
+  "apps_script_url": "https://script.google.com/macros/s/AKfycbx8wUgXYP_vgorVjjoQ26tqqwVd6YyT7YGMUpOwHZ3vwrBZM4ZwmFMq1bbeo7EfZhMp/exec",
+  "patterns": [
+    {
+      "id": "paper-workorder-photo-to-invoice",
+      "name": "Bon de travail papier → photo → envoyée à l'IA → brouillon de facture créé dans {logiciel}",
+      "description": "Le bon de travail est pris en photo et la facture se prépare sans ressaisie.",
+      "triggers": {
+        "q3": [
+          "Bons de travail ou feuilles de temps papier"
+        ],
+        "q6": []
+      },
+      "priority": 1,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Le technicien prend le bon en photo",
+        "L'IA lit la photo",
+        "Heures et prix vérifiés",
+        "Brouillon créé dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Votre téléphone",
+          "text": "À la fin des travaux, le technicien prend le bon en photo et l'envoie par texto ou par courriel. Aucune application à installer."
+        },
+        {
+          "tool": "IA",
+          "text": "L'IA récupère le client, l'adresse du chantier, les heures, le matériel et le numéro de bon, même quand c'est écrit à la main."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Chaque ligne est vérifiée contre votre liste de prix et vos taux horaires. Un écart ou une information manquante est signalé tout de suite."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Un brouillon de facture est créé dans {logiciel}, avec la photo du bon jointe comme pièce justificative."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous recevez la liste des brouillons à approuver. Un clic, et la facture part au client."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Bon de travail illisible",
+          "handling": "La photo est refusée tout de suite et le technicien reçoit un texto pour la reprendre."
+        },
+        {
+          "case": "Client introuvable",
+          "handling": "Le bon est mis de côté avec le client le plus proche suggéré. Rien n'est créé avant votre confirmation."
+        },
+        {
+          "case": "Facture en double",
+          "handling": "Le numéro de bon est vérifié avant la création. Un bon déjà facturé est bloqué."
+        },
+        {
+          "case": "Quantité incohérente",
+          "handling": "Des heures ou des quantités hors de l'ordinaire sont signalées avant l'approbation."
+        }
+      ],
+      "diy": {
+        "setup_time": "4 à 6 semaines",
+        "difficulty": "élevée"
+      }
+    },
+    {
+      "id": "delivery-proof-to-invoice",
+      "name": "Preuve de livraison signée reçue → automatisation débute → brouillon de facture créé dans {logiciel}",
+      "description": "La preuve de livraison signée déclenche la facture du transport, avec le bon tarif.",
+      "triggers": {
+        "q3": [
+          "Bons de livraison ou preuves de livraison"
+        ],
+        "q6": []
+      },
+      "priority": 2,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Le chauffeur envoie la preuve signée",
+        "L'IA lit la preuve",
+        "Le tarif est vérifié",
+        "Brouillon créé dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Votre téléphone",
+          "text": "Le chauffeur prend la preuve de livraison signée en photo, ou elle arrive par courriel."
+        },
+        {
+          "tool": "IA",
+          "text": "L'IA récupère le client, le numéro de connaissement, la date, le poids ou le nombre de palettes, et vérifie la signature."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Le tarif est validé contre la confirmation de tarif ou votre grille. Les frais d'attente et de manutention notés sur la preuve sont ajoutés."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Un brouillon de facture est créé dans {logiciel}, avec la preuve de livraison jointe."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous approuvez les factures du jour d'un coup, et elles partent aux clients."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Signature ou date manquante",
+          "handling": "La preuve est refusée et le répartiteur est averti avant qu'elle soit facturée."
+        },
+        {
+          "case": "Tarif différent de la confirmation",
+          "handling": "L'écart est affiché à côté de la ligne avant l'approbation."
+        },
+        {
+          "case": "Même connaissement reçu deux fois",
+          "handling": "Un numéro déjà facturé est bloqué."
+        },
+        {
+          "case": "Frais d'attente ou de manutention",
+          "handling": "Ils sont repérés sur la preuve et ajoutés comme lignes à approuver."
+        }
+      ],
+      "diy": {
+        "setup_time": "4 à 6 semaines",
+        "difficulty": "élevée"
+      }
+    },
+    {
+      "id": "email-po-to-invoice-draft",
+      "name": "Bon de commande reçu par courriel → automatisation débute → brouillon de facture créé dans {logiciel}",
+      "description": "Les commandes reçues par courriel deviennent des brouillons de facture sans ressaisie.",
+      "triggers": {
+        "q3": [
+          "Bons de commande par courriel"
+        ],
+        "q6": []
+      },
+      "priority": 3,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Le client envoie son bon par courriel",
+        "L'IA lit le bon",
+        "Les prix sont vérifiés",
+        "Brouillon créé dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Courriel",
+          "text": "Les bons de commande qui arrivent dans votre boîte, en PDF ou dans le texte du courriel, sont repérés automatiquement."
+        },
+        {
+          "tool": "IA",
+          "text": "L'IA récupère le client, les numéros de produits, les quantités, les prix convenus et la date de livraison demandée."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Les produits et les prix sont validés contre votre catalogue et votre liste de prix. Une commande reçue deux fois est bloquée."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Un brouillon de facture est créé dans {logiciel}, prêt dès que la commande est livrée."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous approuvez, et la facture part au client avec son numéro de bon de commande en référence."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Numéro de produit inconnu",
+          "handling": "La ligne est signalée avec le produit le plus proche de votre catalogue, et vous choisissez."
+        },
+        {
+          "case": "Prix différent de votre liste",
+          "handling": "L'écart est affiché à côté de la ligne avant l'approbation."
+        },
+        {
+          "case": "Commande reçue deux fois",
+          "handling": "Le numéro de bon de commande est vérifié. Un doublon ne crée pas une deuxième facture."
+        },
+        {
+          "case": "Courriel qui n'est pas une commande",
+          "handling": "Il est ignoré et reste dans votre boîte comme d'habitude."
+        }
+      ],
+      "diy": {
+        "setup_time": "3 à 4 semaines",
+        "difficulty": "moyenne"
+      }
+    },
+    {
+      "id": "excel-quote-to-job-to-invoice",
+      "name": "Soumission Excel → automatisation débute → brouillon de facture créé dans {logiciel}",
+      "description": "La soumission acceptée devient la facture quand le travail est terminé, sans retaper les lignes.",
+      "triggers": {
+        "q3": [
+          "Soumissions dans Excel"
+        ],
+        "q6": []
+      },
+      "priority": 4,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "La soumission Excel est acceptée",
+        "L'IA lit la soumission",
+        "Votre équipe marque le travail terminé",
+        "Brouillon créé dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Votre équipe marque le travail terminé",
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Excel",
+          "text": "Vos soumissions restent dans Excel, dans le même dossier et avec le même gabarit qu'aujourd'hui."
+        },
+        {
+          "tool": "IA",
+          "text": "Quand une soumission est acceptée, l'IA récupère le client, les lignes, les quantités et les prix, même si le gabarit change d'une soumission à l'autre."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Le projet est suivi jusqu'à ce que votre équipe marque le travail terminé, sur son téléphone ou dans votre calendrier."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Un brouillon de facture est créé dans {logiciel} à partir de la soumission, avec les extras ajoutés en cours de route et les dépôts déjà facturés soustraits."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous approuvez, et la facture part le jour même où le travail est terminé."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Soumission modifiée après l'acceptation",
+          "handling": "La dernière version est utilisée et les écarts avec la version acceptée sont affichés."
+        },
+        {
+          "case": "Gabarit Excel différent",
+          "handling": "Les colonnes sont reconnues par leur titre. Un fichier non reconnu est mis de côté pour vous."
+        },
+        {
+          "case": "Client introuvable",
+          "handling": "Le brouillon n'est pas créé et vous recevez un avis pour créer ou associer le client."
+        },
+        {
+          "case": "Dépôt déjà facturé",
+          "handling": "Les montants déjà facturés sont soustraits du brouillon."
+        }
+      ],
+      "diy": {
+        "setup_time": "3 à 4 semaines",
+        "difficulty": "moyenne"
+      }
+    },
+    {
+      "id": "portal-orders-to-monthly-invoice",
+      "name": "Commandes du portail client → regroupement par client → facture créée dans {logiciel}",
+      "description": "Les commandes des portails clients sont regroupées en une facture par client à la fin du mois.",
+      "triggers": {
+        "q3": [
+          "Portail ou plateforme client"
+        ],
+        "q6": []
+      },
+      "priority": 5,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Le client commande sur son portail",
+        "Les commandes sont récupérées chaque jour",
+        "Elles sont regroupées par client",
+        "Facture du mois créée dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Automatisation",
+          "text": "Chaque jour, les nouvelles commandes sont récupérées de vos portails clients, sans copier-coller."
+        },
+        {
+          "tool": "IA",
+          "text": "L'IA lit les commandes, peu importe la présentation du portail, et récupère le client, les produits, les quantités et les numéros de commande."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Les commandes sont classées par client, et celles annulées, modifiées ou déjà facturées sont repérées."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "À la fin du mois, une facture par client est préparée dans {logiciel}, avec le détail de chaque commande."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous approuvez toutes les factures du mois en une seule fois."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Portail qui change de présentation",
+          "handling": "La récupération s'arrête et vous êtes averti, au lieu de créer des factures erronées."
+        },
+        {
+          "case": "Commande annulée ou modifiée",
+          "handling": "La dernière version du portail est utilisée au moment de facturer."
+        },
+        {
+          "case": "Commande déjà facturée",
+          "handling": "Un numéro de commande ne peut apparaître que sur une seule facture."
+        },
+        {
+          "case": "Client pas encore associé",
+          "handling": "La commande est mise de côté jusqu'à ce que le client soit associé."
+        }
+      ],
+      "diy": {
+        "setup_time": "4 à 6 semaines",
+        "difficulty": "élevée"
+      }
+    },
+    {
+      "id": "text-screenshot-to-invoice",
+      "name": "Texto → capture d'écran → envoyée à l'IA → facture créée dans {logiciel}",
+      "description": "Une capture d'écran du texto du client suffit : l'IA en fait la facture.",
+      "triggers": {
+        "q3": [
+          "Commandes par texto"
+        ],
+        "q6": []
+      },
+      "priority": 6,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Le client commande par texto",
+        "Vous envoyez une capture d'écran",
+        "L'IA lit la capture",
+        "Facture créée dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Vous envoyez une capture d'écran",
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Votre téléphone",
+          "text": "Quand un client commande par texto, vous faites une capture d'écran et l'envoyez à un numéro ou une adresse dédiée. Rien d'autre ne change pour vous ni pour lui."
+        },
+        {
+          "tool": "IA",
+          "text": "L'IA lit la capture : client, produits, quantités, date voulue. S'il manque une information, vous êtes averti tout de suite."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "La commande est validée contre vos clients et vos produits."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Une facture est créée dans {logiciel}, prête à approuver."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous approuvez, et la facture part au client."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Capture illisible ou coupée",
+          "handling": "Vous recevez un avis pour en envoyer une autre, rien n'est facturé."
+        },
+        {
+          "case": "Client inconnu",
+          "handling": "La commande attend que vous créiez ou associiez le client."
+        },
+        {
+          "case": "Même capture envoyée deux fois",
+          "handling": "La deuxième est reconnue et ignorée."
+        },
+        {
+          "case": "Commande changée par un deuxième texto",
+          "handling": "La nouvelle capture remplace la première avant l'approbation."
+        }
+      ],
+      "diy": {
+        "setup_time": "3 à 4 semaines",
+        "difficulty": "moyenne"
+      }
+    },
+    {
+      "id": "phone-dictation-to-invoice",
+      "name": "Commande au téléphone → vous répétez la commande à l'IA → facture créée dans {logiciel}",
+      "description": "Après l'appel, vous dictez la commande en 30 secondes et la facture se prépare.",
+      "triggers": {
+        "q3": [
+          "Commandes par téléphone"
+        ],
+        "q6": []
+      },
+      "priority": 7,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Le client commande au téléphone",
+        "Vous répétez la commande à l'IA",
+        "L'IA remplit la fiche",
+        "Facture créée dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Vous répétez la commande à l'IA",
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Votre téléphone",
+          "text": "Après l'appel, vous répétez la commande à voix haute dans une note vocale : client, produits, quantités. Environ 30 secondes."
+        },
+        {
+          "tool": "IA",
+          "text": "L'IA transcrit la note et en fait une fiche de commande complète."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "La fiche est validée contre vos clients et vos produits. S'il manque quelque chose, vous recevez une question par texto."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Une facture est créée dans {logiciel}, prête à approuver."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous approuvez, et aucune commande prise au téléphone n'est oubliée."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Note vocale incomplète",
+          "handling": "L'IA vous demande par texto ce qui manque avant de préparer la facture."
+        },
+        {
+          "case": "Nom de client mal compris",
+          "handling": "Le client le plus proche est proposé, et rien n'est créé avant votre confirmation."
+        },
+        {
+          "case": "Produit inconnu",
+          "handling": "La ligne est signalée avec le produit le plus proche de votre catalogue."
+        },
+        {
+          "case": "Commande dictée deux fois",
+          "handling": "Le doublon est repéré et vous choisissez laquelle garder."
+        }
+      ],
+      "diy": {
+        "setup_time": "3 à 5 semaines",
+        "difficulty": "élevée"
+      }
+    },
+    {
+      "id": "invoice-on-completion",
+      "name": "Travail marqué terminé → facture envoyée le jour même",
+      "description": "Dès qu'un travail est terminé, la facture part le jour même au lieu d'attendre la fin du mois.",
+      "triggers": {
+        "q3": [],
+        "q6": [
+          "Factures envoyées trop tard"
+        ]
+      },
+      "priority": 8,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Votre équipe marque le travail terminé",
+        "Brouillon créé dans {logiciel}",
+        "Vous approuvez",
+        "La facture part le jour même"
+      ],
+      "human_steps": [
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Votre téléphone",
+          "text": "Votre équipe marque le travail terminé d'un clic, sur son téléphone ou dans votre calendrier."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Les heures, le matériel et le prix convenu sont rassemblés à partir de ce qui existe déjà : soumission, bon de travail ou calendrier."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Un brouillon de facture est créé dans {logiciel} dans l'heure."
+        },
+        {
+          "tool": "Vous",
+          "text": "À la fin de la journée, vous recevez la liste des brouillons à approuver."
+        },
+        {
+          "tool": "Courriel",
+          "text": "Les factures approuvées partent le jour même, pas à la fin du mois."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Informations manquantes",
+          "handling": "Le brouillon attend et la personne responsable reçoit un rappel."
+        },
+        {
+          "case": "Brouillon pas approuvé",
+          "handling": "Un rappel vous est envoyé le lendemain matin."
+        },
+        {
+          "case": "Travail rouvert après la facture",
+          "handling": "Un ajout ou une note de crédit est préparé au lieu d'une deuxième facture."
+        }
+      ],
+      "diy": {
+        "setup_time": "2 à 3 semaines",
+        "difficulty": "moyenne"
+      }
+    },
+    {
+      "id": "payment-follow-up",
+      "name": "Facture impayée → relances automatiques à 15, 30 et 45 jours",
+      "description": "Les relances de paiement partent toutes seules et s'arrêtent dès que la facture est payée.",
+      "triggers": {
+        "q3": [],
+        "q6": [
+          "Trop de suivis manuels"
+        ]
+      },
+      "priority": 9,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "La facture est échue",
+        "Relance à 15 jours",
+        "Relance à 30 jours",
+        "Relance à 45 jours",
+        "Vous appelez si elle est impayée"
+      ],
+      "human_steps": [
+        "Vous appelez si elle est impayée"
+      ],
+      "steps": [
+        {
+          "tool": "{logiciel}",
+          "text": "Chaque matin, les factures impayées sont vérifiées dans {logiciel}."
+        },
+        {
+          "tool": "IA",
+          "text": "Chaque relance est rédigée au nom de votre entreprise, avec le numéro de facture et un lien de paiement si vous en avez un."
+        },
+        {
+          "tool": "Courriel",
+          "text": "Une relance courtoise part à 15 jours, une plus directe à 30 jours et une dernière à 45 jours."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Dès qu'un paiement est inscrit dans {logiciel}, les relances s'arrêtent."
+        },
+        {
+          "tool": "Vous",
+          "text": "À 45 jours, vous recevez la liste des clients à appeler, avec l'historique des relances."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Client qui a payé, paiement pas encore inscrit",
+          "handling": "Le solde est vérifié le matin même de chaque relance, et le client peut répondre qu'il a payé."
+        },
+        {
+          "case": "Facture contestée",
+          "handling": "Vous la marquez en litige et elle sort des relances."
+        },
+        {
+          "case": "Bon client qui paie toujours à 45 jours",
+          "handling": "Vous pouvez l'exclure ou décaler ses relances."
+        }
+      ],
+      "diy": {
+        "setup_time": "1 à 2 semaines",
+        "difficulty": "faible"
+      }
+    }
+  ]
+}
