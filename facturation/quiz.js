@@ -15,7 +15,7 @@ const QUESTIONS = [
   ] },
   { id: 'q3', key: 'sources', multi: true, title: "D'où vient l'information avant la facture?", options: [
     { v: 'courriel', label: 'Bons de commande par courriel', short: 'Vous recevez un bon de commande par courriel',
-      today: ['Vous ouvrez le PDF', 'Vous retapez les lignes{dans}', 'Vous vérifiez les prix', 'Vous envoyez la facture'] },
+      today: ['Vous ouvrez le courriel et regardez les informations', 'Vous retapez les lignes{dans}', 'Vous vérifiez les prix', 'Vous envoyez la facture'] },
     { v: 'papier', label: 'Bons de travail ou feuilles de temps papier', short: 'Vous remplissez un bon de travail papier',
       today: ['Le bon revient au bureau', 'Vous retapez les heures et le matériel{dans}', 'Vous vérifiez heures et prix', 'Vous envoyez la facture'] },
     { v: 'livraison', label: 'Bons de livraison ou preuves de livraison', short: 'Le chauffeur rapporte la preuve de livraison',
@@ -57,7 +57,7 @@ const EN = {
     autre: { label: 'Other software' }, excel: { label: 'Excel, Word or Google Sheets' }, papier: { label: 'On paper' } } },
   q3: { title: 'Where does the information come from before the invoice?', opts: {
     courriel: { label: 'Purchase orders by email', short: 'You receive a purchase order by email',
-      today: ['You open the PDF', 'You retype the lines{dans}', 'You check the prices', 'You send the invoice'] },
+      today: ['You open the email and look at the details', 'You retype the lines{dans}', 'You check the prices', 'You send the invoice'] },
     papier: { label: 'Paper work orders or timesheets', short: 'You fill out a paper work order',
       today: ['The work order comes back to the office', 'You retype the hours and materials{dans}', 'You check hours and prices', 'You send the invoice'] },
     livraison: { label: 'Delivery slips or proofs of delivery', short: 'The driver brings back the proof of delivery',
@@ -303,8 +303,7 @@ if (typeof document !== 'undefined') {
       why: "Pourquoi ce n'est pas juste connecter A à B",
       diy: (t, d) => `À faire soi-même\u00a0: environ ${t}, difficulté ${d}, plus l'entretien quand vos outils changent.`,
       endTitle: 'Validons-le avec vos vraies factures',
-      endText: "En 15 minutes, on prend 1 ou 2 de vos factures et le document qui a servi à les créer, et on vérifie ce qui peut réellement être automatisé. Sans engagement.",
-      me: "C'est moi qui regarde vos factures avec vous et qui bâtis l'automatisation."
+      endText: "En 15 minutes, on prend 1 ou 2 de vos factures et le document qui a servi à les créer, et on vérifie ce qui peut réellement être automatisé. Sans engagement."
     },
     en: {
       lastStep: 'Last step', question: (i, n) => `Question ${i} of ${n}`, back: '← Back',
@@ -326,8 +325,7 @@ if (typeof document !== 'undefined') {
       why: "Why it isn't just connecting A to B",
       diy: (t, d) => `Doing it yourself: about ${t}, ${d} difficulty, plus upkeep whenever your tools change.`,
       endTitle: "Let's check it with your real invoices",
-      endText: 'In 15 minutes, we take 1 or 2 of your invoices and the document used to create them, and check what can really be automated. No commitment.',
-      me: "I'm the one who goes through your invoices with you and builds the automation."
+      endText: 'In 15 minutes, we take 1 or 2 of your invoices and the document used to create them, and check what can really be automated. No commitment.'
     }
   };
   const T = UI[LANG];
@@ -520,16 +518,16 @@ if (typeof document !== 'undefined') {
       </div>
     </header>`;
     h += block(T.today,
-      `<ul class="legend"><li class="manual">${T.legend[0]}</li><li class="auto">${T.legend[1]}</li><li class="human">${T.legend[2]}</li></ul>` +
+      `<ul class="legend"><li class="human">${T.legend[2]}</li><li class="auto">${T.legend[1]}</li></ul>` +
       flowHTML(todayFlow(a, p)));
     if (p) {
       const n = eliminated(a, p);
       h += block(T.change, flowHTML(afterFlow(p, a)) + `<p class="elim">${T.elim(n)}</p>`);
     }
     h += `<section class="gain">
-      <h2>${T.gainTitle}</h2>
-      <p class="gain-t">${T.gainText}</p>
-      ${b.low ? sent + bookLink : bookBtn + sent}
+      <div class="gain-text"><h2>${T.gainTitle}</h2><p class="gain-t">${T.gainText}</p></div>
+      <img src="../assets/michael-320.jpg" alt="Michael Laberge" width="265" height="320" loading="lazy">
+      <div class="gain-cta">${b.low ? sent + bookLink : bookBtn + sent}</div>
     </section>`;
     if (p) {
       const steps = p.steps.map(s => stepOf(s, a));
@@ -550,8 +548,6 @@ if (typeof document !== 'undefined') {
     h += `<section class="rblock cta"><h2>${T.endTitle}</h2>
       <p>${T.endText}</p>
       ${b.low ? bookLink : bookBtn}
-      <div class="me"><img src="../assets/michael-320.jpg" alt="Michael Laberge" width="64" height="77" loading="lazy">
-        <p><strong>Michael Laberge</strong>, LabergeTech<br>${T.me}</p></div>
     </section>`;
     return h;
   }

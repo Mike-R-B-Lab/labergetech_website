@@ -30,7 +30,6 @@
   --ink-30: color-mix(in srgb, var(--ink) 30%, transparent);
   --line: color-mix(in srgb, var(--ink) 12%, transparent);
   /* workflow colours, used for the flows and nothing else */
-  --red: #c62d22;
   --green: #1d8052;
   --grey: #9aa1a9;
   --r: 12px;
@@ -148,11 +147,19 @@ a { color: var(--accent); }
 .unit { font-size: 18px; font-weight: 600; margin-top: 8px; line-height: 1.35; }
 .small { margin-top: 12px; font-size: 13px; color: var(--ink-55); }
 /* what they could get back, with the booking button */
-.gain { margin: 4px 0 8px; padding: 24px 22px; border-radius: 22px;
+.gain { display: grid; grid-template-columns: 1fr 92px; grid-template-areas: "text photo" "cta cta"; gap: 16px 16px; align-items: start;
+  margin: 4px 0 8px; padding: 24px 22px; border-radius: 22px;
   background: color-mix(in srgb, var(--accent) 7%, var(--bg)); }
 .gain h2 { font-size: 21px; font-weight: 800; line-height: 1.25; }
 .gain-t { margin-top: 10px; color: var(--ink-70); }
 .gain .btn { margin-top: 18px; }
+.gain-text { grid-area: text; }
+.gain-cta { grid-area: cta; }
+.gain-cta .btn { margin-top: 2px; }
+.gain img { grid-area: photo; width: 100%; aspect-ratio: 265 / 320; object-fit: cover; border-radius: 16px; }
+@media (min-width: 560px) {
+  .gain { grid-template-columns: 1fr 150px; grid-template-areas: "text photo" "cta photo"; gap: 18px 24px; }
+}
 .cta-note { margin-top: 10px; font-size: 14px; color: var(--ink-70); }
 .sent { margin-top: 12px; font-size: 14px; color: var(--ink-70); }
 .sent.main { margin-top: 22px; padding: 14px 16px; background: var(--bg); border-radius: var(--r); color: var(--ink); font-size: 15px; }
@@ -165,7 +172,8 @@ a { color: var(--accent); }
   font-size: 13px; color: var(--ink-70); }
 .legend li { display: inline-flex; align-items: center; gap: 6px; }
 .legend li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
-.manual { --c: var(--red); }
+/* grey is what you do yourself, today and after; green is what runs on its own */
+.manual { --c: var(--grey); }
 .auto { --c: var(--green); }
 .human { --c: var(--grey); }
 
@@ -213,10 +221,6 @@ a { color: var(--accent); }
 .diy { margin-top: 14px; font-size: 15px; color: var(--ink-70); }
 .cta p { color: var(--ink-70); }
 .cta .btn { margin-top: 20px; }
-.me { display: flex; align-items: center; gap: 14px; margin-top: 28px; }
-.me img { width: 64px; height: 77px; object-fit: cover; border-radius: 12px; flex: none; }
-.me p { font-size: 15px; color: var(--ink-70); }
-.me strong { color: var(--ink); }
 
 /* booking bar, shown while neither booking button is on screen */
 .sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;

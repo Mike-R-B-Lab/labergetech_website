@@ -30,7 +30,7 @@ test('days, weeks, then full-time people', () => {
 test('today flow: steps of the featured source, in their software', () => {
   const flow = a => Q.todayFlow(A(a), Q.selectPatterns(A(a), cfg.patterns).primary).map(n => n.label);
   assert.deepStrictEqual(flow({ q2: 'sage50', q3: ['courriel'] }), ['Vous recevez un bon de commande par courriel',
-    'Vous ouvrez le PDF', 'Vous retapez les lignes dans Sage 50', 'Vous vérifiez les prix', 'Vous envoyez la facture']);
+    'Vous ouvrez le courriel et regardez les informations', 'Vous retapez les lignes dans Sage 50', 'Vous vérifiez les prix', 'Vous envoyez la facture']);
   assert.strictEqual(flow({ q2: 'excel', q3: ['textos'] })[2], 'Vous retapez la commande dans votre gabarit Excel');
   assert.strictEqual(flow({ q2: 'papier', q3: ['textos'] })[2], 'Vous écrivez la facture à la main');
   assert.strictEqual(flow({ q2: 'autre', q2_other: 'Maestro', q3: ['livraison'] })[2], 'Vous retapez la livraison dans Maestro');
@@ -165,7 +165,7 @@ test('English: same automation, English words, complete texts', () => {
     const a = A({ q2: 'sage50', q3: ['courriel'] });
     const p = Q.selectPatterns(a, patterns).primary;
     assert.strictEqual(p.id, 'email-po-to-invoice-draft');
-    assert.deepStrictEqual(Q.todayFlow(a, p).map(n => n.label), ['You receive a purchase order by email', 'You open the PDF',
+    assert.deepStrictEqual(Q.todayFlow(a, p).map(n => n.label), ['You receive a purchase order by email', 'You open the email and look at the details',
       'You retype the lines into Sage 50', 'You check the prices', 'You send the invoice']);
     assert.deepStrictEqual(Q.afterFlow(p, a).map(n => n.label), ['You receive a purchase order by email', 'AI reads the order',
       'Prices are checked', 'Draft created in Sage 50', 'You approve', 'The invoice goes to the client']);
