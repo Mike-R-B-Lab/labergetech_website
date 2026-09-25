@@ -25,6 +25,8 @@ const QUESTIONS = [
       today: ['Vous retapez les lignes{dans}', 'Vous ajoutez les extras', 'Vous vérifiez la facture', 'Vous envoyez la facture'] },
     { v: 'portail', label: 'Portail ou plateforme client', short: 'Le client commande sur son portail',
       today: ['Vous vous connectez au portail', 'Vous retapez les commandes{dans}', 'Vous regroupez par client', 'Vous envoyez les factures'] },
+    { v: 'crm', label: 'Mon CRM', other: true, short: 'Une vente est conclue dans {crm}',
+      today: ['Vous ouvrez la vente dans {crm}', 'Vous retapez les lignes{dans}', 'Vous vérifiez les prix', 'Vous envoyez la facture'] },
     { v: 'textos', label: 'Commandes par texto', short: 'Le client commande par texto',
       today: ['Vous retrouvez le texto', 'Vous retapez la commande{dans}', 'Vous vérifiez la facture', "Vous l'envoyez"] }
   ] },
@@ -66,6 +68,8 @@ const EN = {
       today: ['You retype the lines{dans}', 'You add the extras', 'You check the invoice', 'You send the invoice'] },
     portail: { label: 'Client portal or platform', short: 'The client orders on their portal',
       today: ['You log into the portal', 'You retype the orders{dans}', 'You group them by client', 'You send the invoices'] },
+    crm: { label: 'My CRM', short: 'A sale is closed in {crm}',
+      today: ['You open the sale in {crm}', 'You retype the lines{dans}', 'You check the prices', 'You send the invoice'] },
     textos: { label: 'Orders by text message', short: 'The client orders by text',
       today: ['You find the text', 'You retype the order{dans}', 'You check the invoice', 'You send it'] } } },
   q4: { title: 'How many invoices do you send to clients each month?', opts: {
@@ -81,11 +85,11 @@ const EN = {
 
 // Words the rules put into flows and steps, per language.
 const WORDS = {
-  fr: { into: ' dans ', at: ' dans ', excelTemplate: 'votre gabarit Excel', yourSoftware: 'votre logiciel', excelTool: 'Excel ou Google Sheets',
+  fr: { into: ' dans ', at: ' dans ', yourCrm: 'votre CRM', excelTemplate: 'votre gabarit Excel', yourSoftware: 'votre logiciel', excelTool: 'Excel ou Google Sheets',
     byHand: 'Vous écrivez la facture à la main', target: / dans \{logiciel\}/, plural: /^Factures/,
     prepared: 'Facture préparée', preparedPlural: 'Factures préparées', billingSoftware: 'un logiciel de facturation',
     forte: 'Forte compatibilité', valider: 'À valider avec votre processus réel', decimal: ',', locale: 'fr-CA' },
-  en: { into: ' into ', at: ' in ', excelTemplate: 'your Excel template', yourSoftware: 'your software', excelTool: 'Excel or Google Sheets',
+  en: { into: ' into ', at: ' in ', yourCrm: 'your CRM', excelTemplate: 'your Excel template', yourSoftware: 'your software', excelTool: 'Excel or Google Sheets',
     byHand: 'You write the invoice by hand', target: / in \{logiciel\}/, plural: /^Invoices/,
     prepared: 'Invoice prepared', preparedPlural: 'Invoices prepared', billingSoftware: 'invoicing software',
     forte: 'Strong fit', valider: 'To confirm with your actual process', decimal: '.', locale: 'en-CA' }
@@ -117,6 +121,11 @@ const titleOf = q => (LANG === 'en' ? EN[q.id].title : q.title);
 const dec1 = x => (Math.round(x * 10) / 10).toFixed(1).replace(/\.0$/, '').replace('.', W().decimal);
 const num = n => n.toLocaleString(W().locale);
 
+// The CRM they named, or "votre CRM".
+function withCrm(text, a) {
+  return text.split('{crm}').join(String(a.q3_other || '').trim() || W().yourCrm);
+}
+
 // Where they retype today, as it reads in a step: " dans Sage 50", " dans votre gabarit Excel".
 function dans(a) {
   return W().into + logiciel(a);
@@ -125,19 +134,22 @@ function dans(a) {
 // Today's steps for one source, written to mirror that source's automated flow.
 // With several sources ticked, pass the featured automation so both flows compare the same thing.
 function todayFlow(a, primary) {
-  const ticked = inOrder('q3', a.q3).map(v => shown('q3', v));
-  const src = (primary && ticked.find(o => primary.triggers.q3.includes(o.label))) || ticked[0];
-  const flow = [{ kind: 'source', label: src.short }];
+  const ticked = inOrder('q3', a.q3);
+  // Rules use the French labels, whatever the page language.
+  const v = (primary && ticked.find(x => primary.triggers.q3.includes(opt('q3', x).label))) || ticked[0];
+  const src = shown('q3', v);
+  const flow = [{ kind: 'source', label: withCrm(src.short, a) }];
   if (src.waits) flow.push({ kind: 'plain', label: src.waits });
   src.today.forEach(t => flow.push({
     kind: 'manual',
-    label: !t.includes('{dans}') ? t : a.q2 === 'papier' ? W().byHand : t.replace('{dans}', dans(a))
+    label: withCrm(!t.includes('{dans}') ? t : a.q2 === 'papier' ? W().byHand : t.replace('{dans}', dans(a)), a)
   }));
   return flow;
 }
 
 // Excel users get the invoice in their template; paper users have no software yet.
 function afterLabel(s, a) {
+  s = withCrm(s, a);
   const w = W();
   const at = s.search(w.target);
   if (at < 0) return s;
@@ -235,7 +247,8 @@ function decodeAnswers(hash) {
   const p = new URLSearchParams(String(hash || '').replace(/^#/, ''));
   const one = id => (opt(id, p.get(id)) ? p.get(id) : null);
   const vs = String(p.get('q3') || '').split(',').filter(Boolean);
-  const a = { q2: one('q2'), q2_other: '', q3: vs.length && vs.every(v => opt('q3', v)) ? vs : null, q4: one('q4'), q5: one('q5'), q6: one('q6') };
+  const a = { q2: one('q2'), q2_other: '', q3: vs.length && vs.every(v => opt('q3', v)) ? vs : null, q3_other: '',
+    q4: one('q4'), q5: one('q5'), q6: one('q6') };
   return Object.values(a).every(v => v !== null) ? a : null;
 }
 
@@ -251,6 +264,7 @@ function payload(a, contact, cfg, pageUrl) {
     website: contact.website,
     software: opt('q2', a.q2).label,
     software_other: a.q2 === 'autre' ? String(a.q2_other || '').trim() : '',
+    crm_name: a.q3.includes('crm') ? String(a.q3_other || '').trim() : '',
     sources: labelsOf('q3', inOrder('q3', a.q3)),
     monthly_volume: opt('q4', a.q4).label,
     trigger: opt('q6', a.q6).label,
@@ -334,7 +348,7 @@ if (typeof document !== 'undefined') {
     .then(([cfg, texts]) => (cfg && Object.assign({}, cfg, { patterns: localize(cfg.patterns, texts) })));
   const isSet = s => s && !String(s).startsWith('[');
 
-  const state = { i: 0, a: { q2: null, q2_other: '', q3: [], q4: null, q5: null, q6: null }, contact: {} };
+  const state = { i: 0, a: { q2: null, q2_other: '', q3: [], q3_other: '', q4: null, q5: null, q6: null }, contact: {} };
   const TOTAL = QUESTIONS.length;
 
   // Three screens, one at a time: intro, questions, result.
@@ -400,10 +414,11 @@ if (typeof document !== 'undefined') {
     const sel = selected(q);
     const chips = q.options.map(o =>
       `<button type="button" class="chip" data-v="${o.v}" aria-pressed="${sel.includes(o.v)}">${esc(shown(q.id, o.v).label)}</button>`).join('');
-    const other = q.options.some(o => o.other)
-      ? `<label class="fld other" ${state.a.q2 === 'autre' ? '' : 'hidden'}><span>${T.which}</span>
-         <input type="text" maxlength="60" value="${esc(state.a.q2_other)}" autocomplete="off"></label>` : '';
-    const needsNext = q.multi || (q.id === 'q2' && state.a.q2 === 'autre');
+    const withText = q.options.find(o => o.other);
+    const other = withText
+      ? `<label class="fld other" ${sel.includes(withText.v) ? '' : 'hidden'}><span>${T.which}</span>
+         <input type="text" maxlength="60" value="${esc(state.a[q.id + '_other'])}" autocomplete="off"></label>` : '';
+    const needsNext = q.multi || (withText && sel.includes(withText.v));
     return `<h2 tabindex="-1">${esc(titleOf(q))}</h2>` +
       (q.multi ? `<p class="hint">${esc(T.hint)}</p>` : '') +
       `<div class="chips${q.multi ? ' multi' : ''}" role="group" aria-label="${esc(titleOf(q))}">${chips}</div>${other}` +
@@ -415,7 +430,7 @@ if (typeof document !== 'undefined') {
     const next = $('#step .next');
     next.addEventListener('click', () => go(state.i + 1));
     const otherBox = $('#step .other');
-    if (otherBox) otherBox.querySelector('input').addEventListener('input', e => { state.a.q2_other = e.target.value; });
+    if (otherBox) otherBox.querySelector('input').addEventListener('input', e => { state.a[q.id + '_other'] = e.target.value; });
     $('#step .chips').addEventListener('click', e => {
       const b = e.target.closest('.chip');
       if (!b) return;
@@ -432,7 +447,14 @@ if (typeof document !== 'undefined') {
       const sel = selected(q);
       $('#step .chips').querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', sel.includes(c.dataset.v)));
       next.disabled = !sel.length;
-      if (q.multi) return;
+      if (q.multi) {
+        const withText = q.options.find(x => x.other);
+        if (withText && otherBox) {
+          otherBox.hidden = !sel.includes(withText.v);
+          if (o.v === withText.v && !otherBox.hidden) otherBox.querySelector('input').focus();
+        }
+        return;
+      }
       if (o.other) {
         otherBox.hidden = false;
         next.hidden = false;

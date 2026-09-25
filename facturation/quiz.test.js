@@ -6,7 +6,7 @@ const path = require('path');
 const Q = require('./quiz.js');
 
 const cfg = JSON.parse(fs.readFileSync(path.join(__dirname, 'patterns.json'), 'utf8'));
-const base = { q2: 'quickbooks', q2_other: '', q3: ['papier'], q4: '30-100', q5: '6', q6: 'temps' };
+const base = { q2: 'quickbooks', q2_other: '', q3: ['papier'], q3_other: '', q4: '30-100', q5: '6', q6: 'temps' };
 const A = over => Object.assign({}, base, over);
 
 test('five questions, hours straight from their volume and their minutes', () => {
@@ -127,7 +127,7 @@ test('payload carries answers, figure, patterns and UTM', () => {
 
 test('patterns.json is complete and the copy has no dashes', () => {
   const ids = cfg.patterns.map(p => p.id);
-  assert.strictEqual(new Set(ids).size, 8);
+  assert.strictEqual(new Set(ids).size, 9);
   const labels = id => Q.QUESTIONS.find(q => q.id === id).options.map(o => o.label);
   const sources = labels('q3');
   const q6 = labels('q6');
@@ -188,4 +188,31 @@ test('English: same automation, English words, complete texts', () => {
 
 test('the minutes slider starts from where they make invoices', () => {
   assert.deepStrictEqual(['quickbooks', 'sage50', 'autre', 'excel', 'papier'].map(v => Q.startMinutes(A({ q2: v }))), [6, 6, 6, 5, 10]);
+});
+
+test('CRM: its own automation, with the CRM they named in both flows', () => {
+  const a = A({ q2: 'acomba', q3: ['crm'], q3_other: 'HubSpot' });
+  const p = Q.selectPatterns(a, cfg.patterns).primary;
+  assert.strictEqual(p.id, 'crm-sale-to-invoice');
+  assert.strictEqual(p.confidence, 'forte');
+  assert.deepStrictEqual(Q.todayFlow(a, p).map(n => n.label), ['Une vente est conclue dans HubSpot',
+    'Vous ouvrez la vente dans HubSpot', 'Vous retapez les lignes dans Acomba', 'Vous vérifiez les prix', 'Vous envoyez la facture']);
+  assert.deepStrictEqual(Q.afterFlow(p, a).slice(0, 2).map(n => n.label), ['Une vente est conclue dans HubSpot', 'Les infos sont récupérées de HubSpot']);
+  assert.strictEqual(Q.todayFlow(A({ q3: ['crm'] }), p)[0].label, 'Une vente est conclue dans votre CRM');
+  assert.strictEqual(Q.payload(a, { first_name: 'J', company: 'X', email: 'j@x.ca', phone: '', website: '' }, cfg,
+    'https://labergetech.com/facturation/').crm_name, 'HubSpot');
+});
+
+test('English page: several sources still show the featured one in both flows', () => {
+  const en = JSON.parse(fs.readFileSync(path.join(__dirname, 'patterns.en.json'), 'utf8'));
+  Q.setLang('en');
+  try {
+    const a = A({ q2: 'excel', q3: ['courriel', 'papier'] });
+    const p = Q.selectPatterns(a, Q.localize(cfg.patterns, en)).primary;
+    assert.strictEqual(p.id, 'paper-workorder-photo-to-invoice');
+    assert.strictEqual(Q.todayFlow(a, p)[0].label, 'You fill out a paper work order');
+    assert.strictEqual(Q.todayFlow(A({ q3: ['crm'] }), p)[0].label, 'A sale is closed in your CRM');
+  } finally {
+    Q.setLang('fr');
+  }
 });

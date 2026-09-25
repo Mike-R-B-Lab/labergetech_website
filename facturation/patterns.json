@@ -374,6 +374,80 @@
       }
     },
     {
+      "id": "crm-sale-to-invoice",
+      "name": "Vente conclue dans le CRM → automatisation débute → brouillon de facture créé dans {logiciel}",
+      "description": "Quand une vente est conclue dans votre CRM, la facture se prépare sans rien retaper.",
+      "triggers": {
+        "q3": [
+          "Mon CRM"
+        ],
+        "q6": []
+      },
+      "priority": 6,
+      "supported_software": [
+        "QuickBooks",
+        "Sage 50",
+        "Acomba",
+        "Genius ERP",
+        "Excel, Word ou Google Sheets"
+      ],
+      "after_flow": [
+        "Une vente est conclue dans {crm}",
+        "Les infos sont récupérées de {crm}",
+        "Les prix sont vérifiés",
+        "Brouillon créé dans {logiciel}",
+        "Vous approuvez",
+        "La facture part au client"
+      ],
+      "human_steps": [
+        "Vous approuvez"
+      ],
+      "steps": [
+        {
+          "tool": "Votre CRM",
+          "text": "Quand une vente passe à « gagnée » dans votre CRM, l'automatisation se déclenche. Rien ne change dans votre façon de travailler."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Le client, les produits ou services, les quantités et les prix sont récupérés directement de la vente."
+        },
+        {
+          "tool": "Automatisation",
+          "text": "Le client est associé à celui de {logiciel}, ou créé s'il est nouveau, et les prix sont vérifiés contre votre liste."
+        },
+        {
+          "tool": "{logiciel}",
+          "text": "Un brouillon de facture est créé dans {logiciel}, avec le numéro de la vente en référence."
+        },
+        {
+          "tool": "Vous",
+          "text": "Vous approuvez, et la facture part au client. La vente est marquée facturée dans votre CRM."
+        }
+      ],
+      "exceptions": [
+        {
+          "case": "Vente sans produits ou sans prix",
+          "handling": "Le brouillon n'est pas créé et vous recevez un avis pour compléter la vente."
+        },
+        {
+          "case": "Client écrit différemment dans le CRM et dans {logiciel}",
+          "handling": "Le client le plus proche est proposé, et rien n'est créé avant votre confirmation."
+        },
+        {
+          "case": "Vente modifiée après avoir été gagnée",
+          "handling": "Le brouillon est mis à jour tant qu'il n'est pas approuvé."
+        },
+        {
+          "case": "Même vente marquée gagnée deux fois",
+          "handling": "Une vente ne peut créer qu'une seule facture."
+        }
+      ],
+      "diy": {
+        "setup_time": "2 à 4 semaines",
+        "difficulty": "moyenne"
+      }
+    },
+    {
       "id": "text-screenshot-to-invoice",
       "name": "Texto → capture d'écran → envoyée à l'IA → facture créée dans {logiciel}",
       "description": "Une capture d'écran du texto du client suffit : l'IA en fait la facture.",
@@ -383,7 +457,7 @@
         ],
         "q6": []
       },
-      "priority": 6,
+      "priority": 7,
       "supported_software": [
         "QuickBooks",
         "Sage 50",
@@ -458,7 +532,7 @@
           "Factures envoyées trop tard"
         ]
       },
-      "priority": 7,
+      "priority": 8,
       "supported_software": [
         "QuickBooks",
         "Sage 50",
@@ -526,7 +600,7 @@
           "Trop de suivis manuels"
         ]
       },
-      "priority": 8,
+      "priority": 9,
       "supported_software": [
         "QuickBooks",
         "Sage 50",

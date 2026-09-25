@@ -2,159 +2,523 @@
   "paper-workorder-photo-to-invoice": {
     "name": "Paper work order → photo → sent to AI → invoice draft created in {logiciel}",
     "description": "You take a photo of the work order and the invoice gets prepared without retyping.",
-    "after_flow": ["You take a photo of the work order", "AI reads the photo", "Hours and prices checked", "Draft created in {logiciel}", "You approve", "The invoice goes to the client"],
-    "human_steps": ["You approve"],
+    "after_flow": [
+      "You take a photo of the work order",
+      "AI reads the photo",
+      "Hours and prices checked",
+      "Draft created in {logiciel}",
+      "You approve",
+      "The invoice goes to the client"
+    ],
+    "human_steps": [
+      "You approve"
+    ],
     "steps": [
-      { "tool": "Your phone", "text": "When the job is done, you take a photo of the work order and send it by text or email. No app to install." },
-      { "tool": "AI", "text": "AI picks up the client, the job site address, the hours, the materials and the work order number, even when they're handwritten." },
-      { "tool": "Automation", "text": "Each line is checked against your price list and hourly rates. A mismatch or missing detail is flagged right away." },
-      { "tool": "{logiciel}", "text": "An invoice draft is created in {logiciel}, with the photo of the work order attached as backup." },
-      { "tool": "You", "text": "You get the list of drafts to approve. One click, and the invoice goes to the client." }
+      {
+        "tool": "Your phone",
+        "text": "When the job is done, you take a photo of the work order and send it by text or email. No app to install."
+      },
+      {
+        "tool": "AI",
+        "text": "AI picks up the client, the job site address, the hours, the materials and the work order number, even when they're handwritten."
+      },
+      {
+        "tool": "Automation",
+        "text": "Each line is checked against your price list and hourly rates. A mismatch or missing detail is flagged right away."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "An invoice draft is created in {logiciel}, with the photo of the work order attached as backup."
+      },
+      {
+        "tool": "You",
+        "text": "You get the list of drafts to approve. One click, and the invoice goes to the client."
+      }
     ],
     "exceptions": [
-      { "case": "Unreadable work order", "handling": "The photo is rejected right away and you get a text asking you to retake it." },
-      { "case": "Client not found", "handling": "The work order is set aside with the closest client suggested. Nothing is created until you confirm." },
-      { "case": "Duplicate invoice", "handling": "The work order number is checked before anything is created. A work order that was already invoiced is blocked." },
-      { "case": "Quantity that doesn't add up", "handling": "Unusual hours or quantities are flagged before approval." }
+      {
+        "case": "Unreadable work order",
+        "handling": "The photo is rejected right away and you get a text asking you to retake it."
+      },
+      {
+        "case": "Client not found",
+        "handling": "The work order is set aside with the closest client suggested. Nothing is created until you confirm."
+      },
+      {
+        "case": "Duplicate invoice",
+        "handling": "The work order number is checked before anything is created. A work order that was already invoiced is blocked."
+      },
+      {
+        "case": "Quantity that doesn't add up",
+        "handling": "Unusual hours or quantities are flagged before approval."
+      }
     ],
-    "diy": { "setup_time": "4 to 6 weeks", "difficulty": "high" }
+    "diy": {
+      "setup_time": "4 to 6 weeks",
+      "difficulty": "high"
+    }
   },
   "delivery-proof-to-invoice": {
     "name": "Signed proof of delivery received → automation starts → invoice draft created in {logiciel}",
     "description": "The signed proof of delivery triggers the freight invoice, at the right rate.",
-    "after_flow": ["The driver sends the signed proof", "AI reads the proof", "The rate is checked", "Draft created in {logiciel}", "You approve", "The invoice goes to the client"],
-    "human_steps": ["You approve"],
+    "after_flow": [
+      "The driver sends the signed proof",
+      "AI reads the proof",
+      "The rate is checked",
+      "Draft created in {logiciel}",
+      "You approve",
+      "The invoice goes to the client"
+    ],
+    "human_steps": [
+      "You approve"
+    ],
     "steps": [
-      { "tool": "Your phone", "text": "The driver takes a photo of the signed proof of delivery, or it arrives by email." },
-      { "tool": "AI", "text": "AI picks up the client, the bill of lading number, the date, the weight or pallet count, and checks the signature." },
-      { "tool": "Automation", "text": "The rate is checked against the rate confirmation or your rate sheet. Waiting and handling charges noted on the proof are added." },
-      { "tool": "{logiciel}", "text": "An invoice draft is created in {logiciel}, with the proof of delivery attached." },
-      { "tool": "You", "text": "You approve the day's invoices in one go, and they go out to the clients." }
+      {
+        "tool": "Your phone",
+        "text": "The driver takes a photo of the signed proof of delivery, or it arrives by email."
+      },
+      {
+        "tool": "AI",
+        "text": "AI picks up the client, the bill of lading number, the date, the weight or pallet count, and checks the signature."
+      },
+      {
+        "tool": "Automation",
+        "text": "The rate is checked against the rate confirmation or your rate sheet. Waiting and handling charges noted on the proof are added."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "An invoice draft is created in {logiciel}, with the proof of delivery attached."
+      },
+      {
+        "tool": "You",
+        "text": "You approve the day's invoices in one go, and they go out to the clients."
+      }
     ],
     "exceptions": [
-      { "case": "Missing signature or date", "handling": "The proof is rejected and the dispatcher is notified before it gets invoiced." },
-      { "case": "Rate different from the confirmation", "handling": "The difference is shown next to the line before approval." },
-      { "case": "Same bill of lading received twice", "handling": "A number that was already invoiced is blocked." },
-      { "case": "Waiting or handling charges", "handling": "They're picked up from the proof and added as lines to approve." }
+      {
+        "case": "Missing signature or date",
+        "handling": "The proof is rejected and the dispatcher is notified before it gets invoiced."
+      },
+      {
+        "case": "Rate different from the confirmation",
+        "handling": "The difference is shown next to the line before approval."
+      },
+      {
+        "case": "Same bill of lading received twice",
+        "handling": "A number that was already invoiced is blocked."
+      },
+      {
+        "case": "Waiting or handling charges",
+        "handling": "They're picked up from the proof and added as lines to approve."
+      }
     ],
-    "diy": { "setup_time": "4 to 6 weeks", "difficulty": "high" }
+    "diy": {
+      "setup_time": "4 to 6 weeks",
+      "difficulty": "high"
+    }
   },
   "email-po-to-invoice-draft": {
     "name": "Purchase order received by email → automation starts → invoice draft created in {logiciel}",
     "description": "Orders you receive by email become invoice drafts without retyping.",
-    "after_flow": ["You receive a purchase order by email", "AI reads the order", "Prices are checked", "Draft created in {logiciel}", "You approve", "The invoice goes to the client"],
-    "human_steps": ["You approve"],
+    "after_flow": [
+      "You receive a purchase order by email",
+      "AI reads the order",
+      "Prices are checked",
+      "Draft created in {logiciel}",
+      "You approve",
+      "The invoice goes to the client"
+    ],
+    "human_steps": [
+      "You approve"
+    ],
     "steps": [
-      { "tool": "Email", "text": "Purchase orders that land in your inbox, as a PDF or in the body of the email, are picked out automatically." },
-      { "tool": "AI", "text": "AI picks up the client, the product numbers, the quantities, the agreed prices and the requested delivery date." },
-      { "tool": "Automation", "text": "Products and prices are checked against your catalogue and price list. An order received twice is blocked." },
-      { "tool": "{logiciel}", "text": "An invoice draft is created in {logiciel}, ready as soon as the order is delivered." },
-      { "tool": "You", "text": "You approve, and the invoice goes to the client with their purchase order number as a reference." }
+      {
+        "tool": "Email",
+        "text": "Purchase orders that land in your inbox, as a PDF or in the body of the email, are picked out automatically."
+      },
+      {
+        "tool": "AI",
+        "text": "AI picks up the client, the product numbers, the quantities, the agreed prices and the requested delivery date."
+      },
+      {
+        "tool": "Automation",
+        "text": "Products and prices are checked against your catalogue and price list. An order received twice is blocked."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "An invoice draft is created in {logiciel}, ready as soon as the order is delivered."
+      },
+      {
+        "tool": "You",
+        "text": "You approve, and the invoice goes to the client with their purchase order number as a reference."
+      }
     ],
     "exceptions": [
-      { "case": "Unknown product number", "handling": "The line is flagged with the closest product in your catalogue, and you choose." },
-      { "case": "Price different from your list", "handling": "The difference is shown next to the line before approval." },
-      { "case": "Order received twice", "handling": "The purchase order number is checked. A duplicate doesn't create a second invoice." },
-      { "case": "Email that isn't an order", "handling": "It's ignored and stays in your inbox as usual." }
+      {
+        "case": "Unknown product number",
+        "handling": "The line is flagged with the closest product in your catalogue, and you choose."
+      },
+      {
+        "case": "Price different from your list",
+        "handling": "The difference is shown next to the line before approval."
+      },
+      {
+        "case": "Order received twice",
+        "handling": "The purchase order number is checked. A duplicate doesn't create a second invoice."
+      },
+      {
+        "case": "Email that isn't an order",
+        "handling": "It's ignored and stays in your inbox as usual."
+      }
     ],
-    "diy": { "setup_time": "3 to 4 weeks", "difficulty": "medium" }
+    "diy": {
+      "setup_time": "3 to 4 weeks",
+      "difficulty": "medium"
+    }
   },
   "excel-quote-to-job-to-invoice": {
     "name": "Excel quote → automation starts → invoice draft created in {logiciel}",
     "description": "The accepted quote becomes the invoice when the job is done, without retyping the lines.",
-    "after_flow": ["The Excel quote is accepted", "Your team marks the job done", "AI reads the quote", "Draft created in {logiciel}, extras included", "You approve", "The invoice goes to the client"],
-    "human_steps": ["Your team marks the job done", "You approve"],
+    "after_flow": [
+      "The Excel quote is accepted",
+      "Your team marks the job done",
+      "AI reads the quote",
+      "Draft created in {logiciel}, extras included",
+      "You approve",
+      "The invoice goes to the client"
+    ],
+    "human_steps": [
+      "Your team marks the job done",
+      "You approve"
+    ],
     "steps": [
-      { "tool": "Excel", "text": "Your quotes stay in Excel, in the same folder and with the same template as today." },
-      { "tool": "Your phone", "text": "Your team marks the job done, on their phone or in your calendar." },
-      { "tool": "AI", "text": "AI then reads the accepted quote: client, lines, quantities and prices, even if the template changes from one quote to the next." },
-      { "tool": "{logiciel}", "text": "An invoice draft is created in {logiciel} from the quote, with extras added along the way and deposits already invoiced taken off." },
-      { "tool": "You", "text": "You approve, and the invoice goes out the same day the job is done." }
+      {
+        "tool": "Excel",
+        "text": "Your quotes stay in Excel, in the same folder and with the same template as today."
+      },
+      {
+        "tool": "Your phone",
+        "text": "Your team marks the job done, on their phone or in your calendar."
+      },
+      {
+        "tool": "AI",
+        "text": "AI then reads the accepted quote: client, lines, quantities and prices, even if the template changes from one quote to the next."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "An invoice draft is created in {logiciel} from the quote, with extras added along the way and deposits already invoiced taken off."
+      },
+      {
+        "tool": "You",
+        "text": "You approve, and the invoice goes out the same day the job is done."
+      }
     ],
     "exceptions": [
-      { "case": "Quote changed after it was accepted", "handling": "The latest version is used and the differences from the accepted version are shown." },
-      { "case": "Different Excel template", "handling": "Columns are recognized by their heading. A file that isn't recognized is set aside for you." },
-      { "case": "Client not found", "handling": "The draft isn't created and you get a notice to create or match the client." },
-      { "case": "Deposit already invoiced", "handling": "Amounts already invoiced are taken off the draft." }
+      {
+        "case": "Quote changed after it was accepted",
+        "handling": "The latest version is used and the differences from the accepted version are shown."
+      },
+      {
+        "case": "Different Excel template",
+        "handling": "Columns are recognized by their heading. A file that isn't recognized is set aside for you."
+      },
+      {
+        "case": "Client not found",
+        "handling": "The draft isn't created and you get a notice to create or match the client."
+      },
+      {
+        "case": "Deposit already invoiced",
+        "handling": "Amounts already invoiced are taken off the draft."
+      }
     ],
-    "diy": { "setup_time": "3 to 4 weeks", "difficulty": "medium" }
+    "diy": {
+      "setup_time": "3 to 4 weeks",
+      "difficulty": "medium"
+    }
   },
   "portal-orders-to-monthly-invoice": {
     "name": "Client portal orders → grouped by client → invoice created in {logiciel}",
     "description": "Orders from your clients' portals are grouped into one invoice per client at the end of the month.",
-    "after_flow": ["The client orders on their portal", "Orders are pulled every day", "They're grouped by client", "Invoices created in {logiciel}", "You approve", "The invoices go to the clients"],
-    "human_steps": ["You approve"],
+    "after_flow": [
+      "The client orders on their portal",
+      "Orders are pulled every day",
+      "They're grouped by client",
+      "Invoices created in {logiciel}",
+      "You approve",
+      "The invoices go to the clients"
+    ],
+    "human_steps": [
+      "You approve"
+    ],
     "steps": [
-      { "tool": "Automation", "text": "Every day, new orders are pulled from your clients' portals, with no copy and paste." },
-      { "tool": "AI", "text": "AI reads the orders, whatever the portal looks like, and picks up the client, the products, the quantities and the order numbers." },
-      { "tool": "Automation", "text": "Orders are sorted by client, and cancelled, changed or already invoiced orders are caught." },
-      { "tool": "{logiciel}", "text": "At the end of the month, one invoice per client is prepared in {logiciel}, with the detail of each order." },
-      { "tool": "You", "text": "You approve all of the month's invoices in one go." }
+      {
+        "tool": "Automation",
+        "text": "Every day, new orders are pulled from your clients' portals, with no copy and paste."
+      },
+      {
+        "tool": "AI",
+        "text": "AI reads the orders, whatever the portal looks like, and picks up the client, the products, the quantities and the order numbers."
+      },
+      {
+        "tool": "Automation",
+        "text": "Orders are sorted by client, and cancelled, changed or already invoiced orders are caught."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "At the end of the month, one invoice per client is prepared in {logiciel}, with the detail of each order."
+      },
+      {
+        "tool": "You",
+        "text": "You approve all of the month's invoices in one go."
+      }
     ],
     "exceptions": [
-      { "case": "Portal changes its layout", "handling": "Pulling orders stops and you're notified, instead of creating wrong invoices." },
-      { "case": "Cancelled or changed order", "handling": "The latest version in the portal is used at invoicing time." },
-      { "case": "Order already invoiced", "handling": "An order number can only appear on one invoice." },
-      { "case": "Client not matched yet", "handling": "The order is set aside until the client is matched." }
+      {
+        "case": "Portal changes its layout",
+        "handling": "Pulling orders stops and you're notified, instead of creating wrong invoices."
+      },
+      {
+        "case": "Cancelled or changed order",
+        "handling": "The latest version in the portal is used at invoicing time."
+      },
+      {
+        "case": "Order already invoiced",
+        "handling": "An order number can only appear on one invoice."
+      },
+      {
+        "case": "Client not matched yet",
+        "handling": "The order is set aside until the client is matched."
+      }
     ],
-    "diy": { "setup_time": "4 to 6 weeks", "difficulty": "high" }
+    "diy": {
+      "setup_time": "4 to 6 weeks",
+      "difficulty": "high"
+    }
   },
   "text-screenshot-to-invoice": {
     "name": "Text message → screenshot → sent to AI → invoice created in {logiciel}",
     "description": "A screenshot of the client's text is enough: AI turns it into the invoice.",
-    "after_flow": ["The client orders by text", "You send a screenshot", "AI reads the screenshot", "Invoice created in {logiciel}", "You approve", "The invoice goes to the client"],
-    "human_steps": ["You send a screenshot", "You approve"],
+    "after_flow": [
+      "The client orders by text",
+      "You send a screenshot",
+      "AI reads the screenshot",
+      "Invoice created in {logiciel}",
+      "You approve",
+      "The invoice goes to the client"
+    ],
+    "human_steps": [
+      "You send a screenshot",
+      "You approve"
+    ],
     "steps": [
-      { "tool": "Your phone", "text": "When a client orders by text, you take a screenshot and send it to a dedicated number or address. Nothing else changes for you or for them." },
-      { "tool": "AI", "text": "AI reads the screenshot: client, products, quantities, requested date. If something is missing, you're told right away." },
-      { "tool": "Automation", "text": "The order is checked against your clients and products." },
-      { "tool": "{logiciel}", "text": "An invoice is created in {logiciel}, ready to approve." },
-      { "tool": "You", "text": "You approve, and the invoice goes to the client." }
+      {
+        "tool": "Your phone",
+        "text": "When a client orders by text, you take a screenshot and send it to a dedicated number or address. Nothing else changes for you or for them."
+      },
+      {
+        "tool": "AI",
+        "text": "AI reads the screenshot: client, products, quantities, requested date. If something is missing, you're told right away."
+      },
+      {
+        "tool": "Automation",
+        "text": "The order is checked against your clients and products."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "An invoice is created in {logiciel}, ready to approve."
+      },
+      {
+        "tool": "You",
+        "text": "You approve, and the invoice goes to the client."
+      }
     ],
     "exceptions": [
-      { "case": "Unreadable or cut-off screenshot", "handling": "You get a notice to send another one, and nothing is invoiced." },
-      { "case": "Unknown client", "handling": "The order waits until you create or match the client." },
-      { "case": "Same screenshot sent twice", "handling": "The second one is recognized and ignored." },
-      { "case": "Order changed by a second text", "handling": "The new screenshot replaces the first one before approval." }
+      {
+        "case": "Unreadable or cut-off screenshot",
+        "handling": "You get a notice to send another one, and nothing is invoiced."
+      },
+      {
+        "case": "Unknown client",
+        "handling": "The order waits until you create or match the client."
+      },
+      {
+        "case": "Same screenshot sent twice",
+        "handling": "The second one is recognized and ignored."
+      },
+      {
+        "case": "Order changed by a second text",
+        "handling": "The new screenshot replaces the first one before approval."
+      }
     ],
-    "diy": { "setup_time": "3 to 4 weeks", "difficulty": "medium" }
+    "diy": {
+      "setup_time": "3 to 4 weeks",
+      "difficulty": "medium"
+    }
   },
   "invoice-on-completion": {
     "name": "Job marked done → invoice sent the same day",
     "description": "As soon as a job is done, the invoice goes out the same day instead of waiting for month end.",
-    "after_flow": ["Your team marks the job done", "Draft created in {logiciel}", "You approve", "The invoice goes out the same day"],
-    "human_steps": ["You approve"],
+    "after_flow": [
+      "Your team marks the job done",
+      "Draft created in {logiciel}",
+      "You approve",
+      "The invoice goes out the same day"
+    ],
+    "human_steps": [
+      "You approve"
+    ],
     "steps": [
-      { "tool": "Your phone", "text": "Your team marks the job done in one click, on their phone or in your calendar." },
-      { "tool": "Automation", "text": "Hours, materials and the agreed price are pulled from what already exists: the quote, the work order or the calendar." },
-      { "tool": "{logiciel}", "text": "An invoice draft is created in {logiciel} within the hour." },
-      { "tool": "You", "text": "Each evening, you get the list of drafts to approve." },
-      { "tool": "Email", "text": "Approved invoices go out the same day, not at the end of the month." }
+      {
+        "tool": "Your phone",
+        "text": "Your team marks the job done in one click, on their phone or in your calendar."
+      },
+      {
+        "tool": "Automation",
+        "text": "Hours, materials and the agreed price are pulled from what already exists: the quote, the work order or the calendar."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "An invoice draft is created in {logiciel} within the hour."
+      },
+      {
+        "tool": "You",
+        "text": "Each evening, you get the list of drafts to approve."
+      },
+      {
+        "tool": "Email",
+        "text": "Approved invoices go out the same day, not at the end of the month."
+      }
     ],
     "exceptions": [
-      { "case": "Missing information", "handling": "The draft waits and the person responsible gets a reminder." },
-      { "case": "Draft not approved", "handling": "You get a reminder the next morning." },
-      { "case": "Job reopened after invoicing", "handling": "An add-on or a credit note is prepared instead of a second invoice." }
+      {
+        "case": "Missing information",
+        "handling": "The draft waits and the person responsible gets a reminder."
+      },
+      {
+        "case": "Draft not approved",
+        "handling": "You get a reminder the next morning."
+      },
+      {
+        "case": "Job reopened after invoicing",
+        "handling": "An add-on or a credit note is prepared instead of a second invoice."
+      }
     ],
-    "diy": { "setup_time": "2 to 3 weeks", "difficulty": "medium" }
+    "diy": {
+      "setup_time": "2 to 3 weeks",
+      "difficulty": "medium"
+    }
   },
   "payment-follow-up": {
     "name": "Unpaid invoice → automatic reminders at 15, 30 and 45 days",
     "description": "Payment reminders go out on their own and stop as soon as the invoice is paid.",
-    "after_flow": ["The invoice is overdue", "Reminder at 15 days", "Reminder at 30 days", "Reminder at 45 days", "You call if it's still unpaid"],
-    "human_steps": ["You call if it's still unpaid"],
+    "after_flow": [
+      "The invoice is overdue",
+      "Reminder at 15 days",
+      "Reminder at 30 days",
+      "Reminder at 45 days",
+      "You call if it's still unpaid"
+    ],
+    "human_steps": [
+      "You call if it's still unpaid"
+    ],
     "steps": [
-      { "tool": "{logiciel}", "text": "Every morning, unpaid invoices are checked in {logiciel}." },
-      { "tool": "AI", "text": "Each reminder is written in your company's name, with the invoice number and a payment link if you have one." },
-      { "tool": "Email", "text": "A polite reminder goes out at 15 days, a firmer one at 30 days and a last one at 45 days." },
-      { "tool": "Automation", "text": "As soon as a payment is recorded in {logiciel}, the reminders stop." },
-      { "tool": "You", "text": "At 45 days, you get the list of clients to call, with the reminder history." }
+      {
+        "tool": "{logiciel}",
+        "text": "Every morning, unpaid invoices are checked in {logiciel}."
+      },
+      {
+        "tool": "AI",
+        "text": "Each reminder is written in your company's name, with the invoice number and a payment link if you have one."
+      },
+      {
+        "tool": "Email",
+        "text": "A polite reminder goes out at 15 days, a firmer one at 30 days and a last one at 45 days."
+      },
+      {
+        "tool": "Automation",
+        "text": "As soon as a payment is recorded in {logiciel}, the reminders stop."
+      },
+      {
+        "tool": "You",
+        "text": "At 45 days, you get the list of clients to call, with the reminder history."
+      }
     ],
     "exceptions": [
-      { "case": "Client paid, payment not recorded yet", "handling": "The balance is checked the morning of each reminder, and the client can reply that they paid." },
-      { "case": "Disputed invoice", "handling": "You mark it as disputed and it's taken out of the reminders." },
-      { "case": "Good client who always pays at 45 days", "handling": "You can exclude them or push back their reminders." }
+      {
+        "case": "Client paid, payment not recorded yet",
+        "handling": "The balance is checked the morning of each reminder, and the client can reply that they paid."
+      },
+      {
+        "case": "Disputed invoice",
+        "handling": "You mark it as disputed and it's taken out of the reminders."
+      },
+      {
+        "case": "Good client who always pays at 45 days",
+        "handling": "You can exclude them or push back their reminders."
+      }
     ],
-    "diy": { "setup_time": "1 to 2 weeks", "difficulty": "low" }
+    "diy": {
+      "setup_time": "1 to 2 weeks",
+      "difficulty": "low"
+    }
+  },
+  "crm-sale-to-invoice": {
+    "name": "Sale closed in the CRM → automation starts → invoice draft created in {logiciel}",
+    "description": "When a sale is closed in your CRM, the invoice gets prepared without retyping anything.",
+    "after_flow": [
+      "A sale is closed in {crm}",
+      "The details are pulled from {crm}",
+      "Prices are checked",
+      "Draft created in {logiciel}",
+      "You approve",
+      "The invoice goes to the client"
+    ],
+    "human_steps": [
+      "You approve"
+    ],
+    "steps": [
+      {
+        "tool": "Your CRM",
+        "text": "When a sale moves to won in your CRM, the automation starts. Nothing changes in how you work."
+      },
+      {
+        "tool": "Automation",
+        "text": "The client, the products or services, the quantities and the prices are pulled straight from the sale."
+      },
+      {
+        "tool": "Automation",
+        "text": "The client is matched to the one in {logiciel}, or created if new, and prices are checked against your list."
+      },
+      {
+        "tool": "{logiciel}",
+        "text": "An invoice draft is created in {logiciel}, with the sale number as a reference."
+      },
+      {
+        "tool": "You",
+        "text": "You approve, and the invoice goes to the client. The sale is marked invoiced in your CRM."
+      }
+    ],
+    "exceptions": [
+      {
+        "case": "Sale with no products or prices",
+        "handling": "The draft isn't created and you get a notice to complete the sale."
+      },
+      {
+        "case": "Client spelled differently in the CRM and in {logiciel}",
+        "handling": "The closest client is suggested, and nothing is created until you confirm."
+      },
+      {
+        "case": "Sale changed after it was won",
+        "handling": "The draft is updated as long as it hasn't been approved."
+      },
+      {
+        "case": "Same sale marked won twice",
+        "handling": "A sale can only create one invoice."
+      }
+    ],
+    "diy": {
+      "setup_time": "2 to 4 weeks",
+      "difficulty": "medium"
+    }
   }
 }
