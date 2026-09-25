@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>How much time do you spend on your invoices? | LabergeTech</title>
-<meta name="description" content="4 questions, 1 minute. We look at how you invoice your clients and find what can be automated.">
+<meta name="description" content="5 questions, 1 minute. We look at how you invoice your clients and find what can be automated.">
 <link rel="canonical" href="https://labergetech.com/invoicing/">
 <link rel="alternate" hreflang="fr-CA" href="https://labergetech.com/facturation/">
 <link rel="alternate" hreflang="en-CA" href="https://labergetech.com/invoicing/">
 <link rel="icon" type="image/png" href="../assets/logo.png">
 <meta property="og:title" content="How much time do you spend on your invoices?">
-<meta property="og:description" content="4 questions, 1 minute. We look at how you invoice your clients and find what can be automated.">
+<meta property="og:description" content="5 questions, 1 minute. We look at how you invoice your clients and find what can be automated.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="LabergeTech">
 <meta property="og:url" content="https://labergetech.com/invoicing/">
@@ -105,6 +105,24 @@ a { color: var(--accent); }
 .chip::before { content: ""; position: absolute; left: 16px; top: 50%; width: 18px; height: 18px; margin-top: -9px;
   border-radius: 50%; border: 1.5px solid var(--ink-30); background: var(--bg); }
 .chips.multi .chip::before { border-radius: 5px; }
+/* minutes slider: a dot on a line from 1 to 20 */
+.slider { margin-top: 28px; }
+.slider-v { font-size: 20px; font-weight: 700; color: var(--ink-70); }
+.slider-v strong { font-size: 64px; font-weight: 800; letter-spacing: -.04em; color: var(--ink); margin-right: 4px; }
+.slider input[type="range"] { --p: 26%; -webkit-appearance: none; appearance: none; width: 100%; height: 44px;
+  margin: 14px 0 4px; background: transparent; cursor: pointer; touch-action: pan-y; }
+.slider input[type="range"]:focus { outline: none; }
+.slider input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 99px;
+  background: linear-gradient(to right, var(--accent) var(--p), var(--surface) var(--p)); }
+.slider input[type="range"]::-moz-range-track { height: 8px; border-radius: 99px; background: var(--surface); }
+.slider input[type="range"]::-moz-range-progress { height: 8px; border-radius: 99px; background: var(--accent); }
+.slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 34px; height: 34px; margin-top: -13px;
+  border-radius: 50%; background: var(--accent); border: 4px solid var(--bg); box-shadow: 0 2px 8px rgba(17,20,24,.25); }
+.slider input[type="range"]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--accent);
+  border: 4px solid var(--bg); box-shadow: 0 2px 8px rgba(17,20,24,.25); }
+.slider input[type="range"]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--accent); outline-offset: 3px; }
+.slider-ends { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-55); }
+.slider + .next { margin-top: 28px; }
 .chip:hover { border-color: var(--accent); }
 .chip[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--bg)); }
 .chip[aria-pressed="true"]::before { border-color: var(--accent); background: var(--accent);
@@ -223,7 +241,7 @@ a { color: var(--accent); }
 <main>
   <section class="intro" id="intro"><div class="wrap">
     <h1>How much time do you spend on your invoices?</h1>
-    <p class="meta">4 questions · Multiple choice</p>
+    <p class="meta">5 questions · Multiple choice</p>
     <p class="sub">We look at how you invoice your clients and find what can be automated.</p>
     <button type="button" class="btn btn-primary btn-lg wide" id="start">Start →</button>
     <p class="fine">Instant result · Free · 1 minute</p>
@@ -237,7 +255,7 @@ a { color: var(--accent); }
   </div></section>
 
   <section class="quiz" id="questionnaire" aria-label="Questionnaire" hidden><div class="wrap">
-    <div class="prog"><p class="prog-t" id="prog-t" aria-live="polite">Question 1 de 4</p><div class="bar"><span id="bar"></span></div></div>
+    <div class="prog"><p class="prog-t" id="prog-t" aria-live="polite">Question 1 of 5</p><div class="bar"><span id="bar"></span></div></div>
     <div id="step"></div>
   </div></section>
 

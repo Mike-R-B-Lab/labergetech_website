@@ -5,13 +5,13 @@
 // Four questions. The ids stay q2, q3, q4, q6 because patterns.json triggers use q3 and q6.
 const QUESTIONS = [
   { id: 'q2', key: 'software', title: 'Où faites-vous les factures que vous envoyez à vos clients?', options: [
-    { v: 'quickbooks', label: 'QuickBooks', min: 6 },
-    { v: 'sage50', label: 'Sage 50', min: 6 },
-    { v: 'acomba', label: 'Acomba', min: 6 },
-    { v: 'genius', label: 'Genius ERP', min: 6 },
-    { v: 'autre', label: 'Autre logiciel', min: 6, other: true },
-    { v: 'excel', label: 'Excel, Word ou Google Sheets', min: 6 },
-    { v: 'papier', label: 'Sur papier', min: 10 }
+    { v: 'quickbooks', label: 'QuickBooks' },
+    { v: 'sage50', label: 'Sage 50' },
+    { v: 'acomba', label: 'Acomba' },
+    { v: 'genius', label: 'Genius ERP' },
+    { v: 'autre', label: 'Autre logiciel', other: true },
+    { v: 'excel', label: 'Excel, Word ou Google Sheets' },
+    { v: 'papier', label: 'Sur papier' }
   ] },
   { id: 'q3', key: 'sources', multi: true, title: "D'où vient l'information avant la facture?", options: [
     { v: 'courriel', label: 'Bons de commande par courriel', short: 'Vous recevez un bon de commande par courriel',
@@ -35,6 +35,9 @@ const QUESTIONS = [
     { v: '300-1000', label: '300 à 1 000', n: 650 },
     { v: 'gt1000', label: 'Plus de 1 000', n: 1200 }
   ] },
+  // Their own minutes for one invoice, from start to sent, on a 1 to 20 slider.
+  { id: 'q5', key: 'minutes_per_invoice', slider: true, title: "Combien de temps vous prend une facture, du début à l'envoi?",
+    options: Array.from({ length: 20 }, (_, i) => ({ v: String(i + 1), label: String(i + 1), min: i + 1 })) },
   { id: 'q6', key: 'trigger', title: "Qu'est-ce qui vous pousse à regarder votre facturation maintenant?", options: [
     { v: 'temps', label: 'Trop de temps passé à créer les factures' },
     { v: 'ressaisie', label: 'Trop de ressaisie' },
@@ -68,6 +71,7 @@ const EN = {
   q4: { title: 'How many invoices do you send to clients each month?', opts: {
     lt30: { label: 'Under 30' }, '30-100': { label: '30 to 100' }, '100-300': { label: '100 to 300' },
     '300-1000': { label: '300 to 1,000' }, gt1000: { label: 'Over 1,000' } } },
+  q5: { title: 'How long does one invoice take you, from start to sent?', opts: {} },
   q6: { title: "What's making you look at your invoicing now?", opts: {
     temps: { label: 'Too much time spent creating invoices' }, ressaisie: { label: 'Too much retyping' },
     erreurs: { label: 'Too many errors' }, retard: { label: 'Invoices go out too late' },
@@ -93,10 +97,14 @@ const W = () => WORDS[LANG];
 
 // Where invoices are made -> the Q3 source whose pattern it prefers as primary.
 const PREFERS = { papier: 'papier', excel: 'soumission' };
-// Copy, create, check, send: the manual steps behind every invoice.
-const MULTIPLIER = 1.3;
 // Patterns triggered by these sources are always "À valider".
 const ALWAYS_VALIDATE = ['Commandes par texto'];
+// Where the slider starts, from where they make invoices. They move it to their own number.
+const START_MINUTES = { excel: 5, papier: 10 };
+function startMinutes(a) {
+  return START_MINUTES[a.q2] || 6;
+}
+
 const LOGICIEL = { quickbooks: 'QuickBooks', sage50: 'Sage 50', acomba: 'Acomba', genius: 'Genius ERP', papier: 'QuickBooks Online' };
 
 const question = id => QUESTIONS.find(q => q.id === id);
@@ -146,14 +154,13 @@ function afterFlow(p, a) {
   }));
 }
 
+// Hours a year from exactly what they told us: invoices a month x their minutes per invoice.
 function calc(a) {
-  const minutes = opt('q2', a.q2).min;
+  const minutes = opt('q5', a.q5).min;
   const volume = opt('q4', a.q4).n;
-  const hours = Math.round(volume * minutes * MULTIPLIER * 12 / 60 / 10) * 10;
+  const hours = Math.round(volume * minutes * 12 / 60);
   const manual = todayFlow(a).filter(n => n.kind === 'manual').length;
-  // Minutes per invoice with every manual step counted, so volume x this adds up to hours.
-  const perInvoice = Math.round(minutes * MULTIPLIER * 10) / 10;
-  return { minutes, volume, hours, manual, perInvoice };
+  return { minutes, volume, hours, manual };
 }
 
 function figure(hours) {
@@ -221,14 +228,14 @@ function eliminated(a, primary) {
 
 // The answers, in the URL hash, so the emailed link can rebuild the result.
 function encodeAnswers(a) {
-  return ['q2=' + a.q2, 'q3=' + a.q3.join(','), 'q4=' + a.q4, 'q6=' + a.q6].join('&');
+  return ['q2=' + a.q2, 'q3=' + a.q3.join(','), 'q4=' + a.q4, 'q5=' + a.q5, 'q6=' + a.q6].join('&');
 }
 
 function decodeAnswers(hash) {
   const p = new URLSearchParams(String(hash || '').replace(/^#/, ''));
   const one = id => (opt(id, p.get(id)) ? p.get(id) : null);
   const vs = String(p.get('q3') || '').split(',').filter(Boolean);
-  const a = { q2: one('q2'), q2_other: '', q3: vs.length && vs.every(v => opt('q3', v)) ? vs : null, q4: one('q4'), q6: one('q6') };
+  const a = { q2: one('q2'), q2_other: '', q3: vs.length && vs.every(v => opt('q3', v)) ? vs : null, q4: one('q4'), q5: one('q5'), q6: one('q6') };
   return Object.values(a).every(v => v !== null) ? a : null;
 }
 
@@ -247,7 +254,7 @@ function payload(a, contact, cfg, pageUrl) {
     sources: labelsOf('q3', inOrder('q3', a.q3)),
     monthly_volume: opt('q4', a.q4).label,
     trigger: opt('q6', a.q6).label,
-    minutes_per_invoice: c.minutes, minutes_all_steps: c.perInvoice, invoices_per_month: c.volume,
+    minutes_per_invoice: c.minutes, invoices_per_month: c.volume,
     manual_steps: c.manual, hours: c.hours,
     figure: 'environ ' + f.big + ' ' + f.unit,
     primary_pattern: sel.primary ? sel.primary.id : '',
@@ -263,7 +270,7 @@ function payload(a, contact, cfg, pageUrl) {
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { QUESTIONS, EN, opt, shown, setLang, todayFlow, afterFlow, calc, figure, fill, stepOf, localize,
+  module.exports = { QUESTIONS, EN, opt, shown, setLang, startMinutes, todayFlow, afterFlow, calc, figure, fill, stepOf, localize,
     selectPatterns, eliminated, encodeAnswers, decodeAnswers, payload, confidenceLabel: c => W()[c] };
 }
 
@@ -285,7 +292,9 @@ if (typeof document !== 'undefined') {
       privacy: 'Confidentialité', privacyHref: '../confidentialite/', swipe: 'Glissez pour voir la suite →',
       cta: 'On regarde ça ensemble →', sent: e => `Une copie de ce résultat vous sera envoyée à <strong>${e}</strong>.`,
       result: 'Votre résultat', perYear: 'heures / année', spent: 'consacrées à cette tâche administrative.',
-      basis: (v, m, n) => `Basé sur ${v} factures/mois × ${m} min/facture, ${n} étapes manuelles comprises.`,
+      basis: (v, m) => `Basé sur ${v} factures/mois × ${m} min/facture.`,
+      sliderHint: 'Glissez le point vers la gauche ou la droite.', minUnit: 'min',
+      confirm: m => `Continuer avec ${m} min →`,
       today: "Votre processus aujourd'hui", legend: ['Manuel', 'Automatisé', 'Fait par vous'], change: "Ce qu'on peut changer",
       elim: n => (n === 1 ? '1 étape manuelle éliminée.' : `${n} étapes manuelles éliminées.`),
       gainTitle: "Votre processus semble être un bon candidat à l'automatisation.",
@@ -306,7 +315,9 @@ if (typeof document !== 'undefined') {
       privacy: 'Privacy', privacyHref: '../privacy/', swipe: 'Swipe to see the rest →',
       cta: "Let's look at it together →", sent: e => `A copy of this result will be sent to <strong>${e}</strong>.`,
       result: 'Your result', perYear: 'hours / year', spent: 'spent on this administrative task.',
-      basis: (v, m, n) => `Based on ${v} invoices/month × ${m} min/invoice, including ${n} manual steps.`,
+      basis: (v, m) => `Based on ${v} invoices/month × ${m} min/invoice.`,
+      sliderHint: 'Drag the dot left or right.', minUnit: 'min',
+      confirm: m => `Continue with ${m} min →`,
       today: 'Your process today', legend: ['Manual', 'Automated', 'Done by you'], change: 'What we can change',
       elim: n => (n === 1 ? '1 manual step removed.' : `${n} manual steps removed.`),
       gainTitle: 'Your process looks like a good candidate for automation.',
@@ -325,7 +336,7 @@ if (typeof document !== 'undefined') {
     .then(([cfg, texts]) => (cfg && Object.assign({}, cfg, { patterns: localize(cfg.patterns, texts) })));
   const isSet = s => s && !String(s).startsWith('[');
 
-  const state = { i: 0, a: { q2: null, q2_other: '', q3: [], q4: null, q6: null }, contact: {} };
+  const state = { i: 0, a: { q2: null, q2_other: '', q3: [], q4: null, q5: null, q6: null }, contact: {} };
   const TOTAL = QUESTIONS.length;
 
   // Three screens, one at a time: intro, questions, result.
@@ -360,7 +371,34 @@ if (typeof document !== 'undefined') {
     return q.multi ? v : v ? [v] : [];
   }
 
+  function sliderHTML(q) {
+    const m = Number(state.a.q5) || startMinutes(state.a);
+    return `<h2 tabindex="-1">${esc(titleOf(q))}</h2><p class="hint">${esc(T.sliderHint)}</p>
+      <div class="slider">
+        <p class="slider-v"><strong>${m}</strong> ${T.minUnit}</p>
+        <input type="range" min="1" max="20" step="1" value="${m}" aria-label="${esc(titleOf(q))}" aria-valuetext="${m} ${T.minUnit}">
+        <div class="slider-ends"><span>1 ${T.minUnit}</span><span>20 ${T.minUnit}</span></div>
+      </div>
+      <button type="button" class="btn btn-primary btn-lg wide next">${T.confirm(m)}</button>`;
+  }
+
+  function bindSlider() {
+    const input = $('#step input[type="range"]');
+    const next = $('#step .next');
+    const show = () => {
+      const m = input.value;
+      $('#step .slider-v strong').textContent = m;
+      input.setAttribute('aria-valuetext', m + ' ' + T.minUnit);
+      input.style.setProperty('--p', ((m - 1) / 19 * 100) + '%');
+      next.textContent = T.confirm(m);
+    };
+    input.addEventListener('input', show);
+    show();
+    next.addEventListener('click', () => { state.a.q5 = input.value; go(state.i + 1); });
+  }
+
   function questionHTML(q) {
+    if (q.slider) return sliderHTML(q);
     const sel = selected(q);
     const chips = q.options.map(o =>
       `<button type="button" class="chip" data-v="${o.v}" aria-pressed="${sel.includes(o.v)}">${esc(shown(q.id, o.v).label)}</button>`).join('');
@@ -375,6 +413,7 @@ if (typeof document !== 'undefined') {
   }
 
   function bindQuestion(q) {
+    if (q.slider) return bindSlider();
     const next = $('#step .next');
     next.addEventListener('click', () => go(state.i + 1));
     const otherBox = $('#step .other');
@@ -477,7 +516,7 @@ if (typeof document !== 'undefined') {
       <div class="fig">
         <p class="big">${num(c.hours)} <span>${T.perYear}</span></p>
         <p class="unit">${T.spent}</p>
-        <p class="small">${T.basis(num(c.volume), dec1(c.perInvoice), c.manual)}</p>
+        <p class="small">${T.basis(num(c.volume), c.minutes)}</p>
       </div>
     </header>`;
     h += block(T.today,
