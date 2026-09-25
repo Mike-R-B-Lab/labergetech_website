@@ -316,7 +316,8 @@ if (typeof document !== 'undefined') {
       first: 'À automatiser en premier', tools: 'Outils\u00a0: ', others: 'Autres possibilités',
       why: "Pourquoi ce n'est pas juste connecter A à B",
       diy: (t, d) => `À faire soi-même\u00a0: environ ${t}, difficulté ${d}, plus l'entretien quand vos outils changent.`,
-      endTitle: 'Validons-le avec vos vraies factures',
+      spots: n => `J'ai de la place pour ${n} projet${n > 1 ? 's' : ''} d'automatisation le mois prochain.`,
+      endTitle: 'Validons-le avec vos vraies factures', endCta: 'Sauvons votre temps →',
       endText: "En 15 minutes, on prend 1 ou 2 de vos factures et le document qui a servi à les créer, et on vérifie ce qui peut réellement être automatisé. Sans engagement."
     },
     en: {
@@ -338,7 +339,8 @@ if (typeof document !== 'undefined') {
       first: 'Automate this first', tools: 'Tools: ', others: 'Other options',
       why: "Why it isn't just connecting A to B",
       diy: (t, d) => `Doing it yourself: about ${t}, ${d} difficulty, plus upkeep whenever your tools change.`,
-      endTitle: "Let's check it with your real invoices",
+      spots: n => `I can take on ${n} more automation project${n > 1 ? 's' : ''} next month.`,
+      endTitle: "Let's check it with your real invoices", endCta: "Let's save your time →",
       endText: 'In 15 minutes, we take 1 or 2 of your invoices and the document used to create them, and check what can really be automated. No commitment.'
     }
   };
@@ -356,7 +358,6 @@ if (typeof document !== 'undefined') {
     $('#intro').hidden = name !== 'intro';
     $('#questionnaire').hidden = name !== 'quiz';
     $('#resultat').hidden = name !== 'result';
-    $('#sticky').hidden = true;
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
@@ -538,8 +539,11 @@ if (typeof document !== 'undefined') {
     const p = sel.primary;
     const b = booking(a, cfg);
     const link = `href="${esc(b.url)}" target="_blank" rel="noopener"`;
-    const bookBtn = `<a class="btn btn-primary btn-lg wide book" ${link}>${CTA}</a>`;
+    const bookBtn = `<a class="btn btn-primary btn-lg wide" ${link}>${CTA}</a>`;
     const bookLink = `<p class="booklink"><a ${link}>${CTA}</a></p>`;
+    // Set in patterns.json; the line goes away at 0 so it never claims spots that are gone.
+    const left = cfg ? Math.floor(Number(cfg.spots_left)) : 0;
+    const spots = left > 0 ? `<p class="spots">${T.spots(left)}</p>` : '';
     const sent = contact && contact.email
       ? `<p class="sent${b.low ? ' main' : ''}">${T.sent(esc(contact.email))}</p>` : '';
 
@@ -562,7 +566,7 @@ if (typeof document !== 'undefined') {
       <h2>${T.gainTitle}</h2>
       <p class="gain-t">${T.gainText}</p>
       <img src="../assets/michael-320.jpg" alt="Michael Laberge" width="265" height="320" loading="lazy">
-      <div class="gain-cta">${b.low ? sent + bookLink : bookBtn + sent}</div>
+      <div class="gain-cta">${b.low ? sent + bookLink + spots : bookBtn + spots + sent}</div>
     </section>`;
     if (p) {
       const steps = p.steps.map(s => stepOf(s, a));
@@ -582,7 +586,7 @@ if (typeof document !== 'undefined') {
     }
     h += `<section class="rblock cta"><h2>${T.endTitle}</h2>
       <p>${T.endText}</p>
-      ${b.low ? bookLink : bookBtn}
+      ${b.low ? `<p class="booklink"><a ${link}>${T.endCta}</a></p>` : `<a class="btn btn-primary btn-lg wide" ${link}>${T.endCta}</a>`}
     </section>`;
     return h;
   }
@@ -602,17 +606,6 @@ if (typeof document !== 'undefined') {
       f.addEventListener('scroll', edge, { passive: true });
       edge();
     });
-    const b = booking(a, cfg);
-    if (b.low || !('IntersectionObserver' in window)) return;
-    // The booking bar shows only while neither booking button is on screen.
-    const bar = $('#sticky');
-    bar.querySelector('a').href = b.url;
-    const onScreen = new Set();
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => (e.isIntersecting ? onScreen.add(e.target) : onScreen.delete(e.target)));
-      bar.hidden = onScreen.size > 0;
-    });
-    r.querySelectorAll('.book').forEach(el => io.observe(el));
   }
 
   $('#start').addEventListener('click', () => {

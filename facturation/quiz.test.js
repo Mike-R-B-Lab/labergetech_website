@@ -126,6 +126,7 @@ test('payload carries answers, figure, patterns and UTM', () => {
 });
 
 test('patterns.json is complete and the copy has no dashes', () => {
+  assert.ok(Number.isInteger(cfg.spots_left) && cfg.spots_left >= 0, 'spots_left is a whole number, 0 hides the line');
   const ids = cfg.patterns.map(p => p.id);
   assert.strictEqual(new Set(ids).size, 9);
   const labels = id => Q.QUESTIONS.find(q => q.id === id).options.map(o => o.label);

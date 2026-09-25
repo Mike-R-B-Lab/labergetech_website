@@ -139,7 +139,7 @@ a { color: var(--accent); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* result: headline card with the figure and the booking button */
-#resultat { padding: 12px 0 104px; }
+#resultat { padding: 12px 0 40px; }
 .rhead h1 { font-size: clamp(28px, 7.4vw, 40px); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
 .fig { margin-top: 18px; background: var(--surface); border-radius: 22px; padding: 22px 22px 24px; }
 .big { font-size: clamp(60px, 18vw, 92px); font-weight: 800; letter-spacing: -.045em; line-height: 1; }
@@ -154,6 +154,7 @@ a { color: var(--accent); }
 .gain-t { grid-area: text; color: var(--ink-70); }
 .gain-cta { grid-area: cta; }
 .gain-cta .btn { margin-top: 4px; }
+.spots { margin-top: 10px; font-size: 14px; font-weight: 700; color: #c62d22; }
 .gain img { grid-area: photo; width: 100%; height: auto; aspect-ratio: 265 / 320; object-fit: cover; border-radius: 12px; }
 @media (min-width: 560px) {
   .gain { grid-template-columns: 1fr 150px; grid-template-areas: "head photo" "text photo" "cta photo";
@@ -223,12 +224,6 @@ a { color: var(--accent); }
 .cta p { color: var(--ink-70); }
 .cta .btn { margin-top: 20px; }
 
-/* booking bar, shown while neither booking button is on screen */
-.sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
-  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-  background: color-mix(in srgb, var(--bg) 92%, transparent); border-top: 1px solid var(--line);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-.sticky .btn { display: flex; width: 100%; max-width: 680px; margin: 0 auto; }
 
 .foot { border-top: 1px solid var(--line); padding: 22px 0 40px; font-size: 14px; color: var(--ink-55); }
 .foot .wrap { display: flex; flex-wrap: wrap; gap: 8px 20px; }
@@ -266,8 +261,6 @@ a { color: var(--accent); }
 
   <section id="resultat" aria-label="Your result" hidden></section>
 </main>
-
-<div class="sticky" id="sticky" hidden><a class="btn btn-primary btn-lg" target="_blank" rel="noopener">Let's look at it together →</a></div>
 
 <footer class="foot"><div class="wrap">
   <span>LabergeTech</span>
