@@ -8,6 +8,7 @@ const QUESTIONS = [
   { id: 'metier', short: true, title: 'Quel est votre métier?', options: [
     { v: 'plomberie', label: 'Plomberie' },
     { v: 'electricite', label: 'Électricité' },
+    { v: 'cvac', label: 'Chauffage, ventilation et climatisation (CVAC)' },
     { v: 'entrepreneur', label: 'Entrepreneur général ou rénovation' },
     { v: 'paysagement', label: 'Paysagement' },
     { v: 'construction', label: 'Autre métier de la construction' },
