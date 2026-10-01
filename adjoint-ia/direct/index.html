@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Adjoint IA pour entrepreneurs | LabergeTech</title>
+<meta name="description" content="Une IA qui connaît vos prix, vos jobs et vos systèmes connectés à vos outils.">
+<link rel="canonical" href="https://labergetech.com/adjoint-ia/">
+<link rel="icon" type="image/png" href="../../assets/logo.png">
+<meta property="og:title" content="Roulez votre business sans engager une autre personne de bureau">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LabergeTech">
+<meta property="og:locale" content="fr_CA">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../adjoint.css">
+<style>
+/* Variant B: one screen, straight to the point. Headline with the price, video, one button. */
+/* All text black, hierarchy by size only. */
+body { --ink-70: var(--ink); --ink-55: var(--ink); }
+.top { padding: 22px 0 0; text-align: center; }
+.aud { font-size: 14px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.b { text-align: center; padding: 22px 0 48px; }
+.b .wrap { max-width: 1000px; }
+.b h1 { font-size: clamp(28px, 7.4vw, 44px); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; max-width: 21em; margin: 0 auto; }
+.b .sub { margin: 14px auto 0; max-width: none; font-size: clamp(17px, 4.4vw, 20px); color: var(--ink-70); }
+.b .vsl { margin: 26px auto 0; max-width: 640px; box-shadow: 0 16px 50px rgba(17,20,24,.18); }
+.b .next { margin: 34px auto 0; max-width: 640px; font-size: clamp(20px, 5vw, 26px); font-weight: 800; letter-spacing: -.02em; line-height: 1.25; }
+.b .next u { text-underline-offset: 4px; }
+.result .btn-primary { background: var(--green); }
+#quiz { max-width: 640px; margin: 0 auto 56px; text-align: left; scroll-margin-top: 16px; }
+</style>
+</head>
+<body data-adjoint="B" data-base="../">
+
+<header class="top"><div class="wrap">
+  <p class="aud">Entrepreneurs en construction du Québec</p>
+</div></header>
+
+<main>
+  <section class="b"><div class="wrap">
+    <h1>Roulez votre business sans engager une autre personne de bureau</h1>
+    <p class="sub">Une IA qui connaît vos prix, vos jobs et vos systèmes connectés à vos outils.</p>
+    <div class="vsl" role="button" aria-label="Lire la vidéo"><p class="vsl-soon">Vidéo à venir</p></div>
+    <h2 class="next"><u>Prochaine étape</u> : répondez à quelques questions pour voir si on est un bon fit.</h2>
+  </div></section>
+
+  <div class="wrap">
+    <div class="quiz-card" id="quiz">
+      <p class="prog-t" id="prog-t" aria-live="polite"></p><div class="bar"><span id="bar"></span></div>
+      <div id="step"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <span>LabergeTech · Montréal</span>
+  <a href="mailto:michael@labergetech.com">michael@labergetech.com</a>
+  <a href="../../confidentialite/">Confidentialité</a>
+</div></footer>
+
+<script src="../adjoint.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@ if ! node --test facturation/quiz.test.js >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! git diff --quiet || ! git diff --cached --quiet; then
+if [ -n "$(git status --porcelain)" ]; then  # porcelain also lists new, untracked folders
   git add -A
   git commit -q -m "${1:-Update site}"
   echo "committed: ${1:-Update site}"
