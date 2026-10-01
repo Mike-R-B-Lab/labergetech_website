@@ -49,8 +49,16 @@ const QUESTIONS = [
     { v: 'proprietaire', label: 'Propriétaire' }, { v: 'associe', label: 'Associé(e)' },
     { v: 'bureau', label: 'Gestionnaire ou adjoint(e) administratif(ve)' }, { v: 'autre', label: 'Autre' }
   ] },
-  { id: 'temps', short: true, text: true, title: "Qu'est-ce qui vous prend le plus de temps chaque semaine?",
-    placeholder: 'Ex. : les soumissions le soir, relancer les factures, répondre aux mêmes questions des clients' }
+  { id: 'temps', short: true, multi: true, title: "Qu'est-ce qui vous prend le plus de temps chaque semaine?", hint: 'Choisissez tout ce qui s\u2019applique.', options: [
+    { v: 'soumissions', label: 'Monter les soumissions' },
+    { v: 'factures', label: 'Faire les factures et relancer les paiements' },
+    { v: 'courriels', label: 'Répondre aux courriels des clients' },
+    { v: 'horaire', label: "Planifier les jobs et l'horaire des gars" },
+    { v: 'retrouver', label: "Retrouver un prix, un document ou les infos d'une ancienne job" },
+    { v: 'double', label: 'Entrer les mêmes infos dans plusieurs logiciels' },
+    { v: 'suivis', label: 'Faire les suivis avec les prospects' },
+    { v: 'autre', label: 'Autre', other: true } // shows a "Précisez" field
+  ] }
 ];
 
 const opt = (id, v) => (QUESTIONS.find(q => q.id === id).options || []).find(o => o.v === v);
@@ -75,7 +83,8 @@ function payload(a, contact, variant, pageUrl, src = {}) {
     compta: label('compta', a.compta), compta_tier: a.compta ? opt('compta', a.compta).tier : '',
     jobs: a.jobs.map(v => label('jobs', v)), jobs_tier: a.jobs.length ? Math.min(...a.jobs.map(v => opt('jobs', v).tier)) : '',
     courriel: label('courriel', a.courriel), courriel_tier: a.courriel ? opt('courriel', a.courriel).tier : '',
-    ca: label('ca', a.ca), role: label('role', a.role), temps_perdu: a.temps,
+    ca: label('ca', a.ca), role: label('role', a.role),
+    temps_perdu: (a.temps || []).map(v => (v === 'autre' && a.temps_autre ? 'Autre : ' + a.temps_autre : label('temps', v))).join(', '),
     resultat: result(a),
     page_url: pageUrl, horodatage: new Date().toISOString(),
     utm_source: q('utm_source'), utm_medium: q('utm_medium'), utm_campaign: q('utm_campaign'),
@@ -136,7 +145,7 @@ if (typeof document !== 'undefined') (function () {
   // Step 0 is the contact form: saved as a partial lead right away, so Michael can call people who stop halfway.
   // One id per visitor ties the partial row, the complete row and Meta's Lead event together.
   const newId = () => (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()) + Math.random().toString(16).slice(2);
-  const state = { i: 0, a: { jobs: [] }, contact: {}, id: newId() };
+  const state = { i: 0, a: { jobs: [], temps: [] }, contact: {}, id: newId() };
   const quiz = $('#quiz');
   const QS = variant === 'B' ? QUESTIONS.filter(q => q.short) : QUESTIONS;
   const steps = QS.length + 1; // + contact
@@ -148,12 +157,10 @@ if (typeof document !== 'undefined') (function () {
     const back = state.i ? '<button type="button" class="back">← Retour</button>' : '';
     let body;
     if (!q) body = contactForm();
-    else if (q.text) body = `<textarea id="t" rows="3" placeholder="${esc(q.placeholder)}">${esc(state.a.temps || '')}</textarea>
-      <button type="button" class="btn btn-primary next" disabled>${last() ? 'Voir mon résultat →' : 'Continuer →'}</button>`;
     else body = `<div class="chips${q.multi ? ' multi' : ''}">${q.options.map(o => {
-        const on = q.multi ? state.a.jobs.includes(o.v) : state.a[q.id] === o.v;
+        const on = q.multi ? state.a[q.id].includes(o.v) : state.a[q.id] === o.v;
         return `<button type="button" class="chip" data-v="${o.v}" aria-pressed="${on}">${esc(o.label)}</button>`;
-      }).join('')}</div>${q.multi ? `<button type="button" class="btn btn-primary next"${state.a.jobs.length ? '' : ' disabled'}>Continuer →</button>` : ''}`;
+      }).join('')}</div>${q.options.some(o => o.other) ? `<label class="fld" id="autre-w"${state.a[q.id].includes('autre') ? '' : ' hidden'}><span>Précisez</span><input id="autre" value="${esc(state.a[q.id + '_autre'] || '')}"></label>` : ''}${q.multi ? `<button type="button" class="btn btn-primary next"${state.a[q.id].length ? '' : ' disabled'}>${last() ? 'Voir mon résultat →' : 'Continuer →'}</button>` : ''}`;
     $('#step').innerHTML = `${back}<h3 tabindex="-1">${esc(q ? q.title : 'Commençons par vos coordonnées')}</h3>${q && q.hint ? `<p class="hint">${esc(q.hint)}</p>` : ''}${body}`;
     if (focus) $('#step h3').focus();
     wire(q);
@@ -171,7 +178,7 @@ if (typeof document !== 'undefined') (function () {
       <label class="hp" aria-hidden="true">Site web<input name="website" tabindex="-1" autocomplete="off"></label>
       <label class="check"><input type="checkbox" name="consent_loi25" required${on('consent_loi25')}> <span>J'accepte que LabergeTech utilise mes réponses pour évaluer mon projet et me contacter à ce sujet, et transmette à Meta une version chiffrée de mon courriel et de mon téléphone pour mesurer ses publicités. <a href="${base}../confidentialite/" target="_blank">Politique de confidentialité</a></span></label>
       <label class="check"><input type="checkbox" name="consent_sms"${on('consent_sms')}> <span>J'accepte de recevoir des textos de LabergeTech au sujet de ma demande <em>(facultatif)</em>. Je peux répondre ARRÊT en tout temps.</span></label>
-      <p class="err" id="err" role="alert" hidden>Remplissez les champs requis et cochez le consentement.</p>
+      <p class="err" id="err" role="alert" hidden>Oups! Il vous manque une info ou deux. Complétez ce qui est marqué d'un * rouge.</p>
       <button type="submit" class="btn btn-primary btn-lg wide">Continuer →</button>
     </form>`;
   }
@@ -181,19 +188,15 @@ if (typeof document !== 'undefined') (function () {
     if (b) b.onclick = () => { state.i--; render(true); };
     if (!q) return wireContact();
     const next = $('#step .next');
-    if (q.text) {
-      const t = $('#t');
-      const sync = () => { state.a.temps = t.value.trim(); next.disabled = !state.a.temps; };
-      t.oninput = sync; sync();
-      next.onclick = () => (last() ? finish() : (state.i++, render(true)));
-      return;
-    }
+    const autre = $('#autre');
+    if (autre) autre.oninput = () => { state.a[q.id + '_autre'] = autre.value.trim(); };
     document.querySelectorAll('#step .chip').forEach(c => c.onclick = () => {
       if (q.multi) {
-        const v = c.dataset.v, on = state.a.jobs.includes(v);
-        state.a.jobs = on ? state.a.jobs.filter(x => x !== v) : state.a.jobs.concat(v);
+        const v = c.dataset.v, on = state.a[q.id].includes(v);
+        state.a[q.id] = on ? state.a[q.id].filter(x => x !== v) : state.a[q.id].concat(v);
         c.setAttribute('aria-pressed', String(!on));
-        next.disabled = !state.a.jobs.length;
+        next.disabled = !state.a[q.id].length;
+        if (autre && v === 'autre') { $('#autre-w').hidden = on; if (!on) autre.focus(); }
       } else {
         state.a[q.id] = c.dataset.v;
         if (last()) finish(); else { state.i++; render(true); }
@@ -205,9 +208,22 @@ if (typeof document !== 'undefined') (function () {
 
   function wireContact() {
     const form = $('#contact');
+    // Missing or invalid field: red * on its label, cleared as soon as it's fixed.
+    const mark = el => el.closest('label').classList.toggle('miss', !el.validity.valid);
+    form.oninput = e => {
+      if (!e.target.closest('.miss')) return;
+      mark(e.target);
+      $('#err').hidden = !form.querySelector('.miss');
+    };
     form.onsubmit = e => {
       e.preventDefault();
-      if (!form.checkValidity()) { $('#err').hidden = false; return; }
+      if (!form.checkValidity()) {
+        form.querySelectorAll('[required]').forEach(mark);
+        $('#err').hidden = false;
+        const first = form.querySelector('.miss input');
+        if (first) first.focus();
+        return;
+      }
       const f = Object.fromEntries(new FormData(form));
       state.contact = { prenom: f.prenom, nom: f.nom, entreprise: f.entreprise, courriel_contact: f.courriel_contact,
         cellulaire: f.cellulaire, website: f.website || '', consent_loi25: !!f.consent_loi25, consent_sms: !!f.consent_sms };

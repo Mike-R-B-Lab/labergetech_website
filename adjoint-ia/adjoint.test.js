@@ -4,7 +4,7 @@ const assert = require('node:assert');
 const Q = require('./adjoint.js');
 
 const base = { metier: 'plomberie', compta: 'qbo', jobs: ['jobber'], courriel: 'm365', ca: '250k-1m', role: 'proprietaire',
-  temps: 'soumissions' };
+  temps: ['soumissions'] };
 const A = over => Object.assign({}, base, over);
 
 test('result: only "not in construction" rejects', () => {
@@ -48,12 +48,19 @@ test('payload: ad click data, URL UTMs win over the stored first touch', () => {
 
 test('page B: 3 questions (métier, CRM, time), and its short answers make a full payload', () => {
   assert.deepStrictEqual(Q.QUESTIONS.filter(q => q.short).map(q => q.id), ['metier', 'jobs', 'temps']);
-  const b = { metier: 'plomberie', jobs: ['excel'], temps: 'soumissions' };
+  const b = { metier: 'plomberie', jobs: ['excel'], temps: ['soumissions'] };
   assert.strictEqual(Q.result(b), 'qualifie_cerveau');
   assert.strictEqual(Q.result({ ...b, jobs: ['jobber'] }), 'qualifie_complet');
   const p = Q.payload(b, { prenom: 'Luc' }, 'B', 'https://labergetech.com/adjoint-ia/direct/');
   assert.deepStrictEqual([p.compta, p.compta_tier, p.courriel, p.ca, p.role], ['', '', '', '', ''], 'skipped questions are blank, not errors');
   assert.deepStrictEqual(p.jobs, ['Excel ou papier']);
+});
+
+test('time question: several answers, "Autre" carries its text', () => {
+  const p = t => Q.payload(A(t), {}, 'A', 'https://x.test/').temps_perdu;
+  assert.strictEqual(p({ temps: ['soumissions', 'factures'] }), 'Monter les soumissions, Faire les factures et relancer les paiements');
+  assert.strictEqual(p({ temps: ['autre'], temps_autre: 'la paie' }), 'Autre : la paie');
+  assert.strictEqual(p({ temps: ['autre'] }), 'Autre', 'Autre without text still shows');
 });
 
 test('partial lead: contact only, no answers yet, payload still builds', () => {

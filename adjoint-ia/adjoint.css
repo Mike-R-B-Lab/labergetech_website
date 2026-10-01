@@ -93,6 +93,9 @@ textarea:focus, .fld input:focus { outline: none; border-color: var(--accent); b
 .check input { width: 20px; height: 20px; margin: 1px 0 0; flex: none; accent-color: var(--accent); }
 #contact .btn { margin-top: 22px; }
 .err { margin-top: 12px; font-size: 14px; font-weight: 600; color: #c62d22; }
+.fld.miss > span::after { content: " *"; color: #c62d22; font-weight: 800; }
+.fld.miss input { border-color: #c62d22; }
+.check.miss > span::before { content: "* "; color: #c62d22; font-weight: 800; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .result p { margin-top: 12px; color: var(--ink-70); font-size: 17px; }
 .result .btn { margin-top: 22px; }
