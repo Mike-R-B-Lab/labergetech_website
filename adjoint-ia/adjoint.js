@@ -242,7 +242,7 @@ if (typeof document !== 'undefined') (function () {
   function showResult(r, cfg) {
     const book = `<a class="btn btn-primary btn-lg wide book" href="${esc(cfg.booking_url || '#')}" target="_blank" rel="noopener">Réserver mon appel →</a>`;
     const fit = ['Bonne nouvelle : vous semblez être un bon fit.',
-      "La prochaine étape est un appel de 30 minutes pour faire le tour de vos outils et de ce qui vous ferait gagner des heures. Si ça a du sens pour vous, vous recevez un prix fixe par écrit.", book];
+      "La prochaine étape est un appel de 30 minutes pour faire le tour de vos outils et de ce qui vous ferait gagner des heures.", book];
     const T = {
       qualifie_complet: fit,
       qualifie_cerveau: fit,
