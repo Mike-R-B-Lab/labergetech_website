@@ -178,7 +178,6 @@ if (typeof document !== 'undefined') (function () {
       <label class="fld"><span>Cellulaire</span><input name="cellulaire" type="tel" autocomplete="tel" required value="${v('cellulaire')}"></label>
       <label class="hp" aria-hidden="true">Site web<input name="website" tabindex="-1" autocomplete="off"></label>
       <label class="check"><input type="checkbox" name="consent_loi25" required${on('consent_loi25')}> <span>J'accepte que LabergeTech utilise mes réponses pour évaluer mon projet et me contacter à ce sujet, et transmette à Meta une version chiffrée de mon courriel et de mon téléphone pour mesurer ses publicités. <a href="${base}../confidentialite/" target="_blank">Politique de confidentialité</a></span></label>
-      <label class="check"><input type="checkbox" name="consent_sms"${on('consent_sms')}> <span>J'accepte de recevoir des textos de LabergeTech au sujet de ma demande <em>(facultatif)</em>. Je peux répondre ARRÊT en tout temps.</span></label>
       <p class="err" id="err" role="alert" hidden>Oups! Il vous manque une info ou deux. Complétez ce qui est marqué d'un * rouge.</p>
       <button type="submit" class="btn btn-primary btn-lg wide">Continuer →</button>
     </form>`;
@@ -227,7 +226,7 @@ if (typeof document !== 'undefined') (function () {
       }
       const f = Object.fromEntries(new FormData(form));
       state.contact = { prenom: f.prenom, nom: f.nom, entreprise: f.entreprise, courriel_contact: f.courriel_contact,
-        cellulaire: f.cellulaire, website: f.website || '', consent_loi25: !!f.consent_loi25, consent_sms: !!f.consent_sms };
+        cellulaire: f.cellulaire, website: f.website || '', consent_loi25: !!f.consent_loi25 };
       send('partiel');
       state.i++; render(true);
     };
