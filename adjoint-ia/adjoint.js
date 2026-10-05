@@ -130,6 +130,11 @@ if (typeof document !== 'undefined') (function () {
       window.fbq('init', cfg.pixel_id);
       window.fbq('track', 'PageView');
     }
+    // One "visite" row in the sheet per page load, no personal data: Stats compares it with bookings.
+    if (cfg.apps_script_url && !/^(localhost|127\.0\.0\.1|)$/.test(location.hostname)) {
+      fetch(cfg.apps_script_url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ etape: 'visite', variante: variant, utm_campaign: src0.utm_campaign || '', utm_content: src0.utm_content || '' }) }).catch(() => {});
+    }
     const vsl = $('.vsl');
     if (vsl && cfg.vsl_youtube_id) {
       vsl.classList.add('ready');
