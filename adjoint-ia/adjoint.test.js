@@ -7,8 +7,8 @@ const base = { metier: 'plomberie', compta: 'qbo', jobs: ['jobber'], courriel: '
   temps: ['soumissions'] };
 const A = over => Object.assign({}, base, over);
 
-test('result: only "not in construction" rejects', () => {
-  assert.strictEqual(Q.result(A({ metier: 'hors' })), 'refus_A');
+test('result: nobody is rejected', () => {
+  assert.ok(Q.result(A({ metier: 'hors' })).startsWith('qualifie'), 'outside construction still gets the booking button');
   assert.ok(!Q.QUESTIONS.some(q => q.id === 'investir'), 'no investment question: if they are here, they are');
   assert.strictEqual(Q.result(A({ compta: 'aucun', jobs: ['excel'], courriel: 'autre' })), 'qualifie_cerveau', 'Excel, paper and no business email still get a call');
 });

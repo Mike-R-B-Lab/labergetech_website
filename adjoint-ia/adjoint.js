@@ -64,10 +64,9 @@ const QUESTIONS = [
 
 const opt = (id, v) => (QUESTIONS.find(q => q.id === id).options || []).find(o => o.v === v);
 
-// Only "not in construction" rejects. Software never does: Excel, paper or a non-business email
-// still gets a call (Michael takes every call while starting out). Page B asks the CRM, not the accounting.
+// Nobody is rejected: every lead gets the booking button, even outside construction, and with
+// Excel, paper or a non-business email (Michael takes every call). Page B asks the CRM, not the accounting.
 function result(a) {
-  if (a.metier === 'hors') return 'refus_A';
   const direct = (a.compta && opt('compta', a.compta).tier <= 2) || a.jobs.some(v => opt('jobs', v).tier <= 2);
   return direct ? 'qualifie_complet' : 'qualifie_cerveau';
 }
@@ -261,9 +260,7 @@ if (typeof document !== 'undefined') (function () {
       "La prochaine étape est un appel de 30 minutes pour faire le tour de vos outils et de ce qui vous ferait gagner des heures.", book];
     const T = {
       qualifie_complet: fit,
-      qualifie_cerveau: fit,
-      refus_A: ['Merci, on vous tient au courant.',
-        "Pour l'instant, Adjoint IA est conçu pour les entreprises de la construction et des métiers : les logiciels, le vocabulaire et les exemples sont faits pour elles. On garde vos coordonnées et on vous écrit si on ouvre votre secteur.", '']
+      qualifie_cerveau: fit
     }[r];
     quiz.innerHTML = `<div class="result ${r.startsWith('qualifie') ? 'ok' : ''}"><h3 tabindex="-1">${T[0]}</h3><p>${T[1]}</p>${T[2]}</div>`;
     quiz.querySelector('h3').focus();
