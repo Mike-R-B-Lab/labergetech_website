@@ -244,18 +244,21 @@ if (typeof document !== 'undefined') (function () {
     const p = Object.assign(payload(state.a, state.contact, variant, location.href, src), { etape });
     if (etape === 'partiel') p.resultat = '';
     const local = /^(localhost|127\.0\.0\.1|)$/.test(location.hostname);
+    // sent: true once the request left the browser. Honeypot, local or a network error: false.
+    let sent = Promise.resolve(false);
     if (cfg.apps_script_url && !local && !state.contact.website) {
-      fetch(cfg.apps_script_url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(p) }).catch(() => {});
+      sent = fetch(cfg.apps_script_url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(p) }).then(() => true, () => false);
     }
-    return { p, cfg };
+    return { p, cfg, sent };
   }
 
   async function finish() {
-    const { p, cfg } = await send('complet');
+    const { p, cfg, sent } = await send('complet');
     showResult(p.resultat, cfg);
     // Same event_id as the server-side Conversions API call in the Apps Script: Meta counts it once.
-    track('Lead', { content_name: 'adjoint-ia', resultat: p.resultat, variante: variant }, state.id);
+    // Only when the sheet got it, so Meta never counts a lead that has no row.
+    if (await sent) track('Lead', { content_name: 'adjoint-ia', resultat: p.resultat, variante: variant }, state.id);
   }
 
   // Like SDB: qualified leads see "good fit, book a call", not the software details (resultat still goes to the sheet and Meta).
