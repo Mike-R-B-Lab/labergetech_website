@@ -278,13 +278,17 @@ body {
   letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 .client .unit { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: .1em;
   text-transform: uppercase; color: var(--accent); }
-/* Four 290px cards want 1226px and the container is 1144px at every desktop
-   width, so the fourth was always clipped until you scrolled. Wide screens
-   get all four laid out to fit instead of a track that never rests right. */
-@media (min-width: 1040px) {
-  .clients { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+/* Five 290px cards never fit the 1144px container, so the last was clipped
+   until you scrolled. Wide screens get all five laid out to fit, with a
+   smaller figure so "2 parcours" stays on one line in a ~160px column.
+   Narrower screens keep the scrolling track. */
+@media (min-width: 1200px) {
+  .clients { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
     overflow: visible; margin-inline: 0; padding-inline: 0; }
   .client { flex: none; }
+  .client .fig { font-size: 32px; }
+  /* one-line names keep the figures and descriptions on the same row */
+  .client .name { white-space: nowrap; letter-spacing: .05em; }
 }
 
 /* ── who you work with ─────────────────────────────────────────────── */
@@ -511,6 +515,12 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
   <section class="wrap work" id="work">
     <h2 class="reveal">Projets livrés.</h2>
     <div class="clients" id="clients" role="region" aria-label="Clients">
+      <article class="client edge">
+        <span class="client-mark"><img src="../assets/mark-cremationrb.png" alt="Cr&eacute;mation RB" loading="lazy" decoding="async"></span>
+        <p class="name">Cr&eacute;mation RB</p>
+        <p class="fig">900</p>
+        <p class="unit">Factures par mois, automatisées</p>
+      </article>
       <article class="client edge">
         <span class="client-mark"><img src="../assets/mark-apollo.png" alt="Apollo Scooters" loading="lazy" decoding="async"></span>
         <p class="name">Apollo Scooters</p>
