@@ -18,7 +18,7 @@ const QUESTIONS = [
     { v: 'qbo', label: 'QuickBooks Online', tier: 2 },
     { v: 'acombago', label: 'Acomba GO (en ligne)', tier: 3 },
     { v: 'acomba', label: "Acomba installé sur l'ordinateur", tier: 3, bridge: true },
-    { v: 'sage50', label: 'Sage 50', tier: 3, bridge: true },
+    { v: 'sage50', label: 'Sage', tier: 3, bridge: true },
     { v: 'avantage', label: 'Avantage', tier: 3, bridge: true },
     { v: 'maestro', label: 'Maestro', tier: 3 },
     { v: 'xero', label: 'Xero', tier: 1 },
