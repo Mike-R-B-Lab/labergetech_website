@@ -147,8 +147,8 @@ if (typeof document !== 'undefined') (function () {
     }
   });
 
-  // Step 0 is the contact form: saved as a partial lead right away, so Michael can call people who stop halfway.
-  // One id per visitor ties the partial row, the complete row and Meta's Lead event together.
+  // Questions first, contact form last. Submitting it sends the one POST: sheet row, alert email, Meta Lead.
+  // One id per visitor ties the sheet row and Meta's Lead event (pixel + server) together.
   const newId = () => (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()) + Math.random().toString(16).slice(2);
   const state = { i: 0, a: { jobs: [], temps: [] }, contact: {}, id: newId() };
   const quiz = $('#quiz');
@@ -156,7 +156,7 @@ if (typeof document !== 'undefined') (function () {
   const steps = QS.length + 1; // + contact
 
   function render(focus) {
-    const q = state.i ? QS[state.i - 1] : null;
+    const q = state.i < QS.length ? QS[state.i] : null;
     $('#prog-t').textContent = `Étape ${state.i + 1} de ${steps}`;
     $('#bar').style.width = (state.i / steps * 100) + '%';
     const back = state.i ? '<button type="button" class="back">← Retour</button>' : '';
@@ -165,8 +165,8 @@ if (typeof document !== 'undefined') (function () {
     else body = `<div class="chips${q.multi ? ' multi' : ''}">${q.options.map(o => {
         const on = q.multi ? state.a[q.id].includes(o.v) : state.a[q.id] === o.v;
         return `<button type="button" class="chip" data-v="${o.v}" aria-pressed="${on}">${esc(o.label)}</button>`;
-      }).join('')}</div>${q.options.some(o => o.other) ? `<label class="fld" id="autre-w"${state.a[q.id].includes('autre') ? '' : ' hidden'}><span>Précisez</span><input id="autre" value="${esc(state.a[q.id + '_autre'] || '')}"></label>` : ''}${q.multi ? `<button type="button" class="btn btn-primary next"${state.a[q.id].length ? '' : ' disabled'}>${last() ? 'Voir mon résultat →' : 'Continuer →'}</button>` : ''}`;
-    $('#step').innerHTML = `${back}<h3 tabindex="-1">${esc(q ? q.title : 'Commençons par vos coordonnées')}</h3>${q && q.hint ? `<p class="hint">${esc(q.hint)}</p>` : ''}${body}`;
+      }).join('')}</div>${q.options.some(o => o.other) ? `<label class="fld" id="autre-w"${state.a[q.id].includes('autre') ? '' : ' hidden'}><span>Précisez</span><input id="autre" value="${esc(state.a[q.id + '_autre'] || '')}"></label>` : ''}${q.multi ? `<button type="button" class="btn btn-primary next"${state.a[q.id].length ? '' : ' disabled'}>Continuer →</button>` : ''}`;
+    $('#step').innerHTML = `${back}<h3 tabindex="-1">${esc(q ? q.title : 'Dernière étape : vos coordonnées')}</h3>${q && q.hint ? `<p class="hint">${esc(q.hint)}</p>` : ''}${body}`;
     if (focus) $('#step h3').focus();
     wire(q);
   }
@@ -203,12 +203,11 @@ if (typeof document !== 'undefined') (function () {
         if (autre && v === 'autre') { $('#autre-w').hidden = on; if (!on) autre.focus(); }
       } else {
         state.a[q.id] = c.dataset.v;
-        if (last()) finish(); else { state.i++; render(true); }
+        state.i++; render(true);
       }
     });
-    if (next) next.onclick = () => (last() ? finish() : (state.i++, render(true)));
+    if (next) next.onclick = () => { state.i++; render(true); };
   }
-  const last = () => state.i === QS.length;
 
   function wireContact() {
     const form = $('#contact');
@@ -231,18 +230,16 @@ if (typeof document !== 'undefined') (function () {
       const f = Object.fromEntries(new FormData(form));
       state.contact = { prenom: f.prenom, nom: f.nom, entreprise: f.entreprise, courriel_contact: f.courriel_contact,
         cellulaire: f.cellulaire, website: f.website || '', consent_loi25: !!f.consent_loi25 };
-      send('partiel');
-      state.i++; render(true);
+      form.querySelector('[type=submit]').disabled = true; // a double tap must not send two leads
+      finish();
     };
   }
 
-  // partiel: contact only, sheet row, no Meta event. complet: same row updated, Lead to Meta (pixel + server).
-  async function send(etape) {
+  async function finish() {
     const cfg = await cfgReady;
     const src = Object.assign({}, src0, { fbc: cookie('_fbc') || src0.fbc || '', fbp: cookie('_fbp'),
       event_id: state.id, user_agent: navigator.userAgent });
-    const p = Object.assign(payload(state.a, state.contact, variant, location.href, src), { etape });
-    if (etape === 'partiel') p.resultat = '';
+    const p = Object.assign(payload(state.a, state.contact, variant, location.href, src), { etape: 'complet' });
     const local = /^(localhost|127\.0\.0\.1|)$/.test(location.hostname);
     // sent: true once the request left the browser. Honeypot, local or a network error: false.
     let sent = Promise.resolve(false);
@@ -250,11 +247,6 @@ if (typeof document !== 'undefined') (function () {
       sent = fetch(cfg.apps_script_url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(p) }).then(() => true, () => false);
     }
-    return { p, cfg, sent };
-  }
-
-  async function finish() {
-    const { p, cfg, sent } = await send('complet');
     showResult(p.resultat, cfg);
     // Same event_id as the server-side Conversions API call in the Apps Script: Meta counts it once.
     // Only when the sheet got it, so Meta never counts a lead that has no row.

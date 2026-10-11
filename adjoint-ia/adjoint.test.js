@@ -62,8 +62,3 @@ test('time question: several answers, "Autre" carries its text', () => {
   assert.strictEqual(p({ temps: ['autre'], temps_autre: 'la paie' }), 'Autre : la paie');
   assert.strictEqual(p({ temps: ['autre'] }), 'Autre', 'Autre without text still shows');
 });
-
-test('partial lead: contact only, no answers yet, payload still builds', () => {
-  const p = Q.payload({ jobs: [] }, { prenom: 'Luc', cellulaire: '514' }, 'A', 'https://labergetech.com/adjoint-ia/');
-  assert.deepStrictEqual([p.prenom, p.metier, p.compta, p.jobs_tier], ['Luc', '', '', '']);
-});
