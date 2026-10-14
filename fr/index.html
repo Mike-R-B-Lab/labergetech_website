@@ -278,15 +278,12 @@ body {
   letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 .client .unit { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: .1em;
   text-transform: uppercase; color: var(--accent); }
-/* Five 290px cards never fit the 1144px container, so the last was clipped
-   until you scrolled. Wide screens get all five laid out to fit, with a
-   smaller figure so "2 parcours" stays on one line in a ~160px column.
-   Narrower screens keep the scrolling track. */
+/* Wide screens lay all four cards out to fit the container instead of
+   scrolling. Narrower screens keep the scrolling track. */
 @media (min-width: 1200px) {
-  .clients { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
-    overflow: visible; margin-inline: 0; padding-inline: 0; }
-  .client { flex: none; }
-  .client .fig { font-size: 32px; }
+  .clients { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px; overflow: visible; margin-inline: 0; padding-inline: 0; }
+  .client { flex: none; padding: 28px; gap: 18px; }
   /* one-line names keep the figures and descriptions on the same row */
   .client .name { white-space: nowrap; letter-spacing: .05em; }
 }
@@ -532,12 +529,6 @@ textarea.fld-i { resize: vertical; line-height: 1.5; }
         <p class="name">Attorre &amp; Fils</p>
         <p class="fig">20 h</p>
         <p class="unit">Économisées chaque semaine</p>
-      </article>
-      <article class="client edge">
-        <span class="client-mark"><img src="../assets/mark-elia.png" alt="&Eacute;lia M&eacute;dico Esth&eacute;tique" loading="lazy" decoding="async"></span>
-        <p class="name">&Eacute;lia M&eacute;dico Esth&eacute;tique</p>
-        <p class="fig">15 &rarr; 80</p>
-        <p class="unit">Avis Google &middot; en 2 mois</p>
       </article>
       <article class="client edge">
         <span class="client-mark"><img src="../assets/mark-mentors.png" alt="Mentors &Eacute;ducation" loading="lazy" decoding="async"></span>
